@@ -1,10 +1,8 @@
 const router = require('express').Router();
-const OcorrenciasController = require('../controllers');
+const Ocorrencia = require('./Ocorrencia.router');
+const Cidadao = require('./Cidadao.router');
 
-router.post('/new', OcorrenciasController.newOcorrencia);
-router.post('/get', OcorrenciasController.getCategoria);
-
-//****//
-router.post('/dev/addCat', OcorrenciasController.newCategoria);
+router.use('/ocorrencia', Ocorrencia);
+router.use('/cidadao', Cidadao);
 
 module.exports = router;

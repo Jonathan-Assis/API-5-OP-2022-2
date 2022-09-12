@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Routes from './src/pages/Home'
+import Routes from './src/routes'
 
 
 const App = () => {

@@ -9,7 +9,7 @@ import Home from '../pages/Home'
 
 const Stack = createNativeStackNavigator();
 
-const routes = () => {
+const Routes = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName='User_Term'>
@@ -19,4 +19,4 @@ const routes = () => {
         </NavigationContainer>
     );
 }
-export default routes;
+export default Routes;

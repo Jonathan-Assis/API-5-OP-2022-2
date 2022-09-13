@@ -1,7 +1,7 @@
 const stylesVar = {
 //BackgroundColor
     bg:{
-        backgroundColor: "#F5F5F5"
+        backgroundColor: "#D9D9D9"
     },
 
     toolbar:{

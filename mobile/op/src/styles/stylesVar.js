@@ -1,53 +1,60 @@
 const stylesVar = {
 //BackgroundColor
-    bg:{
-        backgroundColor: "#F5F5F5"
+    bgPrimary:{
+        backgroundColor: "#3455AA"
+    },
+    bgSecondary:{
+        backgroundColor: "#D9D9D9"
     },
 
+
     toolbar:{
-        backgroundColor: "#F5F5F5"
+        backgroundColor: "#3455AA"
     },
 
 //Icons
-    iconPrimary:{
-        backgroundColor: "#F5F5F5"
-    },
-
-    iconSecondary:{
-        backgroundColor: "#000000"
+    icon:{
+        backgroundColor: "#FFFFFF"
     },
 
 //Text
     titlePrimary:{
-        backgroundColor: "#F5F5F5",
-        fontSize: 18
+        backgroundColor: "#000000",
+        fontSize: 20
     },
 
     titleSecondary:{
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#000000",
         fontSize: 16
     },
 
+    titleTertiary:{
+        backgroundColor: "#FFFFFF",
+    },
+
     InputText:{
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#000000",
         fontSize: 14
     },
 
     placeholder:{
-        backgroundColor: "#F5F5F5",
+        backgroundColor: "#838383",
         fontSize: 14
     },
 
 //Box
     BoxPrimary:{
+        backgroundColor: "#D9D9D9",
         borderRadius: 16,
     },
 
     BoxSecondary:{
+        backgroundColor: "#3455AA",
         borderRadius: 16,
     },
 
     strokeBox:{
+        backgroundColor: "#3455AA",
         borderRadius: 16,
     },
 };

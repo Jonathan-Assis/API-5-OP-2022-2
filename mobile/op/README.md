@@ -1,13 +1,16 @@
 # Arquivo de boas práticas
 
-**Nota:** Ao fazer alguma adição ao código, rodar o comando `git checkout -b <seu_nome>` nesta branch, e depois de fazer todas as suas atualizações, o `git merge dev` para unir à branch principal.
 
-> Cuidado com os conflitos do `merge` e **sempre** faça um `update` antes do `commit`.
  
 # GitHub
-- Baixar as atualizações das branchs `git pull` na branch sistema;
+
+**Nota:** Antes de fazer alguma adição ao código, rodar o comando `git checkout -b <seu_nome>` na branch dev, e depois de fazer todas as suas atualizações/alterações e commits, faça sempre o `git pull` para acaso ocorra de houver atualizações elas sejam baixadas antes de fazer o comando `git merge dev` para unir a branch principal de desenvolvimento (dev) para a sua.
+
+> Cuidado com os conflitos do `merge` e **sempre** faça um `update` antes do `commit`.
+
+- Baixar as atualizações das branchs `git pull` na branch dev;
 - Trocar de branch `git switch NOMEDABRANCH` ou `git checkout NOMEDABRANCH` **Obs:** Você não irá conseguir trocar de branch se acaso você tiver alterações na sua branch atual;
-- Para mandar as atualizações baixadas na branch `dev` para a sua branch **Obs:** faça o `switch` ou `checkout` para a **sua branch** e depois `git merge sistema`;
+- Para mandar as atualizações baixadas na branch `dev` para a sua branch **Obs:** faça o `switch` ou `checkout` para a **sua branch** e depois `git merge dev`;
 - Para subir um `commit` para o **GitHub** de sua branch faça `git add -u` logo depois `git commit -m " ESCREVA SUA MENSAGEM SOBRE O COMMIT " ` e em seguida para subir **definitivamente** para o **GitHub** faça `git push`;
 - Ao concluir sua tarefa, para mandar suas alterações da branch atual para a branch `dev` faça `git switch dev` ou `git checkout dev` e em seguida faça `git merge NomeDaSuaBranch` **cuidado** com os conflitos!!! e arrume cada um deles antes de subir o `commit`.
 

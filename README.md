@@ -43,13 +43,14 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 
 # 📂 Documentação <a name="documentacao"></a>
 ## PRODUCT BACKLOG <a name="backlog"></a>
-<img src='Referências/Documentação/Backlog/Product Backlog pt1.jpg' width=100% >
-<img src='Referências/Documentação/Backlog/Product Backlog pt2.jpg' width=100% >
+<img src='Referências/Documentação/Backlog/BacklogTotal1.jpg' width=100% >
+<img src='Referências/Documentação/Backlog/BacklogTotal2.jpg' width=100% >
 
-## Sprint Backlog <a name="sprintbBacklog"></a>
+## Sprint Backlog <a name="sprintBacklog"></a>
 
-<img src='Referências/Documentação/Backlog/Sprint Backlog' width=100% >
-
+<div align=center>
+    <img src='Referências\Documentação\Backlog\EquipeNoxTimeline.png' width=600px >
+</div>
 # 📅 Cronograma de Entregas <a name="cronograma"></a>
 
 > Datas definidas sobre as entregas das sprints.
@@ -58,29 +59,30 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 - [ ] SPRINT 2 - 19/09/2022 a 09/10/2022;
 - [ ] SPRINT 3 - 13/10/2022 a 06/11/2022;
 - [ ] SPRINT 4 - 07/11/2022 a 27/11/2022.
-- Feira de Soluções & Apresentação Final 05/12/2022
+
+Feira de Soluções & Apresentação Final - 05/12/2022
 # 💻 Tecnologias <a name="tecnologias"></a>
 
-- React Native:
+[![](https://img.shields.io/badge/%20-React%20Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactnative.dev/)
 
 Utilizado pela versatilidade e praticidade no desenvolvimento híbrido para aplicações mobile.
 
-- JavaScript:
+[![](https://img.shields.io/badge/%20-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://www.javascript.com/)
 
+Tecnologia principal do desenvolvimento, utilizada para a estruturação do servidor/Back-end (NodeJS) e as funcionalidades do Front-end (React Native).
 
-
-- NodeJS: 
+[![](https://img.shields.io/badge/%20-Node.JS-43853D?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/en/)
 
 Utilizado para o Back-end da aplicação, onde o Node tem por foco no desenvolvimento próximo ao servidor.
 
-- MongoDB:
+[![](https://img.shields.io/badge/%20-MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/pt-br)
 
 Banco de Dados não relacional, utilizado para armazenar os dados da aplicação em JSON.
 
 
 ### ✒️ Wireframe
 
-- Figma: 
+[![](https://img.shields.io/badge/%20-Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/)
 
 Utilizado para prototipagem da aplicação mobile.
 # 👩‍💻 Integrantes da Equipe 👨‍💻 <a name="integrantes"></a>
@@ -89,8 +91,12 @@ Utilizado para prototipagem da aplicação mobile.
 | :---: | :---: | :---: | :---: | 
 [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQH-isxJZOCTEw/profile-displayphoto-shrink_200_200/0/1649597894210?e=1668643200&v=beta&t=xnC2On5TZptQVW307RJN3KLmI3F7c2tSdCQCQAF8Gwc" width=115><br><sub> Matheus Emboaba <br><a href="https://www.linkedin.com/in/matheus-emboaba-a21970236">Dev Team</a><br></sub>](https://github.com/MatheusEmboabaTeteu) [![](https://img.shields.io/badge/%20-GitHub-black?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/MatheusEmboabaTeteu "Dev Team") [![](https://img.shields.io/badge/%20-LinkedIn-0e76a8?style=flat&logo=linkedin&logoColor=white&labelColor=0e76a8)](https://www.linkedin.com/in/matheus-emboaba-a21970236 "LinkedIn") | [<img src="https://avatars.githubusercontent.com/u/51235779?v=4" width=115><br><sub> Raul Iglesias <br><a href="https://linkedin.com/in/raul-iglesias-8010201a1">Dev Team</a><br></sub>](https://github.com/RaulIglesias) [![](https://img.shields.io/badge/%20-GitHub-black?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/RaulIglesias "Dev Team") [![](https://img.shields.io/badge/%20-LinkedIn-0e76a8?style=flat&logo=linkedin&logoColor=white&labelColor=0e76a8)](https://linkedin.com/in/raul-iglesias-8010201a1 "LinkedIn") | [<img src="https://media-exp1.licdn.com/dms/image/C5603AQEKfLoogyscwg/profile-displayphoto-shrink_200_200/0/1636418920754?e=1668643200&v=beta&t=mxJjNxlOu1fru7ZtNdV5wKRle5tD76Na8djqUJNwqqA" width=115><br><sub> Rita Ferreira <br><a href="https://www.linkedin.com/in/rita-ferreira-894ba1200">Dev Team </a><br></sub>](https://github.com/ferreirarita) [![](https://img.shields.io/badge/%20-GitHub-black?style=flat&logo=github&logoColor=white&labelColor=black)](https://github.com/ferreirarita "Dev Team") [![](https://img.shields.io/badge/%20-LinkedIn-0e76a8?style=flat&logo=linkedin&logoColor=white&labelColor=0e76a8)](https://www.linkedin.com/in/rita-ferreira-894ba1200 "LinkedIn") |
 
+<br>
+<br>
 <hr>
 
 [Voltar ao topo](#topo)
-
-<img src='Referências/Imagens/FatecSJC.png' width=30%>
+<div align=center>
+    <img src='Referências/Imagens/FatecSJCLogo.png' width=200px>
+    <img src='Referências/Imagens/NoxLogo.png' width=110px>
+<div>

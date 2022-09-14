@@ -19,7 +19,7 @@ const Home = (props) => {
         <Text style={styles.bTitle}>O que deseja fazer hoje?</Text>
         <View style={styles.bRow}>
           <View style={styles.bColumn}>
-            <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate('Cadastro')}>
+            <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate('Rep_Ocorrencia')}>
               <MegaphoneIcon size="50" />
               <Text style={styles.bButtonTitle}>Reportar Ocorrência</Text>
             </TouchableOpacity>

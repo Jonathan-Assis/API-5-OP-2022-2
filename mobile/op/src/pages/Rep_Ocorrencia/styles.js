@@ -5,17 +5,47 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent:"center", 
+        ...stylesVar.backgroundSecondary
     },
     body: {
         flex: 1,
-        flexDirection: 'row',
+        margin:30,
         alignItems: 'center',
-        padding:10
+        justifyContent:"center", 
+        paddingHorizontal:'25%',
+         ...stylesVar.boxPrimary
+
     },
     bText:{
-        fontSize:22,
-        fontWeight: 'bold',
+        ...stylesVar.titleTertiary
+    },
+
+    bRow:{
+        flexDirection:'row'
+    },
+    bInputStroke:{
+        ...stylesVar.strokeBoxSecondary,
+        paddingHorizontal:20
+    },
+    bInputStrokePlaceholder:{
+        ...stylesVar.placeholderPrimary,
+        textAlign:'center'
+    },
+    bInputBox:{
+        flex:0.4,
+        ...stylesVar.boxSecondary,
+        justifyContent:'center'
+    },
+    bInputBoxPlaceHolder:{
+        ...stylesVar.placeholderSecondary,
+        textAlign:'center'
+    },
+    bButton:{
+       ...stylesVar.boxSecondary
+    },
+    bButtonLabel:{
+        ...stylesVar.buttonLabel
     }
 })
 

@@ -1,7 +1,33 @@
 # Arquivo de boas práticas
 
+# Executar o Projeto OP
 
- 
+**Nota:** Antes de baixar ou instalar qualquer dependência, certifique-se de que esteja na pasta `mobile/op` onde há o arquivo `package.json`!!!
+
+## Acesso a pasta do projeto do App OP
+
+Após acessar a pasta do projeto do GitHub, acesse a pasta `mobile/op` pelo terminal digitando 
+> cd mobile/op
+
+caso tenha acessado, mais de uma pasta e deseja retroceder, digite no terminal:
+> cd ..
+## Baixando as dependências do projeto
+Após entrar na pasta do projeto do App `OP`, execute no terminal:<br>
+**Nota:** Execute apenas dentro da pasta `mobile/op`
+> npm install
+
+## Executando o App OP
+Ao concluir todo o download das dependências, execute no terminal para iniciar a aplicação:<br>
+**Nota:** Execute apenas dentro da pasta `mobile/op`
+> npm start
+
+Escaneie o QR Code pelo celular no App do Expo ou se preferir execute no terminal:
+>expo start
+
+Escaneie o QR Code pelo celular no App do Expo ou se deseja executar de forma nativa utilizando o cabo USB ou Android Studio execute no terminal:
+>npm run android
+
+Se optar por rodar de forma nativa, a _primeira instalação_ do projeto ele levará um certo tempo.
 # GitHub
 
 **Nota:** Antes de fazer alguma adição ao código, rodar o comando `git checkout -b <seu_nome>` na branch dev, e depois de fazer todas as suas atualizações/alterações e commits, faça sempre o `git pull` para acaso ocorra de houver atualizações elas sejam baixadas antes de fazer o comando `git merge dev` para unir a branch principal de desenvolvimento (dev) para a sua.

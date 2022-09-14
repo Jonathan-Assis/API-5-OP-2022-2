@@ -15,7 +15,7 @@ const Stack = createNativeStackNavigator();
 const Routes = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home' screenOptions={{
+            <Stack.Navigator initialRouteName='Rep_Ocorrencia' screenOptions={{
                 headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color ,headerStyle:{...stylesVar.toolbar}
             }}>
                 <Stack.Screen name='User_Term' component={User_Term} options={{title:'Termos de Uso', headerShown:false}} />

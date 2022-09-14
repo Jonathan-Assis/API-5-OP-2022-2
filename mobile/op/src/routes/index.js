@@ -8,15 +8,17 @@ import User_Term from '../pages/User_Term'
 import Home from '../pages/Home'
 import Rep_Ocorrencia from '../pages/Rep_Ocorrencia'
 import Chamados from '../pages/Chamados'
+import Start_Screen from '../pages/Start_Screen'
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home' screenOptions={{
+            <Stack.Navigator initialRouteName='Start_Screen' screenOptions={{
                 headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color ,headerStyle:{...stylesVar.toolbar}
             }}>
+                <Stack.Screen name='Start_Screen' component={Start_Screen} options={{title:'Start_Screen', headerShown:false}} />
                 <Stack.Screen name='User_Term' component={User_Term} options={{title:'Termos de Uso', headerShown:false}} />
                 <Stack.Screen name='Home' component={Home} options={{title:'Painel Inicial'}} />
                 <Stack.Screen name='Rep_Ocorrencia' component={Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />

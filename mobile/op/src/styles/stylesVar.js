@@ -1,9 +1,6 @@
 const stylesVar = {
 //BackgroundColor
-    bgPrimary:{
-        backgroundColor: "#3455AA"
-    },
-    bgSecondary:{
+    bg:{
         backgroundColor: "#D9D9D9"
     },
 

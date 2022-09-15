@@ -5,11 +5,12 @@ import styles from './styles';
 import PaperclipIcon from '../../assets/Icons/paperclip'
 
 const Rep_Ocorrencia = () => {
+  const [base64, setBase64] = useState('')
   const [cpf,setCpf]=useState('')
   const [arquivo,setArquivo]=useState({})
   const [descricao,setDescricao]=useState('')
   console.log(descricao)
-  
+
 /*   setArquivo (pipi popopó) = 64 bits    */
 
   return (

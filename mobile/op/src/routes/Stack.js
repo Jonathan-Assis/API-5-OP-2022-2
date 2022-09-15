@@ -6,13 +6,11 @@ import * as Pages from '../pages'
 
 const StackNavigator = () => {
     return (
-        <Stack.Navigator initialRouteName='Home' screenOptions={{
+        <Stack.Navigator initialRouteName='Start_Screen' screenOptions={{
             headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color, headerStyle:{...stylesVar.toolbar}
         }}>
-            <Stack.Screen name='User_Term' component={Pages.User_Term} options={{title:'Termos de Uso', headerShown:false}} />
-            <Stack.Screen name='Home' component={Pages.Home} options={{title:'Painel Inicial'}} />
-            <Stack.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />
-            <Stack.Screen name='Chamados' component={Pages.Chamados} options={{title:'Chamados Abertos'}} />
+            <Stack.Screen name='Start_Screen' component={Pages.Start_Screen} options={{title:'Start_Screen', headerShown:false}} />
+            <Stack.Screen name='User_Term' component={Pages.User_Term} options={{title:'Start_Screen', headerShown:false}} />
         </Stack.Navigator>
     )
 }
@@ -56,4 +54,4 @@ const StackSettingsButton = () => {
     )
 }
 
-export { StackHomeButton, StackFormButton, StackSettingsButton }
+export { StackNavigator, StackHomeButton, StackFormButton, StackSettingsButton }

@@ -10,6 +10,8 @@ const Rep_Ocorrencia = () => {
   const [descricao,setDescricao]=useState('')
   console.log(descricao)
   
+/*   setArquivo (pipi popopó) = 64 bits    */
+
   return (
     <View style={styles.container}>
       <View style={styles.body}>

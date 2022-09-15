@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { View,Text, ScrollView, TouchableOpacity,SafeAreaView} from 'react-native';
+import {Text, ScrollView, TouchableOpacity,SafeAreaView} from 'react-native';
 import styles from './styles';
 
 

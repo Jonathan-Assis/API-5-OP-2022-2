@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {  View,  Image,  Text,Animated,Button} from 'react-native';
+import {  SafeAreaView,  Image,  Text,Animated,Button} from 'react-native';
 import styles from './styles';
 
 
 /* Logo */
-import Logo from '../../assets/Logo/OP.png';
+import Logo from '../../assets/Icons/Logo/OP.png';
 
 class Start_Screen extends Component {
   state = {
@@ -38,7 +38,7 @@ class Start_Screen extends Component {
   }
   render() { 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <Animated.View
           style={{
             opacity: this.state.LogoAnime,
@@ -55,7 +55,7 @@ class Start_Screen extends Component {
       title="Ir para Termos de Uso"
       onPress={() => this.props.navigation.navigate('User_Term')}/>
         </Animated.View>
-      </View>
+      </SafeAreaView>
     
     );
     

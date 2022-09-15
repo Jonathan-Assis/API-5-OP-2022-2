@@ -3,6 +3,7 @@ const stylesVar = {
     backgroundPrimary:{
         backgroundColor: "#3455AA"
     },
+    
     backgroundSecondary:{
         backgroundColor: "#D9D9D9"
     },
@@ -42,8 +43,18 @@ const stylesVar = {
         fontSize: 14
     },
 
-    placeholder:{
+    buttonLabel:{
+        color: "#000000",
+        fontSize: 14
+    },
+
+    placeholderPrimary:{
         color: "#838383",
+        fontSize: 14
+    },
+
+    placeholderSecondary:{
+        color: "#000000",
         fontSize: 14
     },
 
@@ -54,13 +65,19 @@ const stylesVar = {
     },
 
     boxSecondary:{
-        backgroundColor: "#D9D9D9",
+        backgroundColor: "#E9E9E9",
         borderRadius: 16,
     },
 
-    strokeBox:{
+    strokeBoxPrimary:{
         backgroundColor: "#3455AA",
         borderRadius: 16,
+    },
+
+    strokeBoxSecondary:{
+        borderColor:"#D9D9D9",
+        borderWidth:2,
+        borderRadius: 16
     },
 };
 

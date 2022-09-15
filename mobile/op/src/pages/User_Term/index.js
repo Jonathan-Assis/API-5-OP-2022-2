@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import { View,Text, ScrollView, TouchableOpacity} from 'react-native';
+import { View,Text, ScrollView, TouchableOpacity,SafeAreaView} from 'react-native';
 import styles from './styles';
 
 
@@ -17,10 +17,10 @@ state = {
 
 render(){
   return (
-   <View style={styles.container}>
-          <Text style={styles.bTextPrimary}>Termos de Uso e de Política de Privacidade</Text>
+   <SafeAreaView style={styles.container}>
+          <Text style={styles.bTextPrimary}>Termos de Uso</Text>
           <ScrollView 
-          style={styles.tcContainer}
+          style={styles.body}
           onScroll={({nativeEvent}) => {
               if (isCloseToBottom(nativeEvent)) {
                 this.setState({
@@ -29,7 +29,7 @@ render(){
               }
             }}
           >
-              <Text style={styles.text}>
+              <Text style={styles.bTextSecondary}>
                 {"\n"}
                 A sua privacidade é importante para nós. É política do Ocorrências Públicas respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no app Ocorrências Públicas.
                 {"\n\n"}
@@ -62,12 +62,16 @@ render(){
               </Text>          
           </ScrollView>
 
-          <TouchableOpacity disabled={ !this.state.accepted } onPress={ ()=> {
-           alert("Termos e condições aceitos.") 
-          this.props.navigation.navigate('Home') 
-        }}
-          style={ this.state.accepted ? styles.button : styles.buttonDisabled }><Text style={styles.buttonLabel}>Accept</Text></TouchableOpacity>
-    </View>
+          <TouchableOpacity disabled={ !this.state.accepted } 
+            onPress={ ()=> {alert("Termos e condições aceitos.") 
+            this.props.navigation.navigate('Home')
+            }}
+            style={ this.state.accepted ? styles.button : styles.buttonDisabled }>
+            <Text style={styles.bButtontext}>
+              Aceito
+            </Text>
+          </TouchableOpacity>
+    </SafeAreaView>
   );
 }
 

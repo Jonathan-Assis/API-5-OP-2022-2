@@ -7,19 +7,20 @@ import styles from './styles';
 import FormIcon from '../../assets/Icons/journal-richtext'
 import MegaphoneIcon from '../../assets/Icons/megaphone'
 
+import ServerConnection from '../../services';
+
 
 const Home = (props) => {
   const navigation = useNavigation();
+  console.log('olá')
+  ServerConnection.login({ cpf: "219837423", senha: "senha123" })
+  .then(({data}) => console.log(JSON.stringify(data)));
 
   useEffect(() => {
-    const resp = conn.login({ cpf: "219837423", senha: "senha123" });
-    console.log(resp)
-
-
     /* ServerConnection.login({ cpf: "219837423", senha: "senha123" })
     .then(res => console.log(res))
     .catch(e => console.error({...e})) */
-  }, [])
+  });
 
   return (
     <View style={styles.container}>

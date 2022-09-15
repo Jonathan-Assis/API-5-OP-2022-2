@@ -4,7 +4,7 @@ import stylesVar from '../styles/stylesVar'
 
 import HomeIcon     from '../assets/Icons/house-door'
 import FormIcon     from '../assets/Icons/journal-richtext'
-import SettingsIcon from '../assets/Icons/gear'
+import SettingsIcon from '../assets/Icons/list-ul'
 
 import { StackHomeButton, StackFormButton, StackSettingsButton } from './Stack'
 
@@ -16,23 +16,24 @@ const Routes = () => {
             <NavigationContainer>
                 <Tab.Navigator screenOptions={{
                     headerShown: false,
-                    labelStyle: {
-                        fontSize: 12,
+                    tabBarStyle:{ ...stylesVar.toolbar, paddingVertical:8 },
+                    tabBarLabelStyle: {
+                        fontSize: 15,
                       },
-                    tabBarStyle:{ ...stylesVar.toolbar },
                     tabBarActiveTintColor: 'white',
-                    tabBarInactiveTintColor: 'black'
-                    
+                    tabBarInactiveTintColor: 'black',
+                    activeColor: 'white',
+                    inactiveColor: 'black',
                 }}>
-                   <Tab.Screen name='Left' component={StackHomeButton} options={{tabBarLabel:'Início', tabBarIcon: ({color})=>{
-                    <HomeIcon size={14} />
-                   }}} />
-                   <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon: ({color})=>{
-                    <FormIcon size={14} />
-                   }}} />
-                   <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Configurações', tabBarIcon: ({color})=>{
-                    <SettingsIcon size={14} />
-                   }}} />
+                   <Tab.Screen name='Lef-t' component={StackHomeButton} options={{tabBarLabel:'Início', tabBarIcon:({color})=>(
+                    <HomeIcon size={24} fill={color} /> 
+                    )}} />
+                   <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon:({color})=>(
+                    <FormIcon size={24} fill={color} /> 
+                    )}} />
+                   <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Configurações', tabBarIcon:({color})=>(
+                    <SettingsIcon size={24} fill={color} /> 
+                    )}} />
                 </Tab.Navigator>
             </NavigationContainer>
         </>

@@ -4,7 +4,7 @@ import styles from './styles';
 
 
 /* Logo */
-import Logo from '../../assets/Icons/Logo/OP.png';
+import Logo from '../../assets/Logotype/OP.png';
 
 class Start_Screen extends Component {
   state = {

@@ -3,7 +3,6 @@ import { StatusBar } from 'react-native'
 import stylesVar from './src/styles/stylesVar'
 import Routes from './src/routes'
 
-
 const App = () => {
   return (
     <>

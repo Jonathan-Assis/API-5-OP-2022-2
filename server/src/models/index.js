@@ -1,11 +1,22 @@
-const client = require('mongodb').MongoClient;
-const url = process.env.DB;
+const { MongoClient } = require('mongodb');
+const uri = process.env.DB;
 //let db_conn;
 
-client.connect(url, (e, db) => {
-    if(e) throw e;
-    console.log('Conectado ao banco.');
-    db.close();
+const client = new MongoClient(uri,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+);
+
+client.connect(err => {
+    if(err) console.error(err);
+
+    const collections = [
+        client.db('opdb').collection('cidadao'),
+        client.db('opdb').collection('ocorrencias'),
+    ]
+    client.close();
 });
 
 module.exports = client;

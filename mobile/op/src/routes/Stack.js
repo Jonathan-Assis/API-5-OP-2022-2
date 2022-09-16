@@ -24,6 +24,7 @@ const StackHomeButton = () => {
         }}>
             <StackHome.Screen name='Home' component={Pages.Home} options={{title:'Painel Inicial'}} />
             <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />        
+            <StackSettings.Screen name='Cadastro' component={Pages.Cadastro} options={{title:'Cadastro'}} />
         </StackHome.Navigator>
     )
 }
@@ -50,7 +51,6 @@ const StackSettingsButton = () => {
             <StackSettings.Screen name='Settings' component={Pages.Settings} options={{title:'Configurações'}} />
             <StackSettings.Screen name='Edit_Profile' component={Pages.Edit_Profile} options={{title:'Editar Perfil'}} />
             <StackSettings.Screen name='Log_Out' component={Pages.Log_Out} options={{headerShown:false}} />
-            <StackSettings.Screen name='Cadastro' component={Pages.Cadastro} options={{title:'Editar Perfil'}} />
         </StackSettings.Navigator>
     )
 }

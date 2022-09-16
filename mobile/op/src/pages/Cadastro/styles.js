@@ -4,16 +4,16 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         ...stylesVar.backgroundSecondary,
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
+        /* flex: 1, */
+        /* alignItems: 'center', */
+        /* justifyContent: 'center', */
     },
     body: {
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
         padding:10,
-        marginTop: 50
+        marginVertical: 50
     },
     bTextPrimary:{
         fontSize: 22,
@@ -26,8 +26,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 2,
         marginBottom: 20,
-        borderWidth: 1,
-        borderColor: stylesVar.strokeBox.backgroundColor
+        borderWidth: stylesVar.strokeBoxPrimary.borderWidth,
+        borderRadius: stylesVar.strokeBoxPrimary.borderRadius,
+        borderColor: stylesVar.backgroundPrimary.backgroundColor
+    },
+    bTextInputPlaceholder: {
+        /* ...stylesVar.placeholderPrimary, */
+        color: '#F00'
     },
     button: {
         ...stylesVar.boxPrimary,

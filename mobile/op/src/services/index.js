@@ -25,7 +25,7 @@ export default class ServerConnection {
      *  senha: 'senha123'
      * })
      */
-    async cadastro(data) {
+    static async cadastro(data) {
         return await conn.post('/cidadao/cadastro', data);
     }
 

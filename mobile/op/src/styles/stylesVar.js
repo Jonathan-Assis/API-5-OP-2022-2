@@ -1,7 +1,7 @@
 const stylesVar = {
 //BackgroundColor
     backgroundPrimary:{
-        backgroundColor: "#3429A8"
+        backgroundColor: "#0429A8"
     },
     
     backgroundSecondary:{
@@ -69,6 +69,11 @@ const stylesVar = {
         borderRadius: 16,
     },
 
+    boxTertiary:{
+        backgroundColor: "#0429A8",
+        borderRadius: 16,
+    },
+    
     strokeBoxPrimary:{
         borderColor: "#3429A8",
         borderWidth:2,

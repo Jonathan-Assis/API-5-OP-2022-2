@@ -1,6 +1,7 @@
 import Chamados         from './Chamados'
 import Edit_Profile     from './Edit_Profile'
 import Home             from './Home'
+import Log_In           from './Log_In'
 import Log_Out          from './Log_Out'
 import Log_Up           from './Log_Up'
 import Rep_Ocorrencia   from './Rep_Ocorrencia'
@@ -12,6 +13,7 @@ export {
     Chamados,
     Edit_Profile,
     Home,
+    Log_In,
     Log_Out,
     Log_Up,
     Rep_Ocorrencia,

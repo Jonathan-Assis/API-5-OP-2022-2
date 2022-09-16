@@ -71,6 +71,7 @@ const stylesVar = {
 
     strokeBoxPrimary:{
         backgroundColor: "#3429A8",
+        borderWidth:2,
         borderRadius: 16,
     },
 

@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        ...stylesVar.backgroundPrimary
     },
     body: {
         flex: 1,
@@ -13,9 +14,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding:10
     },
+    bLogotype:{
+        width:200,
+        height:200
+    },
     bText:{
         fontSize:22,
         fontWeight: 'bold',
+        ...stylesVar.titleTertiary
     }
 })
 

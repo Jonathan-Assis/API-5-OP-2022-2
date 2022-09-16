@@ -17,7 +17,9 @@ const Settings = () => {
         </TouchableOpacity>
       </View>
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.fButton}>
+        <TouchableOpacity style={styles.fButton}
+          onPress={ () => navigation.navigate('Log_Out')}
+        >
             <Text style={styles.fText}>Sair</Text>  
         </TouchableOpacity>
       </View>

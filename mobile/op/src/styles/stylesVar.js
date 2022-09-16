@@ -1,7 +1,7 @@
 const stylesVar = {
 //BackgroundColor
     backgroundPrimary:{
-        backgroundColor: "#0429A8"
+        backgroundColor: "#3429A8"
     },
     
     backgroundSecondary:{

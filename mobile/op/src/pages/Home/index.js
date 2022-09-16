@@ -12,9 +12,9 @@ import ServerConnection from '../../services';
 
 const Home = (props) => {
   const navigation = useNavigation();
-  console.log('olá')
+  /* console.log('olá')
   ServerConnection.login({ cpf: "219837423", senha: "senha123" })
-  .then(({data}) => console.log(JSON.stringify(data)));
+  .then(({data}) => console.log(JSON.stringify(data))); */
 
   useEffect(() => {
     /* ServerConnection.login({ cpf: "219837423", senha: "senha123" })
@@ -44,6 +44,15 @@ const Home = (props) => {
             </TouchableOpacity>
           </View>
         </View>
+
+        <TouchableOpacity
+          onPress={() => 
+            navigation.navigate('Cadastro')
+          }
+        >
+          <Text>Para o Cadastro (testes)</Text>
+        </TouchableOpacity>
+
       </View>
 
     </View>

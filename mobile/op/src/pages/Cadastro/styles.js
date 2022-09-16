@@ -3,7 +3,7 @@ import stylesVar from '../../styles/stylesVar';
 
 const styles = StyleSheet.create({
     container:{
-        ...stylesVar.bgSecondary,
+        ...stylesVar.backgroundSecondary,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
-        padding:10
+        padding:10,
+        marginTop: 50
     },
     bTextPrimary:{
         fontSize: 22,
@@ -20,23 +21,23 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     bTextInput: {
-        ...stylesVar.BoxPrimary,
+        ...stylesVar.boxSecondary,
         width: 300,
         paddingHorizontal: 10,
         paddingVertical: 2,
         marginBottom: 20,
         borderWidth: 1,
-        borderColor: stylesVar.bgPrimary.backgroundColor
+        borderColor: stylesVar.strokeBox.backgroundColor
     },
     button: {
-        ...stylesVar.BoxPrimary,
-        ...stylesVar.bgPrimary,
+        ...stylesVar.boxPrimary,
+        ...stylesVar.backgroundPrimary,
         width: 300,
         paddingVertical: 5,
         alignItems: 'center'
     },
     buttonText: {
-        fontSize: stylesVar.InputText.fontSize,
+        fontSize: stylesVar.inputText.fontSize,
         color: '#FFF'
     }
 })

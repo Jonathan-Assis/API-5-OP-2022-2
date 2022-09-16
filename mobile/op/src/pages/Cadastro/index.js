@@ -24,7 +24,6 @@ const Cadastro = () => {
                 ? <Text>estou carregando...</Text>
                 : (<>
                     <View style={styles.body}>
-                        <Text style={styles.bTextPrimary}>Cadastro</Text>  
                         <TextInput
                             style={styles.bTextInput}
                             placeholder='Nome'

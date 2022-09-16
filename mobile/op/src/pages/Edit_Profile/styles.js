@@ -5,17 +5,19 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
+        ...stylesVar.backgroundSecondary
     },
     body: {
-        flex: 1,
-        flexDirection: 'row',
+        flex: 1,      
         alignItems: 'center',
         padding:10
     },
     bText:{
         fontSize:22,
         fontWeight: 'bold',
+    },
+    bInput:{
+        ...stylesVar.strokeBoxPrimary
     }
 })
 

@@ -9,16 +9,30 @@ const styles = StyleSheet.create({
     },
     body: {
         flex: 1,      
-        alignItems: 'center',
-        padding:10
+        margin:16,
     },
     bText:{
-        fontSize:22,
-        fontWeight: 'bold',
+        ...stylesVar.titleSecondary
     },
-    bInput:{
-        ...stylesVar.strokeBoxPrimary
-    }
+    bCEP:{
+        flexDirection:'row'
+    },
+    bInputBox:{
+        ...stylesVar.strokeBoxPrimary,
+        padding: 5,
+        paddingHorizontal:15,
+        margin:5
+    },
+    bLabel:{
+        textAlign:'center',
+        ...stylesVar.titleTertiary
+    },
+    bButton:{
+        ...stylesVar.boxPrimary,
+        padding: 10,
+        marginVertical:10   
+
+    },
 })
 
 export default styles;

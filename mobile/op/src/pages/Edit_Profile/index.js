@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { View, Text,TextInput, TouchableOpacity } from 'react-native';
+import { View, Text,TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import ProfileIcon from '../../assets/Icons/file-person'
 
@@ -20,47 +20,55 @@ const Edit_Profile = () => {
       console.log(err)
   })}
   return (
-    <View style={styles.container}>
-      <ProfileIcon size={120} />
-      <View style={styles.body} > 
-      <View style={styles.bInput}>
-        <Text style={styles.bText}>Nome</Text>  
-        <TextInput style={styles.bText} placeholder='Nome Completo'></TextInput> 
-        </View> 
-        <Text style={styles.bText}>CPF</Text>  
-        <TextInput style={styles.bText} placeholder='Insira seu CPF'></TextInput>  
-        <Text style={styles.bText}>Endereço</Text>
-        <Text style={styles.bText}>CEP</Text>
-        <TextInput
-          maxLength={8}
-          placeholder="00000-000"
-          keyboardType='numeric'
-          onChangeText={setCep}
-          value = {cep}
-        ></TextInput>
-        <TouchableOpacity onPress={() => {
-          searchCEP(cep)
-        }}>
-        <Text style={styles.bText}>Número</Text>
-          <TextInput style={styles.bText} placeholder='000'></TextInput>  
-        <Text style={styles.bText}>Obter Endereço</Text>
-        <Text style={styles.bText}>{logradouro}</Text>
-        <Text style={styles.bText}>{bairro}</Text>
-        <Text style={styles.bText}>Senha</Text>  
-        <TextInput style={styles.bText} placeholder='Insira sua Senha'></TextInput>  
-        <Text style={styles.bText}>Confirmar Senha</Text>  
-        <TextInput style={styles.bText} placeholder='Insira novamente a Senha'></TextInput>  
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-        }}>
-        <Text style={styles.bText}>Salvar Alterações</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => {
-        }}>
-        <Text style={styles.bText}>Deletar Conta</Text>
-        </TouchableOpacity>
+    <ScrollView>
+      <View style={styles.container}>
+        <ProfileIcon size={120} />
+        <View style={styles.body} > 
+          <Text style={styles.bText}>Nome</Text>  
+          <TextInput style={styles.bInputBox} placeholder='Nome Completo'></TextInput> 
+          <Text style={styles.bText}>CPF</Text>  
+          <TextInput style={styles.bInputBox} placeholder='Insira seu CPF'></TextInput>  
+          <Text style={styles.bText}>Endereço</Text>
+          <View style={styles.bCEP}>
+          <View>
+            <Text style={styles.bText}>CEP</Text>
+            <TextInput style={styles.bInputBox}
+              maxLength={8}
+              placeholder="00000-000"
+              keyboardType='numeric'
+              onChangeText={setCep}
+              value = {cep}
+            ></TextInput>
+          </View>
+          <View>
+            <Text style={styles.bText}>Número</Text>
+            <TextInput style={styles.bInputBox} placeholder='000'></TextInput>  
+          </View>
+          </View>
+          <TouchableOpacity onPress={() => {
+            searchCEP(cep)
+          }}>
+          <Text style={styles.bText}>Confirmar CEP</Text>
+          </TouchableOpacity>
+          <Text style={styles.bText}>{logradouro}</Text>
+          <Text style={styles.bText}>{bairro}</Text>
+          <Text style={styles.bText}>Senha</Text>  
+          <TextInput style={styles.bInputBox} placeholder='Insira sua Senha'></TextInput>  
+          <Text style={styles.bText}>Confirmar Senha</Text>  
+          <TextInput style={styles.bInputBox} placeholder='Insira novamente a Senha'></TextInput>  
+          <TouchableOpacity style={styles.bButton}
+          onPress={() => {
+          }}>
+          <Text style={styles.bLabel}>Salvar Alterações</Text>
+          </TouchableOpacity >
+          <TouchableOpacity style={styles.bButton}
+          onPress={() => {
+          }}>
+          <Text style={styles.bLabel}>Deletar Conta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 

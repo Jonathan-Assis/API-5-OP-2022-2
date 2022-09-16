@@ -1,22 +1,59 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet,Dimensions } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+const { width , height } = Dimensions.get('window');
 
-const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    body: {
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding:10
-    },
-    bText:{
-        fontSize:22,
-        fontWeight: 'bold',
-    }
-})
+
+const styles = {
+
+  container:{
+    flex:1,
+    backgroundColor: '#3455AA'
+  },
+  bTextPrimary: {
+        fontWeight: "bold",
+        fontSize: 22,
+        alignSelf: 'center',
+        color: '#FFF'
+  },
+
+  bTextSecondary:{
+    marginLeft: 10,
+    marginBottom: 10,
+    fontSize: 18
+},
+  body: {
+    marginTop: 15,
+    marginBottom: 15,
+    height: height * .7,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#D9D9D9',
+    borderRadius: 100 / 5
+  },
+  button:{
+        marginLeft: '30%',
+        marginRight: '30%',
+        marginBottom: 15,
+        backgroundColor: '#136AC7',
+        borderRadius: 100,
+        padding: 10
+  },
+
+  buttonDisabled:{
+    marginLeft: '30%',
+    marginRight: '30%',
+    marginBottom: 15,
+    backgroundColor: '#999',
+    borderRadius: 100,
+    padding: 10
+ },
+
+ bButtontext:{
+      fontSize: 14,
+      color: '#FFF',
+      alignSelf: 'center'
+  }
+
+}
 
 export default styles;

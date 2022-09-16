@@ -1,30 +1,43 @@
-import React from 'react';
-import stylesVar from '../styles/stylesVar';
+import { NavigationContainer } from '@react-navigation/native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import stylesVar from '../styles/stylesVar'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeIcon     from '../assets/Icons/house-door'
+import FormIcon     from '../assets/Icons/journal-richtext'
+import SettingsIcon from '../assets/Icons/list-ul'
 
-import User_Term from '../pages/User_Term'
-import Home from '../pages/Home'
-import Rep_Ocorrencia from '../pages/Rep_Ocorrencia'
-import Chamados from '../pages/Chamados'
-import Cadastro from '../pages/Cadastro'
+import { StackHomeButton, StackFormButton, StackSettingsButton } from './Stack'
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator()
 
 const Routes = () => {
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='Home' screenOptions={{
-                headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color ,headerStyle:{...stylesVar.toolbar}
-            }}>
-                <Stack.Screen name='User_Term' component={User_Term} options={{title:'Termos de Uso', headerShown:false}} />
-                <Stack.Screen name='Home' component={Home} options={{title:'Painel Inicial'}} />
-                <Stack.Screen name='Rep_Ocorrencia' component={Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />
-                <Stack.Screen name='Chamados' component={Chamados} options={{title:'Chamados Abertos'}} />
-                <Stack.Screen name='Cadastro' component={Cadastro} options={{title:'Cadastro'}} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
+        <>
+            <NavigationContainer>
+                <Tab.Navigator screenOptions={{
+                    headerShown: false,
+                    tabBarStyle:{ ...stylesVar.toolbar, paddingVertical:8 },
+                    tabBarLabelStyle: {
+                        fontSize: 15,
+                      },
+                    tabBarActiveTintColor: 'white',
+                    tabBarInactiveTintColor: 'black',
+                    activeColor: 'white',
+                    inactiveColor: 'black',
+                }}>
+                   <Tab.Screen name='Lef-t' component={StackHomeButton} options={{tabBarLabel:'Início', tabBarIcon:({color})=>(
+                    <HomeIcon size={24} fill={color} /> 
+                    )}} />
+                   <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon:({color})=>(
+                    <FormIcon size={24} fill={color} /> 
+                    )}} />
+                   <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Configurações', tabBarIcon:({color})=>(
+                    <SettingsIcon size={24} fill={color} /> 
+                    )}} />
+                </Tab.Navigator>
+            </NavigationContainer>
+        </>
+    )
 }
-export default Routes;
+
+export default Routes

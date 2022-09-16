@@ -11,4 +11,4 @@ const Chamados = () => {
   );
 }
 
-export default Chamados;
+export default Chamados

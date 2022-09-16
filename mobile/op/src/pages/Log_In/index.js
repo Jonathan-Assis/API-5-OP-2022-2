@@ -5,7 +5,7 @@ import styles from './styles';
 const Log_In = () => {
   return (
     <View style={styles.container}>
-        <Text style={styles.bText}>Página de Login</Text>  
+        <Text style={styles.bText}>Página de Acesso a Conta</Text>  
           <Text>Em desenvolvimento!</Text>
     </View>
   );

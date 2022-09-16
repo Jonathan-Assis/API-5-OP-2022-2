@@ -35,7 +35,9 @@ const styles = {
         marginLeft: '30%',
         marginRight: '30%',
         marginBottom: 15,
-        backgroundColor: '#136AC7',
+        ... stylesVar.boxTertiary,
+        ... stylesVar.strokeBoxSecondary,
+        borderColor: "black",
         borderRadius: 100,
         padding: 10
   },

@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
-import styles from '../../styles/stylesVar';
+import styles from './styles';
 
 const Cadastro = () => {
     const navigation = useNavigation();
     const [ loading, setLoading ] = useState(false);
 
-    const [ nome, setNome ] = useState(undefined);
+    const [ nome, setNome ] = useState('undefined');
     const [ cpf, setCpf ] = useState(undefined);
     const [ endereco, setEndereco ] = useState(undefined);
     const [ bairro, setBairro ] = useState(undefined);
@@ -19,50 +19,63 @@ const Cadastro = () => {
     }
 
     return (
-      <View style={styles.bgSecondary}>
+      <View style={styles.container}>
             {loading
                 ? <Text>estou carregando...</Text>
                 : (<>
-                    <Text style={styles.bgPrimary}>Cadastro</Text>  
-                    <TextInput
-                        style={styles.placeholder}
-                        onChangeText={setNome}
-                        value={nome}
-                    />
+                    <View style={styles.body}>
+                        <Text style={styles.bTextPrimary}>Cadastro</Text>  
+                        <TextInput
+                            style={styles.bTextInput}
+                            placeholder='Nome'
+                            onChangeText={setNome}
+                            value={nome}
+                        />
 
-                    <TextInput
-                        style={styles.placeholder}
-                        onChangeText={setCpf}
-                        value={cpf}
-                    />
+                        <TextInput
+                            style={styles.bTextInput}
+                            placeholder='CPF'
+                            onChangeText={setCpf}
+                            value={cpf}
+                        />
 
-                    <TextInput
-                        style={styles.placeholder}
-                        onChangeText={setEndereco}
-                        value={endereco}
-                    />
+                        <TextInput
+                            style={styles.bTextInput}
+                            placeholder='Endereço'
+                            onChangeText={setEndereco}
+                            value={endereco}
+                        />
 
-                    <TextInput
-                        style={styles.placeholder}
-                        onChangeText={setBairro}
-                        value={bairro}
-                    />
+                        <TextInput
+                            style={styles.bTextInput}
+                            placeholder='Bairro'
+                            onChangeText={setBairro}
+                            value={bairro}
+                        />
 
-                    <TextInput
-                        style={styles.placeholder}
-                        value={senha}
-                        onChangeText={setSenha}
-                    />
+                        <TextInput
+                            style={styles.bTextInput}
+                            placeholder='Senha'
+                            value={senha}
+                            onChangeText={setSenha}
+                        />
 
-                    <TextInput
-                        style={styles.placeholder}
-                        value={confSenha}
-                        onChangeText={setConfSenha}
-                    />
+                        <TextInput
+                            style={styles.bTextInput}
+                            placeholder='Confimar Senha'
+                            value={confSenha}
+                            onChangeText={setConfSenha}
+                        />
 
-                    <TouchableOpacity onPress={cadastro}>
-                        <Text>Entrar</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={cadastro}
+                        >
+                            <Text style={styles.buttonText}>
+                                Entrar
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </>)
             }
         

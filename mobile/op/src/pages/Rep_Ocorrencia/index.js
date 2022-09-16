@@ -1,19 +1,27 @@
 import React, {useState} from 'react';
 import { View, Text,TextInput,TouchableOpacity} from 'react-native';
 import styles from './styles';
+import RNFS from 'react-native-fs';
+import FileBase64 from 'react-file-base64';
 
 import PaperclipIcon from '../../assets/Icons/paperclip'
 
 const Rep_Ocorrencia = () => {
-  const [base64, setBase64] = useState('')
+  /*const [base64, setBase64] = useState('')*/
   const [cpf,setCpf]=useState('')
   const [arquivo,setArquivo]=useState({})
   const [descricao,setDescricao]=useState('')
   console.log(descricao)
 
+  RNFS.readFile(this.state.imagePath, 'base64')
+.then(res =>{
+  console.log(res);
+});
 /*   setArquivo (pipi popopó) = 64 bits    */
 
   return (
+
+
     <View style={styles.container}>
       <View style={styles.body}>
           <Text style={styles.bText}>Identificação</Text>
@@ -23,6 +31,12 @@ const Rep_Ocorrencia = () => {
               keyboardType='numeric'
               onChangeText={setCpf}
               ></TextInput> 
+
+          <FileBase64
+          multiple={true}
+          onDone={ this.getFiles.bind(this)}/>
+          
+
           </View>
           <View style={styles.bRow}>         
             <Text style={styles.bText}>Adicionar Arquivo</Text>

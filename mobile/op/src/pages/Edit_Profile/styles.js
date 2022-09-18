@@ -4,34 +4,54 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+        flexDirection: 'row',
         alignItems: 'center',
         ...stylesVar.backgroundSecondary
     },
+
     body: {
         flex: 1,      
-        margin:16,
+        padding:16,
     },
-    bText:{
-        ...stylesVar.titleSecondary
+
+    bImage:{
+        alignItems: 'center',
     },
-    bCEP:{
-        flexDirection:'row'
+
+    bInput:{
+        marginBottom:7
     },
+
+    bTitle:{
+        ...stylesVar.titleSecondary,
+        marginBottom:3
+    },
+
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
         padding: 5,
         paddingHorizontal:15,
-        margin:5
     },
+
+    bEndereço:{
+        flex:1,
+        flexDirection:'row',
+        justifyContent: 'space-between',
+    },
+
+    bEndereçoBox:{
+        flex:0.4,
+    },
+
     bLabel:{
         textAlign:'center',
         ...stylesVar.titleTertiary
     },
+    
     bButton:{
         ...stylesVar.boxPrimary,
         padding: 10,
-        marginVertical:10   
-
+        marginVertical:10
     },
 })
 

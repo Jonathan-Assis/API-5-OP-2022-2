@@ -49,7 +49,7 @@ const stylesVar = {
     },
 
     placeholderPrimary:{
-        color: "#838383",
+        color: "#E9E9E9",
         fontSize: 16
     },
 

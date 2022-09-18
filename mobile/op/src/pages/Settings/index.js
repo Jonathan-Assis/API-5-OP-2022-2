@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
 
 import ProfileIcon from '../../assets/Icons/file-person'
+
 const Settings = () => {
   const navigation = useNavigation();
+
+  const { signOut } = useAuth()
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -18,7 +23,7 @@ const Settings = () => {
       </View>
       <View style={styles.footer}>
         <TouchableOpacity style={styles.fButton}
-          onPress={ () => navigation.navigate('Log_Out')}
+          onPress={signOut}
         >
             <Text style={styles.fText}>Sair</Text>  
         </TouchableOpacity>

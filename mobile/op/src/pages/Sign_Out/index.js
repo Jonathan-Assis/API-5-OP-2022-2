@@ -3,7 +3,7 @@ import { View, Text, Image } from 'react-native';
 import styles from './styles';
 
 
-const Log_Out = () => {
+const Sign_Out = () => {
   return (
     <View style={styles.container}>
       <Image source={require('../../assets/Logotype/OP.png')} style={styles.bLogotype}/>
@@ -13,4 +13,4 @@ const Log_Out = () => {
   );
 }
 
-export default Log_Out;
+export default  Sign_Out;

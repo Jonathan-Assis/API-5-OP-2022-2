@@ -4,6 +4,10 @@ import stylesVar from '../styles/stylesVar'
 
 import * as Pages from '../pages'
 
+/*
+<StackSettings.Screen name='Cadastro' component={Pages.Cadastro} options={{title:'Cadastro'}} />
+*/
+
 const StackNavigator = () => {
     return (
         <Stack.Navigator initialRouteName='Start_Screen' screenOptions={{
@@ -24,7 +28,6 @@ const StackHomeButton = () => {
         }}>
             <StackHome.Screen name='Home' component={Pages.Home} options={{title:'Painel Inicial'}} />
             <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />        
-            <StackSettings.Screen name='Cadastro' component={Pages.Cadastro} options={{title:'Cadastro'}} />
         </StackHome.Navigator>
     )
 }

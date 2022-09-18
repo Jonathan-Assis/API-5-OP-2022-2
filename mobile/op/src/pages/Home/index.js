@@ -6,18 +6,10 @@ import styles from './styles';
 //Icons
 import MegaphoneIcon from '../../assets/Icons/megaphone'
 
-import ServerConnection from '../../services';
-
 const Home = () => {
   const navigation = useNavigation();
-  /* console.log('olá')
-  ServerConnection.login({ cpf: "219837423", senha: "senha123" })
-  .then(({data}) => console.log(JSON.stringify(data))); */
 
   useEffect(() => {
-    /* ServerConnection.login({ cpf: "219837423", senha: "senha123" })
-    .then(res => console.log(res))
-    .catch(e => console.error({...e})) */
   });
 
   return (
@@ -37,15 +29,6 @@ const Home = () => {
           </View>
 
         </View>
-
-        <TouchableOpacity
-          onPress={() => 
-            navigation.navigate('Cadastro')
-          }
-        >
-          <Text>Para o Cadastro (testes)</Text>
-        </TouchableOpacity>
-
       </View>
 
     </View>

@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { ScrollView, View, Text, TouchableOpacity, TextInput } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import { Loading } from '../../components';
 import styles from './styles';
 import ServerConnection from '../../services';
 
@@ -24,16 +25,15 @@ const Cadastro = () => {
                 console.log(data.response)//mudar depois
             ).finally(() => {
                 setLoading(false);
-                navigation.navigate('Home');//mudar depois
+                navigation.navigate('');//mudar depois
             });
         }
     }
 
     return (
-        <ScrollView style={styles.container}>
-            {loading
-                ? <Text>estou carregando...</Text>
-                : (<View style={styles.body}>
+        <Loading loading={loading}>
+            <ScrollView style={styles.container}>
+                <View style={styles.body}>
                     <TextInput
                         style={styles.bTextInput}
                         placeholder='Nome'
@@ -77,16 +77,16 @@ const Cadastro = () => {
                     />
 
                     <TouchableOpacity
-                    style={styles.button}
-                    onPress={cadastro}
+                        style={styles.button}
+                        onPress={cadastro}
                     >
                         <Text style={styles.buttonText}>
                             Entrar
                         </Text>
                     </TouchableOpacity>
-                </View>)
-            }
-        </ScrollView>
+                </View>
+            </ScrollView>
+        </Loading>
     );
   }
   

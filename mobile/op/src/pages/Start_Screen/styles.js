@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
+import stylesVar from "../../styles/stylesVar";
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#5257F2',
+      ... stylesVar.backgroundPrimary,
       justifyContent: 'center',
       alignItems: 'center',
     },
     logotext: {
       color: '#FFFFFF',
-      marginLeft: '5%',
+      marginLeft: '9%',
       fontFamily: 'GoogleSans-Bold',
       fontSize: 60,
       marginBottom: '20%',
@@ -17,7 +18,7 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
     },
   logotype: {
-    marginLeft: '5%',
+    marginLeft: '9%',
     height: "46%",
     width: "100%",
   },

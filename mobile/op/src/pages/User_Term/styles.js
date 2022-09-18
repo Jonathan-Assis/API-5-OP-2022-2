@@ -1,5 +1,6 @@
 import { StyleSheet,Dimensions } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import stylesVar from "../../styles/stylesVar";
+
 const { width , height } = Dimensions.get('window');
 
 
@@ -7,7 +8,7 @@ const styles = {
 
   container:{
     flex:1,
-    backgroundColor: '#3455AA'
+    ... stylesVar.backgroundPrimary,
   },
   bTextPrimary: {
         fontWeight: "bold",
@@ -27,14 +28,16 @@ const styles = {
     height: height * .7,
     marginLeft: 10,
     marginRight: 10,
-    backgroundColor: '#D9D9D9',
+    ... stylesVar.backgroundSecondary,
     borderRadius: 100 / 5
   },
   button:{
         marginLeft: '30%',
         marginRight: '30%',
         marginBottom: 15,
-        backgroundColor: '#136AC7',
+        ... stylesVar.boxTertiary,
+        ... stylesVar.strokeBoxSecondary,
+        borderColor: "black",
         borderRadius: 100,
         padding: 10
   },

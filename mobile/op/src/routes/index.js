@@ -1,43 +1,25 @@
+import React, { useContext } from 'react'
+
 import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import stylesVar from '../styles/stylesVar'
+import { useAuth } from '../contexts/Auth'
 
-import HomeIcon     from '../assets/Icons/house-door'
-import FormIcon     from '../assets/Icons/journal-richtext'
-import SettingsIcon from '../assets/Icons/list-ul'
+import { AuthRoutes } from './AuthRoutes'
+import { AppRoutes } from './AppRoutes'
+import { View, Text } from 'react-native'
 
-import { StackHomeButton, StackFormButton, StackSettingsButton } from './Stack'
+export function Routes () {
+    const {authData, loading} = useAuth()
+    if(loading){
+        return(
+            <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+                <Text>Carregando OP!</Text>
+            </View>
+        )
+    }
 
-const Tab = createBottomTabNavigator()
-
-const Routes = () => {
     return (
-        <>
-            <NavigationContainer>
-                <Tab.Navigator screenOptions={{
-                    headerShown: false,
-                    tabBarStyle:{ ...stylesVar.toolbar, paddingVertical:8 },
-                    tabBarLabelStyle: {
-                        fontSize: 15,
-                      },
-                    tabBarActiveTintColor: 'white',
-                    tabBarInactiveTintColor: 'black',
-                    activeColor: 'white',
-                    inactiveColor: 'black',
-                }}>
-                   <Tab.Screen name='Lef-t' component={StackHomeButton} options={{tabBarLabel:'Início', tabBarIcon:({color})=>(
-                    <HomeIcon size={24} fill={color} /> 
-                    )}} />
-                   <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon:({color})=>(
-                    <FormIcon size={24} fill={color} /> 
-                    )}} />
-                   <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Configurações', tabBarIcon:({color})=>(
-                    <SettingsIcon size={24} fill={color} /> 
-                    )}} />
-                </Tab.Navigator>
-            </NavigationContainer>
-        </>
+        <NavigationContainer>
+            { authData ? <AppRoutes /> : <AuthRoutes />}
+        </NavigationContainer>
     )
 }
-
-export default Routes

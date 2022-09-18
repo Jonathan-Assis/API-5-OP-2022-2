@@ -49,7 +49,7 @@ const StackSettingsButton = () => {
         }}>
             <StackSettings.Screen name='Settings' component={Pages.Settings} options={{title:'Configurações'}} />
             <StackSettings.Screen name='Edit_Profile' component={Pages.Edit_Profile} options={{title:'Editar Perfil'}} />
-            <StackSettings.Screen name='Log_Out' component={Pages.Log_Out} options={{headerShown:false}} />
+            <StackSettings.Screen name='Log_Out' component={Pages.Sign_Out} options={{headerShown:false}} />
         </StackSettings.Navigator>
     )
 }

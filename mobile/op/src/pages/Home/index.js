@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import styles from './styles';
@@ -8,6 +8,10 @@ import MegaphoneIcon from '../../assets/Icons/megaphone'
 
 const Home = () => {
   const navigation = useNavigation();
+
+  useEffect(() => {
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>

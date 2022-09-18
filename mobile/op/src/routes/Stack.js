@@ -4,6 +4,10 @@ import stylesVar from '../styles/stylesVar'
 
 import * as Pages from '../pages'
 
+/*
+<StackSettings.Screen name='Cadastro' component={Pages.Cadastro} options={{title:'Cadastro'}} />
+*/
+
 const StackNavigator = () => {
     return (
         <Stack.Navigator initialRouteName='Start_Screen' screenOptions={{

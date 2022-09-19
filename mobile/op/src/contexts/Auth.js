@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Alert } from "react-native";
 import {authService} from '../services/authService'
+import ServerConnection from '../services'
 
 
 export const AuthContext = createContext({});
@@ -17,19 +18,22 @@ export const AuthProvider = ({children}) =>{
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
         if(auth){
-            setAuth(JSON.parse(auth));
+            setAuth((auth));
         }
         setLoading(false)
     }
 
     async function signIn(cpf,senha) {
-        try{
-            const auth = await authService.signIn(cpf,senha);
-            setAuth(auth);
-            AsyncStorage.setItem('@AuthData', JSON.stringify(auth));
-        } catch(error) {
-        Alert.alert(error.message, 'Favor revise o CPF e a senha se estão corretos.');
-    }
+        setLoading(true);
+        const auth = await ServerConnection.login({cpf,senha})
+        .then(({data}) => String.toString(data)
+
+        ).finally(() => {
+            setLoading(false);
+        });
+        setAuth(auth);
+        AsyncStorage.setItem('@AuthData',(auth));
+        console.log("Cidadão acessou a conta!")
     }
 
 

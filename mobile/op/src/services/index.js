@@ -32,4 +32,8 @@ export default class ServerConnection {
     static async login(data) {
         return await conn.post('/cidadao/login', data);
     }
+
+    static async ocorrencia(data) {
+        return await conn.post('/ocorrencia/new', data);
+    }
 }

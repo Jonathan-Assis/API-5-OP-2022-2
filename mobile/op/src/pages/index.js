@@ -8,7 +8,6 @@ import Rep_Ocorrencia   from './Rep_Ocorrencia'
 import Settings         from './Settings'
 import Start_Screen     from './Start_Screen'
 import User_Term        from './User_Term'
-import Cadastro         from './Cadastro'
 
 export {
     Chamados,
@@ -21,5 +20,4 @@ export {
     Settings,
     Start_Screen,
     User_Term,
-    Cadastro,
 }

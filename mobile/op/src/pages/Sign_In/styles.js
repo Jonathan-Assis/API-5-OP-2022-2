@@ -4,18 +4,35 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        flexDirection: 'row',
+        ...stylesVar.backgroundPrimary
+    },
+    header:{
         alignItems: 'center',
-        ...stylesVar.backgroundSecondary
+        justifyContent: 'center',
+
+    },
+    
+    hLogo:{
+        maxHeight:300,
+        maxWidth:300,
+    },
+
+    hTitle:{
+        ...stylesVar.titlePrimary,
+        color: '#E9E9E9',
+        top:-50
     },
 
     body: {
         flex: 1,      
-        padding:16,
+        flexDirection: 'row',
     },
-
-    bImage:{
-        alignItems: 'center',
+    bForm:{
+        flex: 1,      
+        padding:16,
+        borderTopEndRadius: 30,
+        borderTopStartRadius: 30,
+        ...stylesVar.backgroundSecondary
     },
 
     bInput:{
@@ -31,16 +48,6 @@ const styles = StyleSheet.create({
         ...stylesVar.strokeBoxPrimary,
         padding: 5,
         paddingHorizontal:15,
-    },
-
-    bEndereço:{
-        flex:1,
-        flexDirection:'row',
-        justifyContent: 'space-between',
-    },
-
-    bEndereçoBox:{
-        flex:0.4,
     },
 
     bLabel:{

@@ -4,24 +4,18 @@ import stylesVar from "../../styles/stylesVar";
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      ... stylesVar.backgroundPrimary,
       justifyContent: 'center',
       alignItems: 'center',
+      ...stylesVar.backgroundPrimary,
     },
-    logotext: {
-      color: '#FFFFFF',
-      marginLeft: '9%',
-      fontFamily: 'GoogleSans-Bold',
-      fontSize: 60,
-      marginBottom: '20%',
-      fontWeight: '600',
-      fontWeight: "bold",
+    header: {
+      maxHeight:350,
+      maxWidth:350
     },
-  logotype: {
-    marginLeft: '9%',
-    height: "46%",
-    width: "100%",
-  },
+    body:{
+      ...stylesVar.titleTertiary,
+      fontSize:26
+    }
 });
 
 export default styles;

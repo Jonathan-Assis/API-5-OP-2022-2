@@ -32,29 +32,24 @@ const styles = {
     borderRadius: 100 / 5
   },
   button:{
-        marginLeft: '30%',
-        marginRight: '30%',
-        marginBottom: 15,
+        flex:0.2,
+        margin: 16,
         ... stylesVar.boxTertiary,
         ... stylesVar.strokeBoxSecondary,
-        borderColor: "black",
-        borderRadius: 100,
         padding: 10
   },
 
   buttonDisabled:{
-    marginLeft: '30%',
-    marginRight: '30%',
-    marginBottom: 15,
+    flex:0.2,
+    margin: 16,
     backgroundColor: '#999',
-    borderRadius: 100,
+    borderRadius: 16,
     padding: 10
  },
 
  bButtontext:{
-      fontSize: 14,
-      color: '#FFF',
-      alignSelf: 'center'
+    ... stylesVar.titleTertiary,
+      textAlign: 'center',
   }
 
 }

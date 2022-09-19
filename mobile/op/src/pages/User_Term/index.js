@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Text, ScrollView, TouchableOpacity,SafeAreaView} from 'react-native';
+import {Alert, Text, ScrollView, TouchableOpacity,SafeAreaView} from 'react-native';
 import styles from './styles';
 
 
@@ -63,12 +63,12 @@ render(){
           </ScrollView>
 
           <TouchableOpacity disabled={ !this.state.accepted } 
-            onPress={ ()=> {alert("Termos e condições aceitos.") 
-            this.props.navigation.navigate('Home')
+            onPress={ ()=> {Alert.alert("Termos de Uso","Os Termos de Uso foram lidos e aceitos com sucesso.") 
+            this.props.navigation.navigate('Sign_In')
             }}
             style={ this.state.accepted ? styles.button : styles.buttonDisabled }>
             <Text style={styles.bButtontext}>
-              Aceito
+              Aceitar Termos
             </Text>
           </TouchableOpacity>
     </SafeAreaView>

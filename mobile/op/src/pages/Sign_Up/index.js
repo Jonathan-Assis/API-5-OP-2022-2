@@ -81,6 +81,7 @@ const Sign_Up = () => {
                             <TextInput
                                 style={styles.bInputBox}
                                 placeholder='Senha'
+                                secureTextEntry={true}
                                 value={senha}
                                 onChangeText={setSenha}
                             />
@@ -91,6 +92,7 @@ const Sign_Up = () => {
                             <TextInput
                                 style={styles.bInputBox}
                                 placeholder='Confimar Senha'
+                                secureTextEntry={true}
                                 value={confSenha}
                                 onChangeText={setConfSenha}
                             />

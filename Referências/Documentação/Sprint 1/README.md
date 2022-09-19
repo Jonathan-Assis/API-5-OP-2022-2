@@ -18,11 +18,15 @@ O gráfico abaixo representa o desempenho da equipe com base no período de 29/0
 <a href="https://www.figma.com/proto/jWVZKzzxK3lfpdcwSv3jQA/5-Semestre-team-library?node-id=431%3A2&scaling=scale-down&starting-point-node-id=411%3A2&show-proto-sidebar=1">Link do Play do protótipo Figma</a>
 
 Os gifs abaixo é o protótipo das telas realizadas para a entrega da sprint.
-
-<img src='./Imagens/Figma .gif' width=100%>
-
+<div align='center'>
+    <img src='./Imagens/PrototipoPart1.gif' width=50%>
+    <img src='./Imagens/PrototipoPart2.gif' width=50%>
+</div>
 - ## 📱 App
 
 Os gifs abaixo representam o aplicativo atual da entrega da sprint.
 
-<img src='./Imagens/Figma .gif' width=100%>
+<div align='center'>
+    <img src='./Imagens/AppPart1.gif' width=50%>
+    <img src='./Imagens/AppPart2.gif' width=50%>
+</div>

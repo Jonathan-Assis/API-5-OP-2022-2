@@ -4,19 +4,42 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        alignItems: 'center',
+        flexDirection: 'row',
+        alignItems: 'center', 
         justifyContent: 'center',
+        ...stylesVar.backgroundSecondary,
     },
+    
     body: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding:10
+        padding: 16
     },
-    bText:{
-        fontSize:22,
-        fontWeight: 'bold',
-    }
+
+    bInput:{
+        marginBottom:7
+    },
+
+    bLabelTitle:{
+        ...stylesVar.titleSecondary,
+        marginBottom:3
+    },
+
+    bInputBox:{
+        ...stylesVar.strokeBoxPrimary,
+        padding: 5,
+        paddingHorizontal:15,
+    },
+
+    bButton:{
+        ...stylesVar.boxPrimary,
+        padding: 10,
+        marginVertical:10
+    },
+
+    bLabel:{
+        textAlign:'center',
+        ...stylesVar.titleTertiary
+    },
 })
 
 export default styles;

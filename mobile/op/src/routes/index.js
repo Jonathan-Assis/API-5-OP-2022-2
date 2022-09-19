@@ -1,22 +1,26 @@
-import React from 'react';
-import stylesVar from '../styles/stylesVar';
+import React, { useContext } from 'react'
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from '@react-navigation/native'
+import { useAuth } from '../contexts/Auth'
 
-import User_Term from '../pages/User_Term'
-import Home from '../pages/Home'
+import { AuthRoutes } from './AuthRoutes'
+import { AppRoutes } from './AppRoutes'
+import { View, Text, ActivityIndicator } from 'react-native'
 
-const Stack = createNativeStackNavigator();
+export function Routes () {
+    const {authData, loading} = useAuth()
+    if(loading){
+        return(
+            <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator color='gray' size={45} />
+                <Text style={{fontSize:20}}>Carregando o OP!</Text>
+            </View>
+        )
+    }
 
-const Routes = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='User_Term'>
-                <Stack.Screen name='User_Term' component={User_Term} />
-                <Stack.Screen name='Home' component={Home} />
-            </Stack.Navigator>
+            { authData ? <AppRoutes /> : <AuthRoutes />}
         </NavigationContainer>
-    );
+    )
 }
-export default Routes;

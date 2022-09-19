@@ -5,6 +5,7 @@ class OcorrenciaController {
     /*
     {
         cidadao: ObjectID,
+        foto: string,
         local: {
             lat: number,
             long: number

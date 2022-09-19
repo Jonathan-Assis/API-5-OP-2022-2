@@ -55,7 +55,7 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 
 > Datas definidas sobre as entregas das sprints.
 
-- [ ] [SPRINT 1](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%201/) - 29/08/2022 a 18/09/2022;
+- [x] [SPRINT 1](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%201/) - 29/08/2022 a 18/09/2022;
 - [ ] SPRINT 2 - 19/09/2022 a 09/10/2022;
 - [ ] SPRINT 3 - 13/10/2022 a 06/11/2022;
 - [ ] SPRINT 4 - 07/11/2022 a 27/11/2022.

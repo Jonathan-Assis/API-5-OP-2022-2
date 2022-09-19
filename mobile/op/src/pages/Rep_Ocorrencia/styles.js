@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         flex: 1,
         margin:20,    
         padding:30,
-        ...stylesVar.boxPrimary
+        ...stylesVar.boxPrimary,
     },
 
     bImage:{
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     },
 
     bInput:{
-        marginBottom:7,
+        marginBottom:15,
     },
 
     bTitle:{
@@ -37,18 +37,29 @@ const styles = StyleSheet.create({
         padding: 5,
         paddingHorizontal:15,
     },
+
     bInputBox:{
-        flex:1,
         textAlign: 'center',
         ...stylesVar.boxSecondary,
         ...stylesVar.placeholderSecondary,
-        padding: '30%',
+        padding: 10,
+        minHeight: 100
+    },
+    bPickerBox:{
+        ...stylesVar.strokeBoxSecondary,
+        marginBottom:10,
+
+    },
+    bPickerTitle:{
+        flexWrap: 'nowrap',        
+        ...stylesVar.titleTertiary,
     },
 
     bArquivo:{
         flexDirection:'row',
         justifyContent: 'center',
         alignItems: 'center',
+        marginVertical:10,
     },
 
     bLabel:{

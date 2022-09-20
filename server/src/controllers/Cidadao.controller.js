@@ -42,7 +42,7 @@ class CidadaoController {
                 senha: data.senha 
             });
             
-            res.json(!!result);
+            res.json(result);
         }
         catch(e) {
             console.error(e);

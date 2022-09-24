@@ -6,6 +6,12 @@ import styles from './styles';
 
 import FileIcon from '../../assets/Icons/paperclip'
 
+
+function mapView(){
+
+}
+
+
 const Rep_Ocorrencia = (props) => {
   const [tipo,setTipo]=useState('')
   const [cpf,setCpf]=useState('')
@@ -20,13 +26,14 @@ const Rep_Ocorrencia = (props) => {
 
 
 useEffect(() =>{
-  if(TipoOcorrencia == 'Elétrico'){
+  console.log(TipoOcorrencia)
+  if(TipoOcorrencia === 'Elétrico'){
     setSubType(['Poste de Luz','Queda do poste','Fiação em curto'])
   } 
-  if(TipoOcorrencia == 'Pavimentação'){
+  if(TipoOcorrencia === 'Pavimentação'){
     setSubType(['Buraco no asfalto','Buraco na calçada'])
   }
-  if(TipoOcorrencia == 'Natureza'){
+  if(TipoOcorrencia === 'Natureza'){
     setSubType(['Árvore caída','Árvore com risco de queda'])
   }
   else{

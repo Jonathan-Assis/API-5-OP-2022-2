@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import stylesVar from '../styles/stylesVar'
 
-import HomeIcon     from '../assets/Icons/house-door'
+import HomeIcon     from '../assets/Icons/megaphone'
 import FormIcon     from '../assets/Icons/journal-richtext'
 import SettingsIcon from '../assets/Icons/list-ul'
 
@@ -23,13 +23,13 @@ export function AppRoutes (){
                 activeColor: 'white',
                 inactiveColor: 'black',
             }}>
-                <Tab.Screen name='Lef-t' component={StackHomeButton} options={{tabBarLabel:'Início', tabBarIcon:({color})=>(
+                <Tab.Screen name='Lef-t' component={StackHomeButton} options={{tabBarLabel:'Reportar', tabBarIcon:({color})=>(
                 <HomeIcon size={24} fill={color} /> 
                 )}} />
                 <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon:({color})=>(
                 <FormIcon size={24} fill={color} /> 
                 )}} />
-                <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Configurações', tabBarIcon:({color})=>(
+                <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Opções', tabBarIcon:({color})=>(
                 <SettingsIcon size={24} fill={color} /> 
                 )}} />
             </Tab.Navigator>

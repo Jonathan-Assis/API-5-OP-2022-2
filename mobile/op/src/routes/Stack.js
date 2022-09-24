@@ -23,11 +23,12 @@ const StackHome = createNativeStackNavigator()
 
 const StackHomeButton = () => {
     return(
-        <StackHome.Navigator initialRouteName='Home' screenOptions={{
+        <StackHome.Navigator initialRouteName='Rep_tipo' screenOptions={{
             headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color, headerStyle:{...stylesVar.toolbar}
         }}>
             <StackHome.Screen name='Home' component={Pages.Home} options={{title:'Painel Inicial'}} />
             <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />        
+            <StackHome.Screen name='Rep_Tipo' component={Pages.Rep_Tipo} options={{title:'Tipo da Ocorrência'}} />        
         </StackHome.Navigator>
     )
 }

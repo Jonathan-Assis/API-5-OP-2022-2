@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faBolt, faPersonDigging } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 
 //Icons
@@ -24,12 +26,12 @@ const Home = () => {
           
           <View style={styles.bColumn}>
             <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-              name: 'Rep_Ocorrencia',
+              name: 'Maps',
               params:{
                 TipoOcorrencia:'Elétrico'
               }
             })}>
-              <EnergyIcon size={50} />
+            <FontAwesomeIcon icon={ faBolt } size={50} />
               <Text style={styles.bButtonTitle}>Elétrico</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
@@ -50,7 +52,7 @@ const Home = () => {
                 TipoOcorrencia:'Pavimentação'
               }
             })}>
-              <ConstructionIcon size={50} />
+            <FontAwesomeIcon icon={ faPersonDigging } size={50} />
               <Text style={styles.bButtonTitle}>Pavimentação</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({

@@ -29,6 +29,7 @@ const StackHomeButton = () => {
             <StackHome.Screen name='Home' component={Pages.Home} options={{title:'Painel Inicial'}} />
             <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />        
             <StackHome.Screen name='Rep_Tipo' component={Pages.Rep_Tipo} options={{title:'Tipo da Ocorrência'}} />        
+            <StackHome.Screen name='Maps' component={Pages.Maps} options={{headerShown:false}} />        
         </StackHome.Navigator>
     )
 }

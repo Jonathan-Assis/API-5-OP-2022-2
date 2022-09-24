@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text,TextInput,TouchableOpacity, ScrollView} from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import ServerConnection from '../../services'
@@ -6,24 +6,48 @@ import styles from './styles';
 
 import FileIcon from '../../assets/Icons/paperclip'
 
-const Rep_Ocorrencia = () => {
+const Rep_Ocorrencia = (props) => {
+  const [tipo,setTipo]=useState('')
   const [cpf,setCpf]=useState('')
   const [titulo,setTitulo]=useState('')
   const [arquivo,setArquivo]=useState({})
   const [descricao,setDescricao]=useState('')
   const [ loading, setLoading ] = useState(false);
 
-  const type = ([
-    "Poste de Luz",
-    "Árvore Caída",
-    "Pavimentação",
-    "Cano Vazando",
-  ]);
+  const [subType,setSubType] = useState([]); 
+
+  let TipoOcorrencia = props.route.params?.TipoOcorrencia
+
+
+useEffect(() =>{
+  if(TipoOcorrencia == 'Elétrico'){
+    setSubType(['Poste de Luz','Queda do poste','Fiação em curto'])
+  } 
+  if(TipoOcorrencia == 'Pavimentação'){
+    setSubType(['Buraco no asfalto','Buraco na calçada'])
+  }
+  if(TipoOcorrencia == 'Natureza'){
+    setSubType(['Árvore caída','Árvore com risco de queda'])
+  }
+  else{
+    setSubType(['Foça aberta'])
+  }
+},[TipoOcorrencia])
+
+
+
+
+
+
+
+
+
+
+
 
   const [local,setLocal]=useState({lat:0,long:0})
 
-  const [selectedType, setSelectedType] = useState([]);
-
+  const [selectedSubType, setSelectedSubType] = useState([]);
 
   const newOcorrencia = () => {
     /* if(titulo !== '' && descricao !== '') {
@@ -56,17 +80,17 @@ const Rep_Ocorrencia = () => {
           <TouchableOpacity style={styles.bPickerBox}>
                 <Picker
                   style={styles.bPickerTitle}
-                  selectedValue={selectedType}
+                  selectedValue={selectedSubType}
                   onValueChange={(itemValue, index) =>
-                    setSelectedType(itemValue, index)
+                    setSelectedSubType(itemValue, index)
                   }
                 >
-                  {type.map((type, index) => {
+                  {subType.map((subType, index) => {
                     return (
                       <Picker
                         style={{ flex: 1 }}
-                        label={type}
-                        value={type}
+                        label={subType}
+                        value={subType}
                         key={index}
                       />
                     );

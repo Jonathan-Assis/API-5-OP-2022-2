@@ -1,16 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import styles from './styles';
-
-//Icons
 
 import EnergyIcon from '../../assets/Icons/energy'
 import ConstructionIcon from '../../assets/Icons/construction'
 import TreeIcon from '../../assets/Icons/tree'
 import PipeIcon from '../../assets/Icons/pipeline-32-regular'
 
-const Home = () => {
+const Rep_Tipo = (props) => {
   const navigation = useNavigation();
 
   return (
@@ -68,7 +66,7 @@ const Home = () => {
       </View>
 
     </View>
-  );
+  )
 }
 
-export default Home
+export default Rep_Tipo;

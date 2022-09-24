@@ -4,6 +4,8 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
 
+import LogoIcon from '../../assets/Icons/megaphone-fill'
+
 const Sign_In = () => {
   const navigation = useNavigation();
   const [cpf,setCpf]=useState('')
@@ -13,13 +15,16 @@ const Sign_In = () => {
   const { signIn } = useAuth()
 
 
+  {/*           <Image source={require('../../assets/Logotype/OP.png')} style={styles.hLogo}/>
+   */}        
+   {/*           <Text style={styles.hTitle}>Ocorrências Públicas</Text>
+    */}       
 
   return (
-      <ScrollView style={styles.container}>
+    <View style={styles.container}>
         <View style={styles.header}>
-          <Image source={require('../../assets/Logotype/OP.png')} style={styles.hLogo}/>
-        <Text style={styles.hTitle}>Ocorrências Públicas</Text>
-        </View>
+        <LogoIcon size={50} />
+    </View>
 
         <View style={styles.body} > 
         <View style={styles.bForm} > 
@@ -58,7 +63,7 @@ const Sign_In = () => {
           </TouchableOpacity>
         </View>
       </View>
-      </ScrollView>
+      </View>
   );
 }
 export default Sign_In;

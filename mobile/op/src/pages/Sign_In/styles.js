@@ -4,7 +4,8 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        ...stylesVar.backgroundPrimary
+        ...stylesVar.backgroundPrimary,
+        justifyContent: 'flex-end',
     },
     header:{
         alignItems: 'center',
@@ -24,11 +25,11 @@ const styles = StyleSheet.create({
     },
 
     body: {
-        flex: 1,      
         flexDirection: 'row',
+
+        
     },
     bForm:{
-        flex: 1,      
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,

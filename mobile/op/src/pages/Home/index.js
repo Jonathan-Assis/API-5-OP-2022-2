@@ -1,15 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faBolt, faPersonDigging } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 
 //Icons
-
-import EnergyIcon from '../../assets/Icons/energy'
-import ConstructionIcon from '../../assets/Icons/construction'
-import TreeIcon from '../../assets/Icons/tree'
+import { faTree, faPersonDigging, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import PipeIcon from '../../assets/Icons/pipeline-32-regular'
 
 const Home = () => {
@@ -21,18 +17,18 @@ const Home = () => {
         <Text style={styles.hTitle}>Bem vindo(a) ao Ocorrências Públicas!</Text>  
       </View>
       <View style={styles.body}>
-        <Text style={styles.bTitle}>Selecione o tipo de ocorrência a ser reportado.</Text>  
+        <Text style={styles.bTitle}>Selecione a categoria da ocorrência a ser reportado.</Text>  
         <View style={styles.bRow}>
           
           <View style={styles.bColumn}>
             <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-              name: 'Maps',
+              name: 'Rep_Ocorrencia',
               params:{
-                TipoOcorrencia:'Elétrico'
+                TipoOcorrencia:'Eletricidade'
               }
             })}>
-            <FontAwesomeIcon icon={ faBolt } size={50} />
-              <Text style={styles.bButtonTitle}>Elétrico</Text>
+            <FontAwesomeIcon icon={ faLightbulb } size={50} color={'white'}/>
+              <Text style={styles.bButtonTitle}>Elétricidade</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
               name: 'Rep_Ocorrencia',
@@ -40,7 +36,7 @@ const Home = () => {
                 TipoOcorrencia:'Natureza'
               }
             })}>
-              <TreeIcon size={50} />
+            <FontAwesomeIcon icon={ faTree } size={50} color={'white'} />
               <Text style={styles.bButtonTitle}>Natureza</Text>
             </TouchableOpacity>
           </View>
@@ -52,7 +48,7 @@ const Home = () => {
                 TipoOcorrencia:'Pavimentação'
               }
             })}>
-            <FontAwesomeIcon icon={ faPersonDigging } size={50} />
+              <FontAwesomeIcon icon={ faPersonDigging } size={50} color={'white'} />
               <Text style={styles.bButtonTitle}>Pavimentação</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({

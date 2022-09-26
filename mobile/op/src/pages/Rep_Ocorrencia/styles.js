@@ -4,21 +4,41 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        flexDirection: 'row',
         alignItems: 'center',
         ...stylesVar.backgroundSecondary
     },
+    header:{
+        flex:1,
+        height:190,
+        alignItems: 'center',
+        margin:10
+    },
 
+    hImage:{
+        flex:1,
+        margin:15,
+        alignItems: 'center'
+    },
+    hTitle:{
+        textAlign: 'center',
+        ...stylesVar.titleSecondary,
+        marginBottom:3
+    },
+ 
     body: {
         flex: 1,
-        margin:20,    
-        padding:30,
-        ...stylesVar.boxPrimary,
-    },
-
-    bImage:{
+        flexDirection: 'row',
         alignItems: 'center',
     },
+
+    bContainer: {
+        flex: 1,
+        padding:25,
+        borderTopEndRadius: 30,
+        borderTopStartRadius: 30,
+        ...stylesVar.backgroundPrimary,
+    },
+
 
     bInput:{
         marginBottom:15,
@@ -34,7 +54,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         ...stylesVar.strokeBoxSecondary,
         ...stylesVar.placeholderPrimary,
-        padding: 5,
+        padding: 10,
         paddingHorizontal:15,
     },
 
@@ -45,11 +65,12 @@ const styles = StyleSheet.create({
         padding: 10,
         minHeight: 100
     },
+
     bPickerBox:{
         ...stylesVar.strokeBoxSecondary,
         marginBottom:10,
-
     },
+
     bPickerTitle:{
         flexWrap: 'nowrap',        
         ...stylesVar.titleTertiary,
@@ -72,6 +93,35 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical:10
     },
+    bButtonMap:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        ...stylesVar.strokeBoxSecondary,
+        padding: 10,
+        paddingHorizontal:25,
+        marginBottom:15,
+    },
+    bButtonMapLabel:{
+        textAlign: 'center',
+        ...stylesVar.titleTertiary,
+        left:-20
+    },
+    bButtonMapSelected:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        ...stylesVar.boxSecondary,
+        padding: 11,
+        paddingHorizontal:25,
+        marginBottom:15,
+    },
+    bButtonMapLabelSelected:{
+        textAlign: 'center',
+        ...stylesVar.titleSecondary,
+        left:-20
+    }
+
 })
 
 export default styles;

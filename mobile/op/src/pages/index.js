@@ -8,10 +8,12 @@ import Sign_Up          from './Sign_Up'
 import Rep_Ocorrencia   from './Rep_Ocorrencia'
 import Rep_Tipo         from './Rep_Tipo'
 import Settings         from './Settings'
-import Start_Screen     from './Start_Screen'
+import Splash_Screen     from './Splash_Screen'
 import User_Term        from './User_Term'
 
+import Loading from './Loading'
 export {
+    Loading,
     Chamados,
     Edit_Profile,
     Home,
@@ -22,6 +24,6 @@ export {
     Rep_Ocorrencia,
     Rep_Tipo,
     Settings,
-    Start_Screen,
+    Splash_Screen,
     User_Term,
 }

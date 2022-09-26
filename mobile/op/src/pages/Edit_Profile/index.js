@@ -1,5 +1,7 @@
 import React,{useState} from 'react';
 import { View, Text,TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faImage } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 import ProfileIcon from '../../assets/Icons/file-person'
 
@@ -25,7 +27,7 @@ const Edit_Profile = () => {
         <View style={styles.body} > 
 
           <View style={styles.bImage}>
-            <ProfileIcon size={120} />
+          <FontAwesomeIcon icon={ faImage } size={140} color={'white'}/>
           </View>
 
           <View style={styles.bInput}>

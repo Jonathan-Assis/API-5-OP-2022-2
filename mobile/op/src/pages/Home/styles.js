@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
     },
 
     header:{
-        flex:0.3,
         margin:16,
+        paddingBottom:5
     },
 
     hTitle:{
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
     body: {
         flex: 1,
         alignItems: 'center',
-        padding:10
     },
 
     bTitle:{
@@ -34,8 +33,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-evenly',
         padding:10,
-        width:130,
-        height:130,
+        margin:10,
+        width:150,
+        height:150,
     },
     bButtonTitle:{
         ...stylesVar.titleTertiary,
@@ -43,13 +43,15 @@ const styles = StyleSheet.create({
     },
 
     bRow:{
+        justifyContent: 'center',
+        alignItems: 'center',
         flexDirection: 'row',
+        flexWrap:'wrap',
     },
     bColumn:{
         justifyContent: 'space-around',
-        margin:20
-    }
 
+    }
 })
 
 export default styles;

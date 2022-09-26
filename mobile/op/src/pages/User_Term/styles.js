@@ -11,6 +11,7 @@ const styles = {
     ... stylesVar.backgroundPrimary,
   },
   bTextPrimary: {
+        top:5,
         fontWeight: "bold",
         fontSize: 22,
         alignSelf: 'center',
@@ -32,15 +33,13 @@ const styles = {
     borderRadius: 100 / 5
   },
   button:{
-        flex:0.2,
         margin: 16,
         ... stylesVar.boxTertiary,
         ... stylesVar.strokeBoxSecondary,
-        padding: 10
+        padding: 8
   },
 
   buttonDisabled:{
-    flex:0.2,
     margin: 16,
     backgroundColor: '#999',
     borderRadius: 16,

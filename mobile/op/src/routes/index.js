@@ -1,8 +1,6 @@
-import React, { useContext } from 'react'
-
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { useAuth } from '../contexts/Auth'
-
 import { AuthRoutes } from './AuthRoutes'
 import { AppRoutes } from './AppRoutes'
 import { View, Text, ActivityIndicator } from 'react-native'

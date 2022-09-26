@@ -4,31 +4,25 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
 
-import LogoIcon from '../../assets/Icons/megaphone-fill'
+import MegaphoneIcon from '../../assets/Icons/megaphone-fill';
 
 const Sign_In = () => {
   const navigation = useNavigation();
   const [cpf,setCpf]=useState('')
   const [senha, setSenha]=useState('')
-  const [ loading, setLoading ] = useState(false);
 
-  const { signIn } = useAuth()
-
-
-  {/*           <Image source={require('../../assets/Logotype/OP.png')} style={styles.hLogo}/>
-   */}        
-   {/*           <Text style={styles.hTitle}>Ocorrências Públicas</Text>
-    */}       
+  const { signIn } = useAuth()   
 
   return (
     <View style={styles.container}>
-        <View style={styles.header}>
-        <LogoIcon size={50} />
-    </View>
+      <View style={styles.header}>
+        <MegaphoneIcon size={120} fill='white' />
+        <Text style={styles.hTitle}>Ocorrências Públicas</Text>
+      </View>
 
-        <View style={styles.body} > 
-        <View style={styles.bForm} > 
-          <Text style={styles.bTitle}>O acesso a este aplicativo é feito através do uso do CPF</Text>  
+      <View style={styles.body}> 
+        <View style={styles.bForm}> 
+          <Text style={styles.bDescription}>O acesso a este aplicativo é feito através do uso do CPF</Text>  
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>CPF</Text>  
             <TextInput style={styles.bInputBox}
@@ -63,7 +57,7 @@ const Sign_In = () => {
           </TouchableOpacity>
         </View>
       </View>
-      </View>
+    </View>
   );
 }
 export default Sign_In;

@@ -8,14 +8,12 @@ const StackHome = createStackNavigator()
 
 const StackHomeButton = () => {
     return(
-        <StackHome.Navigator initialRouteName='Rep_tipo' screenOptions={{
+        <StackHome.Navigator initialRouteName='Home' screenOptions={{
             headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color, headerStyle:{...stylesVar.toolbar}
         }}>
             <StackHome.Screen name='Home' component={Pages.Home} options={{headerShown:false}} />
-            <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />        
-            <StackHome.Screen name='Rep_Tipo' component={Pages.Rep_Tipo} options={{title:'Tipo da Ocorrência'}} />        
+            <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} /> 
             <StackHome.Screen name='Maps' component={Pages.Maps} options={{headerShown:false}} />        
-            <StackHome.Screen name='Loading' component={Pages.Loading} options={{headerShown:false}} />      
             <StackHome.Screen name='Start_Screen' component={Pages.Splash_Screen} />  
         </StackHome.Navigator>
     )
@@ -42,7 +40,6 @@ const StackSettingsButton = () => {
         }}>
             <StackSettings.Screen name='Settings' component={Pages.Settings} options={{title:'Configurações', headerShown:false}} />
             <StackSettings.Screen name='Edit_Profile' component={Pages.Edit_Profile} options={{title:'Editar Perfil'}} />
-            <StackSettings.Screen name='Sign_Out' component={Pages.Sign_Out} options={{headerShown:false}} />
         </StackSettings.Navigator>
     )
 }

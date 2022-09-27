@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems: 'center',
-        ...stylesVar.backgroundPrimary
+        ...stylesVar.backgroundSecondary
     },
     header:{
         flexDirection: 'row',
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     },
     hButtonLabel:{
         paddingHorizontal:8,
-        ...stylesVar.titleTertiary
+        ...stylesVar.titleSecondary
     },
 
     body:{
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     },
 
     bTitle:{
-        ...stylesVar.titleTertiary,
+        ...stylesVar.titleSecondary,
         marginBottom:3
     },
     bText:{

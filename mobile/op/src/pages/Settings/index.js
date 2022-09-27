@@ -19,7 +19,7 @@ const Settings = () => {
         >
           <View style={styles.hButton}>
             <Text style={styles.hButtonLabel}>Editar</Text>
-            <FontAwesomeIcon icon={ faUserPen } size={26} color={'white'} />
+            <FontAwesomeIcon icon={ faUserPen } size={26} color={'black'} />
           </View>
         </TouchableOpacity>
       </View>
@@ -27,7 +27,7 @@ const Settings = () => {
       <View style={styles.body}>
         <View style={styles.bContainer}> 
           <View style={styles.bImage}>
-              <FontAwesomeIcon icon={ faImage } size={140} color={'white'}/>
+              <FontAwesomeIcon icon={ faImage } size={140} color={'black'}/>
           </View>
 
           <View style={styles.bRow}>
@@ -46,7 +46,7 @@ const Settings = () => {
         <TouchableOpacity style={styles.fButton}
           onPress={signOut}
         >
-          <FontAwesomeIcon icon={ faRightFromBracket } size={24} color={'white'}/>
+          <FontAwesomeIcon icon={ faRightFromBracket } size={24} color={'black'}/>
           <Text style={styles.fLabel}>Sair</Text>
         </TouchableOpacity>
       </View>

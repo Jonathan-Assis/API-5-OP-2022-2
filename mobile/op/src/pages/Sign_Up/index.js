@@ -101,6 +101,7 @@ const Sign_Up = () => {
                         <TouchableOpacity
                             style={styles.bButton}
                             onPress={cadastro}
+
                         >
                             <Text style={styles.bLabel}>
                                 Confirmar Cadastro

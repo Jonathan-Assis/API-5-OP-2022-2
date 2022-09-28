@@ -5,55 +5,79 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-between',
-        ...stylesVar.backgroundPrimary
+        ...stylesVar.backgroundSecondary
     },
-
     header:{
-        flex:0.4,
-        alignItems: 'center',
-        width:'60%',
-        justifyContent: 'space-around',
-        margin:10,
+        flexDirection: 'row',
     },
-
+    hContainer:{
+        flexDirection: 'row',
+        flex:1,
+    },
     hButton:{
-        paddingHorizontal:30,
+        flex:1,
         alignItems: 'center',
-        justifyContent: 'center',
-        ...stylesVar.boxSecondary
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        padding:15
     },
-
-    hText:{
-        ...stylesVar.titleSecondary,
-        padding:6,
-        fontWeight:'bold'
+    hButtonLabel:{
+        paddingHorizontal:8,
+        ...stylesVar.titleSecondary
     },
 
     body:{
-        justifyContent: 'space-around',
+        flex: 1, 
+        flexDirection: 'row',     
+        padding:18,
+    },
+    bContainer: {
+        flex: 1,
+    },
+    
+    bImage:{
         alignItems: 'center',
+    },
+
+    bRow:{
+        marginBottom:7,
+        borderBottomWidth:1,
+        ...stylesVar.lineStrokeSecondary,
+    },
+
+    bTitle:{
+        ...stylesVar.titleSecondary,
+        marginBottom:3
+    },
+    bText:{
+        ...stylesVar.textSecondary
+    },
+
+    bRowBox:{
+        padding: 5,
+        paddingHorizontal:15,
     },
 
     footer:{
-        flex:0.1,
-        alignItems: 'center',
-        bottom: 10,
-        width:'60%',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        bottom:4,
+        justifyContent: 'flex-end',
+    },
+    
+    fLabel:{
+        textAlign:'center',
+        paddingHorizontal:10,
+        ...stylesVar.titleTertiary
     },
 
     fButton:{
-        paddingHorizontal:50,
+        flex:1,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        ...stylesVar.strokeBoxSecondary
-    },
-
-    fText:{
-        ...stylesVar.titleTertiary,
-        padding:5,
-        fontWeight:'bold'
+        padding: 10,
+        margin:16,
+        ...stylesVar.strokeBoxSecondary,
     },
 })
 

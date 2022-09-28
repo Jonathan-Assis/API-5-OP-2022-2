@@ -1,28 +1,26 @@
 import { StyleSheet } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
 
+
 const styles = StyleSheet.create({
     container:{
-        flex: 1,
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        ...stylesVar.backgroundPrimary
+        ...stylesVar.backgroundSecondary
     },
-    body: {
-        flex: 1,
+    body:{
+        flex:0.2,
         flexDirection: 'row',
         alignItems: 'center',
-        padding:10
+        justifyContent: 'space-between',
     },
-    bLogotype:{
-        width:200,
-        height:200
+    bBall:{
+        width:15,
+        height:15,
+        margin:10,
+        ...stylesVar.boxPrimary,
     },
-    bText:{
-        fontSize:22,
-        fontWeight: 'bold',
-        ...stylesVar.titleTertiary
-    }
 })
 
 export default styles;

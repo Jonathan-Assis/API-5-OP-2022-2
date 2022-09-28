@@ -1,9 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Alert } from "react-native";
-import {authService} from '../services/authService'
 import ServerConnection from '../services'
-
+import { Alert } from "react-native";
 
 export const AuthContext = createContext({});
 
@@ -25,17 +23,33 @@ export const AuthProvider = ({children}) =>{
 
     async function signIn(cpf,senha) {
         setLoading(true);
-        const auth = await ServerConnection.login({cpf,senha})
-        .then(({data}) => String.toString(data)
-
-        ).finally(() => {
+        await ServerConnection.login({cpf,senha})
+        .then(({data}) => {
+            setAuth(String.toString(data));
+            AsyncStorage.setItem('@AuthData',(String.toString(data)));
+            console.log("Cidadão acessou a conta!")
+        })
+        .catch(() => {
+            Alert.alert('Falha no acesso', 'CPF ou Senha inválidos.')
+        })
+        .finally(() => {
             setLoading(false);
         });
-        setAuth(auth);
-        AsyncStorage.setItem('@AuthData',(auth));
-        console.log("Cidadão acessou a conta!")
     }
 
+    async function signUp(nome, cpf, email, senha) {
+        setLoading(true);
+        await ServerConnection.cadastro({
+            nome, cpf, email, senha
+        })
+        .catch(() => {
+            Alert.alert('Falha no cadastro', 'Campo(s) obrigatório(s) vazio(s).')
+        })
+        .finally(async () => {
+            await signIn(cpf, senha);
+            setLoading(false);
+        });
+    }
 
     async function signOut() {
         setAuth(undefined)
@@ -44,7 +58,7 @@ export const AuthProvider = ({children}) =>{
     }
 
     return (
-        <AuthContext.Provider value={{authData, loading, signIn, signOut}}>
+        <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp}}>
             {children}
         </AuthContext.Provider>
     )

@@ -4,31 +4,26 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        ...stylesVar.backgroundPrimary
+        ...stylesVar.backgroundPrimary,
+        justifyContent: 'flex-end',
     },
     header:{
         alignItems: 'center',
         justifyContent: 'center',
-
-    },
-    
-    hLogo:{
-        maxHeight:300,
-        maxWidth:300,
+        marginBottom:20
     },
 
     hTitle:{
         ...stylesVar.titlePrimary,
         color: '#E9E9E9',
-        top:-50
     },
 
     body: {
-        flex: 1,      
         flexDirection: 'row',
     },
+
     bForm:{
-        flex: 1,      
+        flex: 1,
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
@@ -37,6 +32,11 @@ const styles = StyleSheet.create({
 
     bInput:{
         marginBottom:7
+    },
+    bDescription:{
+        ...stylesVar.titleSecondary,
+        opacity:0.5,
+        marginBottom:5    
     },
 
     bTitle:{

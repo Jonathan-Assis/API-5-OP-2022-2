@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     ... stylesVar.backgroundPrimary,
   },
   bTextPrimary: {
+        top:5,
         fontWeight: "bold",
         fontSize: 22,
         alignSelf: 'center',
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
         margin: 16,
         ... stylesVar.boxTertiary.backgroundColor,
         ... stylesVar.strokeBoxSecondary,
-        padding: 10
+        padding: 8
   },
 
   buttonDisabled:{

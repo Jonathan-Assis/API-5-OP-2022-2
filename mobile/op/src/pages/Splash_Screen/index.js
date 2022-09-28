@@ -7,7 +7,7 @@ const Start_Screen = () =>{
   const navigation = useNavigation();
 
   setTimeout(() =>{
-    navigation.navigate('User_Term')
+    navigation.navigate('Sign_In')
   }, 1200)
 
 

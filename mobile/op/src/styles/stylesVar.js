@@ -1,17 +1,17 @@
 const stylesVar = {
 //BackgroundColor
-    bgPrimary:{
+    backgroundPrimary:{
         backgroundColor: "#3455AA"
     },
-    bgSecondary:{
+    backgroundSecondary:{
         backgroundColor: "#D9D9D9"
     },
 
     toolbar:{
-        backgroundColor: "#3455AA"
+        backgroundColor: "#3429A8"
     },
 
-//Icons
+//Icon
     icon:{
         color: "#FFFFFF"
     },
@@ -24,22 +24,19 @@ const stylesVar = {
     titlePrimary:{
         fontWeight:'bold',
         color: "#000000",
-        fontSize: 20
+        fontSize: 24,
+        fontWeight: '500'
     },
 
     titleSecondary:{
         color: "#000000",
-        fontSize: 16
+        fontSize: 18,
+        fontWeight: '500'
     },
-
+    
     titleTertiary:{
         color: "#FFFFFF",
         fontSize: 16
-    },
-
-    inputText:{
-        color: "#000000",
-        fontSize: 14
     },
 
     buttonLabel:{
@@ -47,19 +44,14 @@ const stylesVar = {
         fontSize: 14
     },
 
-    placeholderPrimary:{
+    placeholder:{
         color: "#838383",
-        fontSize: 14
-    },
-
-    placeholderSecondary:{
-        color: "#000000",
         fontSize: 14
     },
 
 //Box
     boxPrimary:{
-        backgroundColor: "#3455AA",
+        backgroundColor: "#3429A8",
         borderRadius: 16,
     },
 
@@ -68,15 +60,9 @@ const stylesVar = {
         borderRadius: 16,
     },
 
-    strokeBoxPrimary:{
+    strokeBox:{
         backgroundColor: "#3455AA",
         borderRadius: 16,
-    },
-
-    strokeBoxSecondary:{
-        borderColor:"#D9D9D9",
-        borderWidth:2,
-        borderRadius: 16
     },
 };
 

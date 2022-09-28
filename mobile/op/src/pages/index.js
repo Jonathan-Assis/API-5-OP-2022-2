@@ -1,9 +1,11 @@
 import Home from './Home'
 import User_Term from './User_Term'
-import Cadastro from './Cadastro'
 
+import Loading from './Loading'
 export {
+    Loading,
+    Chamados,
+    Edit_Profile,
     Home,
-    User_Term,
-    Cadastro
+    User_Term
 }

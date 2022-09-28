@@ -5,48 +5,37 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems: 'center',
-        justifyContent:"center", 
-        ...stylesVar.backgroundSecondary
+        justifyContent: 'center',
     },
+    header:{
+        flex:1,
+        height:190,
+        alignItems: 'center',
+        margin:10
+    },
+
+    hImage:{
+        flex:1,
+        margin:15,
+        alignItems: 'center'
+    },
+    hTitle:{
+        textAlign: 'center',
+        ...stylesVar.titleSecondary,
+        marginBottom:3
+    },
+ 
     body: {
         flex: 1,
-        margin:30,
+        flexDirection: 'row',
         alignItems: 'center',
-        justifyContent:"center", 
-        paddingHorizontal:'25%',
-         ...stylesVar.boxPrimary
-
+        padding:10
     },
     bText:{
-        ...stylesVar.titleTertiary
-    },
-
-    bRow:{
-        flexDirection:'row'
-    },
-    bInputStroke:{
-        ...stylesVar.strokeBoxSecondary,
-        paddingHorizontal:20
-    },
-    bInputStrokePlaceholder:{
-        ...stylesVar.placeholderPrimary,
-        textAlign:'center'
-    },
-    bInputBox:{
-        flex:0.4,
-        ...stylesVar.boxSecondary,
-        justifyContent:'center'
-    },
-    bInputBoxPlaceHolder:{
-        ...stylesVar.placeholderSecondary,
-        textAlign:'center'
-    },
-    bButton:{
-       ...stylesVar.boxSecondary
-    },
-    bButtonLabel:{
-        ...stylesVar.buttonLabel
+        fontSize:22,
+        fontWeight: 'bold',
     }
+
 })
 
 export default styles;

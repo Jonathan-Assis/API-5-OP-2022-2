@@ -5,14 +5,18 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         alignItems: 'center',
-        ...stylesVar.backgroundSecondary
+        paddingHorizontal: 0,
+        ...stylesVar.backgroundSecondary,
+        /* backgroundColor: 'red', */
+        padding: 24
     },
     header:{
         flexDirection: 'row',
     },
     hContainer:{
         flexDirection: 'row',
-        flex:1,
+        backgroundColor: 'yellow'
+        /* flex:1, */
     },
     hButton:{
         flex:1,
@@ -28,26 +32,33 @@ const styles = StyleSheet.create({
 
     body:{
         flex: 1, 
-        flexDirection: 'row',     
-        padding:18,
+        /* flexDirection: 'row',     */ 
+        /* backgroundColor: 'purple', */
+        padding: 18,
+        marginHorizontal: 0
     },
+
     bContainer: {
-        flex: 1,
+        /* flex: 1, */
+        backgroundColor: 'red'
     },
     
     bImage:{
-        alignItems: 'center',
+        /* alignItems: 'center', */
+        /* backgroundColor: 'green' */
     },
 
     bRow:{
         marginBottom:7,
         borderBottomWidth:1,
         ...stylesVar.lineStrokeSecondary,
+        backgroundColor: 'green'
     },
 
     bTitle:{
         ...stylesVar.titleSecondary,
-        marginBottom:3
+        marginBottom:3,
+        /* backgroundColor: 'blue' */
     },
     bText:{
         ...stylesVar.textSecondary
@@ -71,13 +82,14 @@ const styles = StyleSheet.create({
     },
 
     fButton:{
-        flex:1,
+        /* flex:1, */
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
         margin:16,
         ...stylesVar.strokeBoxSecondary,
+        ...stylesVar.backgroundPrimary
     },
 })
 

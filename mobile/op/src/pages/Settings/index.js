@@ -11,18 +11,29 @@ const Settings = () => {
   const navigation = useNavigation();
   const { signOut } = useAuth()
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.hContainer}
-          onPress={() => navigation.navigate('Edit_Profile')}
-        >
-          <View style={styles.hButton}>
-            <Text style={styles.hButtonLabel}>Editar</Text>
-            <FontAwesomeIcon icon={ faUserPen } size={26} color={'black'} />
-          </View>
-        </TouchableOpacity>
-      </View>
+  return (<>
+  <View style={styles.container}>
+    <View style={styles.bImage}>
+        <FontAwesomeIcon icon={ faImage } size={140} color={'black'}/>
+    </View>
+
+    <View style={styles.body}>
+      <TouchableOpacity style={styles.fButton}
+        onPress={() => navigation.navigate('Edit_Profile')}
+      >
+        <Text style={styles.fLabel}>Editar Perfil</Text>
+        <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.fButton}
+        onPress={signOut}
+      >
+        <Text style={styles.fLabel}>Sair da Conta</Text>
+        <FontAwesomeIcon icon={ faRightFromBracket } size={24} color={'white'}/>
+      </TouchableOpacity>
+    </View>
+  </View>
+    {/* <View style={styles.container}>
 
       <View style={styles.body}>
         <View style={styles.bContainer}> 
@@ -34,6 +45,15 @@ const Settings = () => {
             <Text style={styles.bTitle}>Nome</Text>  
             <Text style={styles.bText}>Robervaldo Lopes</Text>  
           </View>
+
+          <TouchableOpacity style={styles.hContainer}
+            onPress={() => navigation.navigate('Edit_Profile')}
+          >
+            <View style={styles.hButton}>
+              <Text style={styles.hButtonLabel}>Editar</Text>
+              <FontAwesomeIcon icon={ faUserPen } size={26} color={'black'} />
+            </View>
+          </TouchableOpacity>
 
           <View style={styles.bRow}>
             <Text style={styles.bTitle}>E-mail</Text>
@@ -50,7 +70,8 @@ const Settings = () => {
           <Text style={styles.fLabel}>Sair</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </View> */}
+    </>
   );
 }
 

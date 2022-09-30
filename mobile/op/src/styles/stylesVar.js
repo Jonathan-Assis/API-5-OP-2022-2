@@ -26,7 +26,7 @@ const stylesVar = {
         fontWeight:'bold',
         color: "#000000",
         fontSize: 24,
-        fontWeight: '500'
+        fontWeight: '700'
     },
 
     titleSecondary:{

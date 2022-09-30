@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { View, Text,TextInput,TouchableOpacity, ScrollView, Alert, Image} from 'react-native';
 import { Picker } from "@react-native-picker/picker";
-import {useNavigation, useNavigationState} from '@react-navigation/native'
+import {useNavigation} from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
@@ -27,27 +27,8 @@ const Rep_Ocorrencia = (props) => {
   
   useEffect(()=>{
     tipoPrincipal()
-    //getCoordinate()
   },[])
 
-
-  useEffect(()=>{
-    let isRecived = false
-    const done = async () =>{
-      let map = await props.route.params?.done
-      if(isRecived === true && map === true){
-        setMapSelected(true)
-        console.log('foi?', map)
-        console.log('props é', coordinate)
-      }
-    }
-
-    return(()=>{
-      isRecived = true
-      done()
-    })
-  },
-  [])
 
 
   function tipoPrincipal(){
@@ -70,8 +51,6 @@ const Rep_Ocorrencia = (props) => {
       }
     }
 
-
-  const [local,setLocal]=useState({lat:0,long:0})
   const [selectedSubType, setSelectedSubType] = useState([]);
 
   const newOcorrencia = () => {
@@ -130,6 +109,7 @@ if (hasGalleryPermission === false){
       :
         <TouchableOpacity style={styles.header}
         onPress={()=> pickImage()}
+        
         >
           <View style={styles.hImage}>
             <FontAwesomeIcon icon={faImage} size={150} color='black' />
@@ -172,8 +152,9 @@ if (hasGalleryPermission === false){
                 placeholderTextColor={styles.bInputStrokeBox.color}
               ></TextInput>
             </View>
-            { props.route.params?.done ?
-            <TouchableOpacity style={styles.bButtonMapSelected}
+            
+            
+             <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
               onPress={() =>  {
                 navigation.navigate({
                   name: 'Maps',
@@ -182,24 +163,20 @@ if (hasGalleryPermission === false){
                   }
               })
               }}>
-              <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
-              <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
-            </TouchableOpacity>
-            :
-            <TouchableOpacity style={styles.bButtonMap}
-            onPress={() =>  {
-              navigation.navigate({
-                name: 'Maps',
-                params: {
-                  idPage: route.name
+                {!!props.route.params?.coordinate ? (<>
+                  <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
+                  <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
+                    </>
+                  )
+                  : 
+                  (
+                  <>
+                    <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
+                    <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
+                  </>)
                 }
-            })
-            }}>
-            <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
-            <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
-          </TouchableOpacity>
-            }
-
+            </TouchableOpacity>
+             
             <View style={styles.bInput}>
               <Text style={styles.bTitle}>Ocorrido:</Text>  
               <TextInput style={styles.bInputBox} 

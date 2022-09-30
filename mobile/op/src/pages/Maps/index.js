@@ -9,22 +9,20 @@ import styles from "./styles";
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faXmark, faLocationCrosshairs } from "@fortawesome/free-solid-svg-icons";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import GeoIcon from "../../assets/Icons/geo-alt";
 import GeoIconFill from "../../assets/Icons/geo-alt-fill";
 
 const Maps = () => {
   const navigation = useNavigation();
-  const [pin, setPin] = useState({ latitude: 0, longitude: 0 });
+  const [pin, setPin] = useState({});
   const [pinSelected, setPinSelected] = useState(false);
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
   const [markers, setMarkers] = useState(latlng);
   const [filterMarkers, setFilterMarkers] = useState("");
-  const [isMapSelected, setIsMapSelected] = useState(false);
 
   const filterData = markers.filter((e) => e.category === filterMarkers);
-
 
   useEffect(() => {
     permission();
@@ -62,7 +60,6 @@ const Maps = () => {
     //console.log(backPerm);
   };
 
-  //console.log(filterMarkers)
   return (
     <>
       <MapView
@@ -76,14 +73,12 @@ const Maps = () => {
         onPress={(e) => {
           setPin(e.nativeEvent.coordinate);
           setPinSelected(true);
-          setIsMapSelected(true)
         }}
       >
         {pinSelected && (
           <Marker
             coordinate={pin}
             onPress={(e) => {
-              setIsMapSelected(false)
               setPinSelected(false);
             }}
           />
@@ -111,9 +106,9 @@ const Maps = () => {
             <View style={styles.fButtons}>
               <TouchableOpacity
                 style={styles.fButtonSecondary}
-                onPress={() => { 
-                  setIsMapSelected(false)
-                  setPinSelected(false)
+                onPress={() => {
+                  setPinSelected(false);
+                  setPin(null);
                 }}
               >
                 <GeoIcon size={22} fill="black" />
@@ -125,7 +120,6 @@ const Maps = () => {
                   navigation.navigate({
                     name: "Rep_Ocorrencia",
                     params: {
-                      done: isMapSelected,
                       coordinate: pin,
                     },
                   });
@@ -140,7 +134,17 @@ const Maps = () => {
               <TouchableOpacity
                 style={styles.fButtonSecondary}
                 onPress={() => {
-                  navigation.goBack()
+                  async function foo() {
+                    setPin(null);
+                    setCoordinate(null);
+                  }
+                  foo().then(() => navigation.navigate({
+                    name: "Rep_Ocorrencia",
+                    params: {
+                      coordinate: null,
+                    },
+                  }))
+
                 }}
               >
                 <FontAwesomeIcon icon={faXmark} size={22} color="black" />
@@ -154,7 +158,6 @@ const Maps = () => {
                   navigation.navigate({
                     name: "Rep_Ocorrencia",
                     params: {
-                      done: true,
                       coordinate: coordinate,
                     },
                   });

@@ -9,9 +9,7 @@ import Settings         from './Settings'
 import Splash_Screen    from './Splash_Screen'
 import User_Term        from './User_Term'
 
-import Loading from './Loading'
 export {
-    Loading,
     Chamados,
     Edit_Profile,
     Home,

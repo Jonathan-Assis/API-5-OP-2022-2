@@ -86,6 +86,33 @@ Separação da estruturação do "styles" pelas variáveis:
 - `fIconOne` Estilo do primeiro icone a ser usado no fim da página
 - `fIconTwo` Estilo do segundo icone a ser usado no fim da página
 
+## Componente de Loading
+Enquanto alguma função está rodando em paralelo na aplicação (ex.: um request para o servidor), recomenda-se o uso de do componete de Loading para mostrar ao usuário que algo está carregando no app.
+
+Como é mostrado no exemplo de uso a baixo, é só definir uma variável do tipo `boolean` e passar para o componete. Quando a variável `loading` for true, mostrará na tela o loading padrão, em vez do conteúdo da função (no caso, da função `Bananas`).
+
+> Nota: Substituir o caminho de importação do componente de `./path/to/componet` pelo caminho a partir de sua tela.
+```Javascript
+import React, { useState } from 'react';
+import { Loading } from './path/to/component';
+
+export default function Bananas() {
+  const [ loading, setLoading ] = useState(false);
+  
+  const request = async () => {
+    setLoading(true);
+    /* todo: request from Bananas */
+    setLoading(false);
+  }
+  
+  return (
+    <Loading loading={loading}>
+      {/* todo: content of Bananas */}
+    </Loading>
+  );
+}
+```
+
 # Conexão com o Banco de Dados
 A conexão entre o App (React Native) e o Banco (MongoDB) é feita pelo servidor (NodeJs), o App envia e recebe os dados por requisições HTTP com o servidor.
 A classe `ServerConnection` faz essa requisições, como segue o exemplo do login:

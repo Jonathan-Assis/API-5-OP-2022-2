@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
 
     header:{
         margin:16,
-        paddingBottom:5
+        paddingBottom:7
     },
 
     hTitle:{
@@ -43,12 +43,14 @@ const styles = StyleSheet.create({
     },
 
     bRow:{
+        marginVertical:10,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         flexWrap:'wrap',
     },
     bColumn:{
+        alignItems: 'center',
         justifyContent: 'space-around',
 
     }

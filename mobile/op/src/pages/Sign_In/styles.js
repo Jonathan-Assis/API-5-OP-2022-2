@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     },
 
     bForm:{
+        flex: 1,
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,

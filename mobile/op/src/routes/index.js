@@ -18,7 +18,7 @@ export function Routes () {
 
     return (
         <NavigationContainer>
-            { authData ? <AppRoutes /> : <AuthRoutes />}
+            { authData ? <AppRoutes /> : <AuthRoutes />} 
         </NavigationContainer>
     )
 }

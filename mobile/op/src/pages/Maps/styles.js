@@ -61,13 +61,12 @@ const styles = StyleSheet.create({
     },
     fButtonLabelPrimary:{
         paddingHorizontal:5,
-        ...stylesVar.titleTertiary
+        ...stylesVar.titleTertiary,
     },
     fButtonLabelSecondary:{
         paddingHorizontal:5,
-        ...stylesVar.titleSecondary
+        ...stylesVar.titleSecondary,
     },
-
 })
 
 export default styles;

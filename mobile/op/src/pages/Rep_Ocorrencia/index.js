@@ -10,6 +10,7 @@ import styles from './styles';
 
 import FileIcon from '../../assets/Icons/paperclip'
 import { useRoute } from '@react-navigation/native';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 
 
@@ -51,6 +52,9 @@ const Rep_Ocorrencia = (props) => {
 
       case 'Esgoto':
         return setSubType(['Foça aberta', 'Esgoto aberto', 'Caixa de Esgoto vazando'])
+        break
+      case 'Outros':
+        return setSubType(null)
         break
 
       default:
@@ -130,7 +134,8 @@ if (hasGalleryPermission === false){
           <View style={styles.bContainer}> 
 
             <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text>  
-            <TouchableOpacity style={styles.bPickerBox}>
+            { !!subType ?
+              <TouchableOpacity style={styles.bPickerBox}>
               <Picker
                 style={styles.bPickerTitle}
                 selectedValue={selectedSubType}
@@ -150,6 +155,13 @@ if (hasGalleryPermission === false){
                 })}
               </Picker>
             </TouchableOpacity>
+            :
+            <View>
+            <Text>
+              {TipoOcorrencia}
+            </Text>
+            </View>
+            }
 
             <View style={styles.bInput}>
               <Text style={styles.bTitle}>Título:</Text>  

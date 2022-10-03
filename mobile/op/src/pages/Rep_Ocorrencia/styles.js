@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     bContainer: {
         flex: 1,
         padding:25,
+        paddingTop:10,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
         ...stylesVar.backgroundPrimary,
@@ -49,7 +50,11 @@ const styles = StyleSheet.create({
         ...stylesVar.titleTertiary,
         marginBottom:3
     },
-
+    bTitle2:{
+        textAlign: 'center',
+        ...stylesVar.titleTertiary,
+        marginBottom: 20
+    },
     bInputStrokeBox:{
         textAlign: 'center',
         ...stylesVar.strokeBoxSecondary,
@@ -75,7 +80,6 @@ const styles = StyleSheet.create({
         flexWrap: 'nowrap',        
         ...stylesVar.titleTertiary,
     },
-
     bArquivo:{
         flexDirection:'row',
         justifyContent: 'center',

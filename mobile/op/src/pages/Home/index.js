@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import styles from './styles';
 
 //Icons
-import { faTree, faPersonDigging, faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { faTree, faPersonDigging, faLightbulb, faCommentDots } from '@fortawesome/free-solid-svg-icons'
 import PipeIcon from '../../assets/Icons/pipeline-32-regular'
 
 const Home = () => {  
@@ -70,7 +70,7 @@ const Home = () => {
                   TipoOcorrencia:'Outros'
                 }
               })}>
-                <FontAwesomeIcon icon={ faPersonDigging } size={50} color={'white'} />
+                <FontAwesomeIcon icon={ faCommentDots } size={50} color={'white'} />
                 <Text style={styles.bButtonTitle}>Outros</Text>
               </TouchableOpacity>
             </View>

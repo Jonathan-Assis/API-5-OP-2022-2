@@ -30,24 +30,27 @@ const Rep_Ocorrencia = (props) => {
 
   let TipoOcorrencia = props.route.params?.TipoOcorrencia
   let Mapa = props.route.params?.map
+  
   useEffect(()=>{
+    ServerConnection.categorias({}).then ((data)=>(setSubType,console.log(data)))
     tipoPrincipal()
   },[])
 
-
+  
+ 
   function tipoPrincipal(props){
     switch(TipoOcorrencia) {
 
       case 'Eletricidade':
-        return setSubType(['Poste de Luz','Queda do poste','Fiação em curto'])
+        return setSubType(subType['Eletricidade'['subCategorias']])
         break
 
         case 'Pavimentação':
-        return setSubType(['Buraco no asfalto','Buraco na calçada'])
+        return setSubType(['Buraco','Sem asfalto'])
         break
 
       case 'Natureza':
-        return setSubType(['Árvore caída','Árvore com risco de queda'])
+        return setSubType(['Árvore caída','Árvore com risco de queda','Raizes na rua'])
         break
 
       case 'Esgoto':
@@ -133,9 +136,10 @@ if (hasGalleryPermission === false){
         <View style={styles.body}> 
           <View style={styles.bContainer}> 
 
-            <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text>  
-            { !!subType ?
-              <TouchableOpacity style={styles.bPickerBox}>
+            { !!subType ? (<>
+              <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+              <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
+              <TouchableOpacity style={styles.bPickerBox}> 
               <Picker
                 style={styles.bPickerTitle}
                 selectedValue={selectedSubType}
@@ -143,24 +147,24 @@ if (hasGalleryPermission === false){
                   setSelectedSubType(itemValue, index)
                 }
               >
-                {subType.map((subType, index) => {
-                  return (
-                    <Picker
-                      style={{ flex: 1 }}
-                      label={subType}
-                      value={subType}
-                      key={index}
-                    />
-                  );
-                })}
+                {subType.map((subType, index) =>
+                  {
+                    return (
+                      <Picker
+                        style={{ flex: 1 }}
+                        label={subType}
+                        value={subType}
+                        key={index}
+                      />
+                    );
+                  })
+                }
               </Picker>
             </TouchableOpacity>
-            :
-            <View>
-            <Text>
-              {TipoOcorrencia}
-            </Text>
-            </View>
+            </>)
+            : (<>
+           <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+            </>)
             }
 
             <View style={styles.bInput}>

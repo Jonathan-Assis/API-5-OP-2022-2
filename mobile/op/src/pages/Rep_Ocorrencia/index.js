@@ -36,6 +36,7 @@ const Rep_Ocorrencia = (props) => {
     tipoPrincipal()
   },[])
 
+
  
   function tipoPrincipal(props){
     switch(TipoOcorrencia) {

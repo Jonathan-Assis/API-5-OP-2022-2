@@ -2,68 +2,32 @@ import { StyleSheet } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
 
 const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        alignItems: 'center',
-        ...stylesVar.backgroundPrimary
-    },
-    header:{
-        flexDirection: 'row',
-    },
-    hContainer:{
-        flexDirection: 'row',
-        flex:1,
-    },
-    hButton:{
-        flex:1,
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        padding:15
-    },
-    hButtonLabel:{
-        paddingHorizontal:8,
-        ...stylesVar.titleTertiary
-    },
+    container:{ flex: 1 },
 
     body:{
-        flex: 1, 
-        flexDirection: 'row',     
-        padding:18,
-    },
-    bContainer: {
         flex: 1,
+        width: '100%',
+        alignItems: 'center',
+        padding: 18,
+        marginHorizontal: 0,
+        ...stylesVar.backgroundPrimary
+    },
+
+    footer:{
+        flex: 1,
+        width: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center'        
     },
     
-    bImage:{
-        alignItems: 'center',
+    image:{
+        marginBottom: 10
     },
 
-    bRow:{
-        marginBottom:7,
-        borderBottomWidth:1,
-        ...stylesVar.lineStrokeSecondary,
-    },
-
-    bTitle:{
-        ...stylesVar.titleTertiary,
-        marginBottom:3
-    },
     bText:{
         ...stylesVar.textSecondary
     },
 
-    bRowBox:{
-        padding: 5,
-        paddingHorizontal:15,
-    },
-
-    footer:{
-        flexDirection: 'row',
-        bottom:4,
-        justifyContent: 'flex-end',
-    },
-    
     fLabel:{
         textAlign:'center',
         paddingHorizontal:10,
@@ -71,13 +35,13 @@ const styles = StyleSheet.create({
     },
 
     fButton:{
-        flex:1,
         flexDirection: 'row',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        margin:16,
-        ...stylesVar.strokeBoxSecondary,
+        margin:10,
+        ...stylesVar.strokeBoxSecondary
     },
 })
 

@@ -32,7 +32,7 @@ const Rep_Ocorrencia = (props) => {
   let Mapa = props.route.params?.map
   
   useEffect(()=>{
-    ServerConnection.categorias({}).then ((data)=>(setSubType,console.log(data)))
+    ServerConnection.categorias({}).then ((data)=>(setSubType(JSON.parse(data))))
     tipoPrincipal()
   },[])
 

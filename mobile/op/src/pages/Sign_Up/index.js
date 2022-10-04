@@ -6,20 +6,28 @@ import styles from './styles';
 
 const Sign_Up = () => {
     const navigation = useNavigation();
-    const [ nome, setNome ] = useState(undefined);
-    const [ cpf, setCpf ] = useState(undefined);
-    const [ email, setEmail ] = useState(undefined);
-    const [ senha, setSenha ] = useState(undefined);
-    const [ confSenha, setConfSenha ] = useState(undefined);
+    const [ state, setState ] = useState({
+        nome: undefined,
+        cpf: undefined,
+        email: undefined,
+        senha: undefined,
+        confSenha: undefined
+    });
+
 
     const cadastro = () => {
-        if(senha === confSenha) {
-            navigation.navigate({ name: 'User_Term', params: {
-                nome: nome, 
-                cpf: cpf, 
-                email: email, 
-                senha: senha 
-            } })
+        const { nome, cpf, email, senha, confSenha } = state;
+        if(!!nome && !!cpf && !!email && !!senha && !!confSenha)
+            if(senha === confSenha) {
+                navigation.navigate({ name: 'User_Term', params: {
+                    nome: nome, 
+                    cpf: cpf, 
+                    email: email, 
+                    senha: senha 
+                } })
+            }
+        else {
+
         }
     }
 
@@ -32,8 +40,8 @@ const Sign_Up = () => {
                     <TextInput
                         style={styles.bInputBox}
                         placeholder='Nome'
-                        onChangeText={setNome}
-                        value={nome}
+                        onChangeText={e => setState(prev => { return { ...prev, nome: e } })}
+                        defaultValue={state.nome}
                     />
                 </View>
 
@@ -42,8 +50,8 @@ const Sign_Up = () => {
                     <TextInput
                         style={styles.bInputBox}
                         placeholder='Email'
-                        onChangeText={setEmail}
-                        value={email}
+                        onChangeText={e => setState(prev => { return { ...prev, email: e } })}
+                        value={state.email}
                         keyboardType='email-address'
                     />
                 </View>
@@ -53,8 +61,8 @@ const Sign_Up = () => {
                     <TextInput
                         style={styles.bInputBox}
                         placeholder='CPF'
-                        onChangeText={setCpf}
-                        value={cpf}
+                        onChangeText={e => setState(prev => { return { ...prev, cpf: e } })}
+                        value={state.cpf}
                         keyboardType='decimal-pad'
                     />
                 </View>
@@ -65,8 +73,8 @@ const Sign_Up = () => {
                         style={styles.bInputBox}
                         placeholder='Senha'
                         secureTextEntry={true}
-                        value={senha}
-                        onChangeText={setSenha}
+                        value={state.senha}
+                        onChangeText={e => setState(prev => { return { ...prev, senha: e } })}
                     />
                 </View>
 
@@ -76,8 +84,8 @@ const Sign_Up = () => {
                         style={styles.bInputBox}
                         placeholder='Confimar Senha'
                         secureTextEntry={true}
-                        value={confSenha}
-                        onChangeText={setConfSenha}
+                        value={state.confSenha}
+                        onChangeText={e => setState(prev => { return { ...prev, confSenha: e } })}
                     />
                 </View>
 

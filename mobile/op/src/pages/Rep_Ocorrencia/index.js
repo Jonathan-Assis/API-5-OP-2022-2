@@ -85,7 +85,6 @@ const pickImage = async () => {
     quality:1,
   });
 
-  console.log(result)
   if(!result.cancelled){
     setImage(result.uri);
   }
@@ -125,6 +124,7 @@ if (hasGalleryPermission === false){
             <TouchableOpacity style={styles.bPickerBox}>
               <Picker
                 style={styles.bPickerTitle}
+                dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
                 selectedValue={selectedSubType}
                 onValueChange={(itemValue, index) =>
                   setSelectedSubType(itemValue, index)
@@ -146,6 +146,8 @@ if (hasGalleryPermission === false){
             <View style={styles.bInput}>
               <Text style={styles.bTitle}>Título:</Text>  
               <TextInput style={styles.bInputStrokeBox} 
+                multiple={true}
+                numberOfLines={1}
                 onChangeText={setTitulo}
                 value={titulo}
                 placeholder='Título da Ocorrência'
@@ -178,7 +180,7 @@ if (hasGalleryPermission === false){
             </TouchableOpacity>
              
             <View style={styles.bInput}>
-              <Text style={styles.bTitle}>Ocorrido:</Text>  
+              <Text style={styles.bTitle}>Sobre o ocorrido:</Text>  
               <TextInput style={styles.bInputBox} 
                 placeholder='Descrição do Problema'
                 multiline={true}

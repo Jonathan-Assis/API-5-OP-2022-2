@@ -12,33 +12,29 @@ const Settings = () => {
   const { signOut } = useAuth()
   const authData = JSON.parse(useAuth().authData)
 
-  return (
-    <View style={styles.container}>
-      <View style={styles.body}>
-        <View style={styles.image}>
-            <FontAwesomeIcon icon={ faImage } size={140} color={'white'}/>
-        </View>
-
-        <Text style={styles.bText}>{authData.nome}</Text>
-        <Text style={styles.bText}>{authData.email}</Text>
-
-        <View style={styles.footer}>
-          <TouchableOpacity style={styles.fButton}
-            onPress={() => navigation.navigate('Edit_Profile')}
-          >
-            <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
-            <Text style={styles.fLabel}>Editar Perfil</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.fButton}
-            onPress={signOut}
-          >
-            <FontAwesomeIcon icon={ faArrowRightFromBracket } size={24} color={'white'}/>
-            <Text style={styles.fLabel}>Sair da Conta</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+  return (<>
+  <View style={styles.container}>
+    <View style={styles.bImage}>
+        <FontAwesomeIcon icon={ faImage } size={140} color={'black'}/>
     </View>
+
+    <View style={styles.body}>
+      <TouchableOpacity style={styles.fButton}
+        onPress={() => navigation.navigate('Edit_Profile')}
+      >
+        <Text style={styles.fLabel}>Editar Perfil</Text>
+        <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.fButton}
+        onPress={signOut}
+      >
+        <Text style={styles.fLabel}>Sair da Conta</Text>
+        <FontAwesomeIcon icon={ faRightFromBracket } size={24} color={'white'}/>
+      </TouchableOpacity>
+    </View>
+  </View>
+    </>
   );
 }
 

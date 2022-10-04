@@ -60,6 +60,12 @@ const stylesVar = {
         color: "#000000",
         fontSize: 16
     },
+    buttonLabelPrimary:{
+        color: "#E9E9E9"
+    },
+    buttonLabelSecondary:{
+        color: "#3429A8"
+    },
 
     placeholderPrimary:{
         color: "#E9E9E9",

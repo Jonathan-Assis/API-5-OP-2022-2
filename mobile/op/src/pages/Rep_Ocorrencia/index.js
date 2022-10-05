@@ -118,7 +118,7 @@ if (hasGalleryPermission === false){
         onPress={()=> pickImage()}
         >
           <View style={styles.hImage}>
-            <FontAwesomeIcon icon={faImage} size={80} color='black' />
+            <FontAwesomeIcon icon={faCamera} size={80} color='black' />
             <Text style={styles.hTitle}>Tirar uma Foto</Text>  
         </View>
         </TouchableOpacity>

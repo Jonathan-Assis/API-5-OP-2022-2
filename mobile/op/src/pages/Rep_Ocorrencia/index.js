@@ -27,22 +27,46 @@ const Rep_Ocorrencia = (props) => {
   const [mapSelected, setMapSelected] = useState(true);
 
   const [subType,setSubType] = useState([]); 
+  const [datas,setDatas] = useState([]);
 
   let TipoOcorrencia = props.route.params?.TipoOcorrencia
   let Mapa = props.route.params?.map
   
   useEffect(()=>{
-    ServerConnection.categorias({}).then ((data)=>(setSubType(JSON.parse(data))))
-    tipoPrincipal()
+    setLoading (true)
+    ServerConnection.categorias({}).then ((data) => 
+    {
+      setDatas(JSON.parse(data))
+    }).finally (()=>{
+      setLoading (false)
+    })
+      /* (data)=>{ */
+      /* setDatas(JSON.parse(data)) */    
   },[])
 
 
- 
-  function tipoPrincipal(props){
+   //Busca de subCategoria
+   if(TipoOcorrencia !== "Outros")
+   {
+   datas.map(categoria =>
+  {
+    if (categoria.tipo===TipoOcorrencia)
+      {
+        setSubType
+        (
+          categoria.subCategorias
+        )
+      }
+    else  
+      Alert.alert("Aviso","Categoria não encontrada"); 
+    return categoria
+  })}
+
+  /* function tipoPrincipal(props){
     switch(TipoOcorrencia) {
 
       case 'Eletricidade':
-        return setSubType(subType['Eletricidade'['subCategorias']])
+        return setSubType(['Buraco','Sem asfalto'])
         break
 
         case 'Pavimentação':
@@ -62,9 +86,10 @@ const Rep_Ocorrencia = (props) => {
 
       default:
         Alert.alert("Aviso","Categoria não encontrada");        
-      }
-    }
+     }
+  } */
 
+  
 
   const [local,setLocal]=useState({lat:0,long:0})
 

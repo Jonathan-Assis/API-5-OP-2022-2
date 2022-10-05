@@ -7,24 +7,6 @@ let conn = axios.create({
 });
 
 export default class ServerConnection {
-    /**
-     * 
-     * @param {{
-     *  nome: string,
-     *  cpf: string,
-     *  endereco: string,
-     *  bairro: string,
-     *  senha: string
-     * }} data 
-     * 
-     * @example ServerConnection.cadastro({
-     *  nome: 'Guguinha',
-     *  cpf: '123456789/00',
-     *  endereco: 'Rua da Alegria, n°42',
-     *  bairro: 'Bairro do Abacate',
-     *  senha: 'senha123'
-     * })
-     */
     static async cadastro(data) {
         return await conn.post('/cidadao/cadastro', data);
     }
@@ -35,6 +17,14 @@ export default class ServerConnection {
 
     static async login(data) {
         return await conn.post('/cidadao/login', data);
+    }
+
+    static async editarPerfil(data) {
+        return await conn.put('/cidadao/update', data);
+    }
+
+    static async deletePerfil(data) {
+        return await conn.delete('/cidadao/delete', { data });
     }
 
     static async ocorrencia(data) {

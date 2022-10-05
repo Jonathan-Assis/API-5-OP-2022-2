@@ -5,15 +5,11 @@ import {useNavigation} from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faImage, faCircleCheck, IconDefinition, faCamera } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 
-import FileIcon from '../../assets/Icons/paperclip'
 import { useRoute } from '@react-navigation/native';
 import { text } from '@fortawesome/fontawesome-svg-core';
-
-
-
 
 const Rep_Ocorrencia = (props) => {
   const navigation = useNavigation();
@@ -23,14 +19,19 @@ const Rep_Ocorrencia = (props) => {
   const [titulo,setTitulo]=useState('')
   const [arquivo,setArquivo]=useState({})
   const [descricao,setDescricao]=useState('')
-  const [ loading, setLoading ] = useState(false);
-  const [mapSelected, setMapSelected] = useState(true);
+  const [loading, setLoading ] = useState(false);
+  const [mapSelected, setMapSelected] = useState(false);
 
   const [subType,setSubType] = useState([]); 
+<<<<<<< HEAD
   const [datas,setDatas] = useState([]);
 
   let TipoOcorrencia = props.route.params?.TipoOcorrencia
   let Mapa = props.route.params?.map
+=======
+  let TipoOcorrencia = props.route.params?.TipoOcorrencia
+  let coordinate = props.route.params?.coordinate
+>>>>>>> dev
   
   useEffect(()=>{
     setLoading (true)
@@ -45,6 +46,7 @@ const Rep_Ocorrencia = (props) => {
   },[])
 
 
+<<<<<<< HEAD
    //Busca de subCategoria
    if(TipoOcorrencia !== "Outros")
    {
@@ -83,16 +85,35 @@ const Rep_Ocorrencia = (props) => {
       case 'Outros':
         return setSubType(null)
         break
+=======
+  function tipoPrincipal(){
+    switch(TipoOcorrencia) {
+
+      case 'Eletricidade':
+        return setSubType(['Poste de Luz','Queda do poste','Fiação em curto'])
+
+        case 'Pavimentação':
+        return setSubType(['Buraco no asfalto','Buraco na calçada'])
+
+      case 'Natureza':
+        return setSubType(['Árvore caída','Árvore com risco de queda'])
+
+      case 'Esgoto':
+        return setSubType(['Foça aberta', 'Esgoto aberto', 'Caixa de Esgoto vazando'])
+>>>>>>> dev
 
       default:
         Alert.alert("Aviso","Categoria não encontrada");        
      }
   } */
 
+<<<<<<< HEAD
   
 
   const [local,setLocal]=useState({lat:0,long:0})
 
+=======
+>>>>>>> dev
   const [selectedSubType, setSelectedSubType] = useState([]);
 
   const newOcorrencia = () => {
@@ -127,14 +148,14 @@ const pickImage = async () => {
     quality:1,
   });
 
-  console.log(result)
   if(!result.cancelled){
     setImage(result.uri);
   }
 }
 
 if (hasGalleryPermission === false){
-  return Alert.alert('Permissão Negada!','A Permissão da galeria foi negada.')
+  Alert.alert('Permissão Negada!','A Permissão da galeria foi negada.')
+  navigation.navigate('Home');
 }
 
   return (
@@ -148,14 +169,24 @@ if (hasGalleryPermission === false){
           <Image source={{uri:image}} style={{width:150, height:150}}/>
         </TouchableOpacity>
       :
+      <View style={{display: 'flex', flexDirection: 'row'}}>
         <TouchableOpacity style={styles.header}
         onPress={()=> pickImage()}
         >
           <View style={styles.hImage}>
-            <FontAwesomeIcon icon={faImage} size={150} color='black' />
-            <Text style={styles.hTitle}>Selecione ou tire uma Foto.</Text>  
+            <FontAwesomeIcon icon={faImage} size={80} color='black'></FontAwesomeIcon>
+            <Text style={styles.hTitle}>Selecionar foto</Text>  
         </View>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.header}
+        onPress={()=> pickImage()}
+        >
+          <View style={styles.hImage}>
+            <FontAwesomeIcon icon={faCamera} size={80} color='black' />
+            <Text style={styles.hTitle}>Tirar uma Foto</Text>  
+        </View>
+        </TouchableOpacity>
+        </View>
       }
 
         <View style={styles.body}> 
@@ -167,6 +198,7 @@ if (hasGalleryPermission === false){
               <TouchableOpacity style={styles.bPickerBox}> 
               <Picker
                 style={styles.bPickerTitle}
+                dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
                 selectedValue={selectedSubType}
                 onValueChange={(itemValue, index) =>
                   setSelectedSubType(itemValue, index)
@@ -195,14 +227,17 @@ if (hasGalleryPermission === false){
             <View style={styles.bInput}>
               <Text style={styles.bTitle}>Título:</Text>  
               <TextInput style={styles.bInputStrokeBox} 
+                multiple={true}
+                numberOfLines={1}
                 onChangeText={setTitulo}
                 value={titulo}
                 placeholder='Título da Ocorrência'
                 placeholderTextColor={styles.bInputStrokeBox.color}
               ></TextInput>
             </View>
-            { mapSelected ?
-              <TouchableOpacity style={styles.bButtonMap}
+            
+            
+             <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
               onPress={() =>  {
                 navigation.navigate({
                   name: 'Maps',
@@ -211,26 +246,22 @@ if (hasGalleryPermission === false){
                   }
               })
               }}>
-              <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
-              <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
+                {!!props.route.params?.coordinate ? (<>
+                  <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
+                  <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
+                    </>
+                  )
+                  : 
+                  (
+                  <>
+                    <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
+                    <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
+                  </>)
+                }
             </TouchableOpacity>
-            :
-            <TouchableOpacity style={styles.bButtonMapSelected}
-              onPress={() =>  {
-                navigation.navigate({
-                  name: 'Maps',
-                  params: {
-                    idPage: route.name
-                  }
-              })
-              }}>
-              <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
-              <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
-            </TouchableOpacity>
-            }
-
+             
             <View style={styles.bInput}>
-              <Text style={styles.bTitle}>Ocorrido:</Text>  
+              <Text style={styles.bTitle}>Sobre o ocorrido:</Text>  
               <TextInput style={styles.bInputBox} 
                 placeholder='Descrição do Problema'
                 multiline={true}

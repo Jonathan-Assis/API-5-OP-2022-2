@@ -5,9 +5,8 @@ import Maps             from './Maps'
 import Sign_In          from './Sign_In'
 import Sign_Up          from './Sign_Up'
 import Rep_Ocorrencia   from './Rep_Ocorrencia'
-
 import Settings         from './Settings'
-import Splash_Screen     from './Splash_Screen'
+import Splash_Screen    from './Splash_Screen'
 import User_Term        from './User_Term'
 
 export {

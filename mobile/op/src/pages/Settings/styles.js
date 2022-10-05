@@ -2,8 +2,11 @@ import { StyleSheet } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
 
 const styles = StyleSheet.create({
-    container:{
+    container:{ flex: 1 },
+
+    body:{
         flex: 1,
+        width: '100%',
         alignItems: 'center',
         paddingHorizontal: 0,
         ...stylesVar.backgroundSecondary,
@@ -64,17 +67,6 @@ const styles = StyleSheet.create({
         ...stylesVar.textSecondary
     },
 
-    bRowBox:{
-        padding: 5,
-        paddingHorizontal:15,
-    },
-
-    footer:{
-        flexDirection: 'row',
-        bottom:4,
-        justifyContent: 'flex-end',
-    },
-    
     fLabel:{
         textAlign:'center',
         paddingHorizontal:10,
@@ -84,6 +76,7 @@ const styles = StyleSheet.create({
     fButton:{
         /* flex:1, */
         flexDirection: 'row',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,

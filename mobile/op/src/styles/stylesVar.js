@@ -26,7 +26,7 @@ const stylesVar = {
         fontWeight:'bold',
         color: "#000000",
         fontSize: 24,
-        fontWeight: '500'
+        fontWeight: '700'
     },
 
     titleSecondary:{
@@ -59,6 +59,12 @@ const stylesVar = {
     buttonLabel:{
         color: "#000000",
         fontSize: 16
+    },
+    buttonLabelPrimary:{
+        color: "#E9E9E9"
+    },
+    buttonLabelSecondary:{
+        color: "#3429A8"
     },
 
     placeholderPrimary:{

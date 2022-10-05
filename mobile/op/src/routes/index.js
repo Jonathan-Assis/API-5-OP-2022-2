@@ -3,8 +3,6 @@ import { NavigationContainer } from '@react-navigation/native'
 import { useAuth } from '../contexts/Auth'
 import { AuthRoutes } from './AuthRoutes'
 import { AppRoutes } from './AppRoutes'
-//import { View, Text, ActivityIndicator } from 'react-native'
-
 import { Loading } from '../components'
 
 export function Routes () {
@@ -12,7 +10,7 @@ export function Routes () {
     return (
         <NavigationContainer>
             <Loading loading={loading}>
-                { authData ? <AppRoutes /> : <AuthRoutes />}
+            { authData ? <AppRoutes /> : <AuthRoutes />}
             </Loading>
         </NavigationContainer>
     )

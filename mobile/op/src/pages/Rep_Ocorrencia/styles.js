@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         ...stylesVar.boxSecondary,
         ...stylesVar.placeholderSecondary,
         padding: 10,
-        minHeight: 100
+        minHeight: 100,
     },
 
     bPickerBox:{
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     
     bButton:{
         ...stylesVar.boxSecondary,
-        padding: 10,
+        padding: 14,
         marginVertical:10
     },
     bButtonMap:{

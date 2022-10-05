@@ -1,14 +1,38 @@
 import React,{useState} from 'react';
-import { View, Text,TextInput, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
+import { Loading } from '../../components'
+import ServerConnection from '../../services';
+import { useAuth } from '../../contexts/Auth'
 import styles from './styles';
-import ProfileIcon from '../../assets/Icons/file-person'
 
 const Edit_Profile = () => {
-  const [cep, setCep] = useState('');
-  const [logradouro, setLogradouro] = useState("");
-  const [bairro, setBairro] = useState("");
+  const authData = JSON.parse(useAuth().authData);
+  const { updateAuth, deleteAuth } = useAuth();
+
+  const [ data, setData ] = useState({
+    id: authData._id || undefined,
+    nome: authData.nome || undefined,
+    email: authData.email || undefined,
+    cpf: authData.cpf || undefined,
+    senha: undefined,
+    confSenha: undefined
+  });
+
+  const update = async () => {
+    const { id, nome, email, cpf, senha, confSenha } = data;
+    if(senha === confSenha) {
+      if(!!nome && !!email && !!cpf) {
+        let aux = !!senha ? senha : authData.senha;
+        updateAuth({
+          id, nome, email, cpf, senha: aux
+        });
+      }
+      else Alert.alert('Falha ao editar o Perfil', 'Informe um Nome, Email e CPF');
+    }
+    else Alert.alert('Falha ao editar o Perfil', 'Senhas diferentes');
+  }
 
   return (
     <ScrollView>
@@ -32,11 +56,11 @@ const Edit_Profile = () => {
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>Senha</Text>  
             <TextInput style={styles.bInputBox} 
-              placeholder='Insira sua Senha'
+              placeholder='Insira sua nova Senha'
               secureTextEntry={true}
             />
           </View>  
-           
+          
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>Confirmar Senha</Text>  
             <TextInput style={styles.bInputBox}

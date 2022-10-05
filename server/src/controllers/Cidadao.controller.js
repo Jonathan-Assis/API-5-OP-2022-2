@@ -1,4 +1,4 @@
-const { ObjectID, MongoClient, ObjectId } = require('mongodb');
+const { ObjectId, MongoClient } = require('mongodb');
 const url = process.env.DB;
 
 class CidadaoController {
@@ -6,8 +6,7 @@ class CidadaoController {
     {
         nome: string,
         cpf: string,
-        endereco: string,
-        bairro: string,
+        email: string,
         senha: string (criptografado)
     }
     */
@@ -17,10 +16,23 @@ class CidadaoController {
 
         try {
             const opdb = client.db('opdb');
-            const result = await opdb.collection('cidadao')
-                .insertOne(data);
-            
-            res.json(!!result);
+
+            opdb.collection('cidadao').find({ cpf: data.cpf }).toArray((err, value) => {
+                if(err) throw err;
+                try {
+                    if(!value.length) {
+                        opdb.collection('cidadao')
+                        .insertOne(data)
+                        .then(result => res.json(!!result))
+                        .catch(e => { throw e });
+                    }
+                    else throw 'CPF já cadastrado'
+                }
+                catch(e) {
+                    console.error(e);
+                    res.status(400).json({ error: e });
+                }
+            })
         }
         catch(e) {
             console.error(e);
@@ -42,7 +54,10 @@ class CidadaoController {
                 senha: data.senha 
             });
             
-            res.json(result);
+            if(!!result)
+                res.json(result);
+            else
+                throw 'CPF ou Senha inválidos'
         }
         catch(e) {
             console.error(e);
@@ -90,8 +105,7 @@ class CidadaoController {
                 { $set: {
                     nome: data.nome,
                     cpf: data.cpf,
-                    endereco: data.endereco,
-                    bairro: data.bairro,
+                    email: data.email,
                     senha: data.senha
                 } }
                 /* , { upsert: true } */
@@ -110,12 +124,12 @@ class CidadaoController {
 
     static async deleteCidadao(req, res) {
         const client = new MongoClient(url);
-        const data = req.body;
+        const { id } = req.body;
 
         try {
             const opdb = client.db('opdb');
             const result = await opdb.collection('cidadao').deleteOne({
-                _id: new ObjectId(data.id)
+                _id: new ObjectId(id)
             });
 
             res.json({ deletedCount: result.deletedCount });

@@ -12,9 +12,8 @@ const StackHomeButton = () => {
             headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color, headerStyle:{...stylesVar.toolbar}
         }}>
             <StackHome.Screen name='Home' component={Pages.Home} options={{headerShown:false}} />
-            <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} /> 
+            <StackHome.Screen name='Rep_Ocorrencia' component={Pages.Rep_Ocorrencia} options={{title:'Reportar Ocorrência'}} />        
             <StackHome.Screen name='Maps' component={Pages.Maps} options={{headerShown:false}} />        
-            <StackHome.Screen name='Start_Screen' component={Pages.Splash_Screen} />  
         </StackHome.Navigator>
     )
 }

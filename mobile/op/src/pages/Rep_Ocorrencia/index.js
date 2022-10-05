@@ -23,15 +23,11 @@ const Rep_Ocorrencia = (props) => {
   const [mapSelected, setMapSelected] = useState(false);
 
   const [subType,setSubType] = useState([]); 
-<<<<<<< HEAD
   const [datas,setDatas] = useState([]);
 
   let TipoOcorrencia = props.route.params?.TipoOcorrencia
   let Mapa = props.route.params?.map
-=======
-  let TipoOcorrencia = props.route.params?.TipoOcorrencia
   let coordinate = props.route.params?.coordinate
->>>>>>> dev
   
   useEffect(()=>{
     setLoading (true)
@@ -46,7 +42,6 @@ const Rep_Ocorrencia = (props) => {
   },[])
 
 
-<<<<<<< HEAD
    //Busca de subCategoria
    if(TipoOcorrencia !== "Outros")
    {
@@ -64,56 +59,8 @@ const Rep_Ocorrencia = (props) => {
     return categoria
   })}
 
-  /* function tipoPrincipal(props){
-    switch(TipoOcorrencia) {
-
-      case 'Eletricidade':
-        return setSubType(['Buraco','Sem asfalto'])
-        break
-
-        case 'Pavimentação':
-        return setSubType(['Buraco','Sem asfalto'])
-        break
-
-      case 'Natureza':
-        return setSubType(['Árvore caída','Árvore com risco de queda','Raizes na rua'])
-        break
-
-      case 'Esgoto':
-        return setSubType(['Foça aberta', 'Esgoto aberto', 'Caixa de Esgoto vazando'])
-        break
-      case 'Outros':
-        return setSubType(null)
-        break
-=======
-  function tipoPrincipal(){
-    switch(TipoOcorrencia) {
-
-      case 'Eletricidade':
-        return setSubType(['Poste de Luz','Queda do poste','Fiação em curto'])
-
-        case 'Pavimentação':
-        return setSubType(['Buraco no asfalto','Buraco na calçada'])
-
-      case 'Natureza':
-        return setSubType(['Árvore caída','Árvore com risco de queda'])
-
-      case 'Esgoto':
-        return setSubType(['Foça aberta', 'Esgoto aberto', 'Caixa de Esgoto vazando'])
->>>>>>> dev
-
-      default:
-        Alert.alert("Aviso","Categoria não encontrada");        
-     }
-  } */
-
-<<<<<<< HEAD
-  
-
   const [local,setLocal]=useState({lat:0,long:0})
 
-=======
->>>>>>> dev
   const [selectedSubType, setSelectedSubType] = useState([]);
 
   const newOcorrencia = () => {

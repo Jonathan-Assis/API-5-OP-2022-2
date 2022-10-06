@@ -31,16 +31,13 @@ const Rep_Ocorrencia = (props) => {
   
   useEffect(()=>{
     setLoading (true)
-    ServerConnection.categorias({}).then ((data) => 
+    ServerConnection.categorias({}).then (({data}) => 
     {
-      setDatas(JSON.parse(data))
+      setDatas(data/* JSON.parse(data) */)
     }).finally (()=>{
       setLoading (false)
     })
-      /* (data)=>{ */
-      /* setDatas(JSON.parse(data)) */    
-  },[])
-
+  },[TipoOcorrencia])
 
    //Busca de subCategoria
    if(TipoOcorrencia !== "Outros")
@@ -79,12 +76,6 @@ const Rep_Ocorrencia = (props) => {
 const [hasGalleryPermission,setHasGalleryPermission]=useState(null)
 const [image,setImage] = useState(null)
 
-useEffect(()=>{
-  (async ()=>{
-    const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync()
-    setHasGalleryPermission(galleryStatus.status === 'granted')
-  })()
-},[])
 
 const pickImage = async () => {
   let result = await ImagePicker.launchImageLibraryAsync({

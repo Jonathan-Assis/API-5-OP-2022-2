@@ -4,7 +4,7 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        alignItems: 'center',
+        //alignItems: 'center',
         ...stylesVar.backgroundSecondary
     },
     header:{
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
  
     body: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center',
+        justifyContent: 'flex-end',
     },
-
+    
     bContainer: {
         flex: 1,
+        width:'100%',
         padding:25,
         paddingTop:10,
         borderTopEndRadius: 30,

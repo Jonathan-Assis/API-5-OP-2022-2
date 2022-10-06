@@ -9,15 +9,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#00000085'
     },
     modal:{
-        width:'70%',
-        height:'50%',
+        width:'73%',
+        padding:15,
         alignItems: 'center',
-        justifyContent: 'space-between',
         ...stylesVar.boxSecondary
     },
     header:{
         alignItems: 'center',
-        margin:10
     },
     hIcon:{
         padding:25,
@@ -27,38 +25,42 @@ const styles = StyleSheet.create({
     hTitle:{
         marginTop:10,
         textAlign: 'center',
-        ...stylesVar.titleSecondary,
-        fontSize:20,
-        backgroundColor: '#f0f',
-
+        ...stylesVar.titlePrimary,
+        fontSize:22,
+        
     },
     body:{
-        backgroundColor: '#f0f',
-        margin:15,
+        marginVertical:15,
     },
     bDescription:{
-
+        ...stylesVar.titleSecondary,
+        opacity:0.6,
+        flexWrap:'wrap',
+        fontSize:17,
     },
     footer:{
-        margin:16,
         flexDirection: 'row',
     },
     fButtonPrimary:{
         flex:1,
         alignItems: 'center',
-        marginHorizontal:10,
+        justifyContent: 'center',
+        marginHorizontal:5,
         ...stylesVar.boxPrimary
     },
     fButtonPrimaryLabel:{
+        padding:12,
         ...stylesVar.buttonLabelPrimary
     },
     fButtonSecondary:{
         flex:1,
         alignItems: 'center',
-        marginHorizontal:10,
+        justifyContent: 'center',
+        marginHorizontal:5,
         ...stylesVar.strokeBoxPrimary
     },
     fButtonSecondaryLabel:{
+        padding:12,
         ...stylesVar.buttonLabelSecondary
     },
 })

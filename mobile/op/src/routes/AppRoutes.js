@@ -28,9 +28,9 @@ export function AppRoutes (){
                 <Tab.Screen name='Left' component={StackHomeButton} options={{tabBarLabel:'Reportar', tabBarIcon:({color})=>(
                 <HomeIcon size={30} fill={color} /> 
                 )}} />
-               {/*  <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon:({color})=>(
+                {/* <Tab.Screen name='Center' component={StackFormButton} options={{tabBarLabel:'Chamados', tabBarIcon:({color})=>(
                 <FormIcon size={25} fill={color} /> 
-                )}} /> */} 
+                )}} /> */}
                 <Tab.Screen name='Right' component={StackSettingsButton} options={{tabBarLabel:'Opções', tabBarIcon:({color})=>(
                 <SettingsIcon size={26} fill={color} /> 
                 )}} />

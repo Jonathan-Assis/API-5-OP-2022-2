@@ -45,32 +45,12 @@ const Edit_Profile = () => {
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>Nome</Text>  
-            <TextInput
-              style={styles.bInputBox}
-              placeholder='Nome Completo'
-              defaultValue={data.nome}
-              onChangeText={value => setData(prev => { return {...prev, nome: value} })}
-            />
-          </View>
-
-          <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Email</Text>
-            <TextInput
-              style={styles.bInputBox}
-              placeholder='Insira seu Email'
-              value={data.email}
-              onChangeText={value => setData(prev => { return {...prev, email: value} })}
-            />
+            <TextInput style={styles.bInputBox} placeholder='Nome Completo'/>
           </View>
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>CPF</Text>
-            <TextInput
-              style={styles.bInputBox}
-              placeholder='Insira seu CPF'
-              value={data.cpf}
-              onChangeText={value => setData(prev => { return {...prev, cpf: value} })}
-            />  
+            <TextInput style={styles.bInputBox} placeholder='Insira seu CPF'/>  
           </View>
 
           <View style={styles.bInput}>
@@ -78,8 +58,6 @@ const Edit_Profile = () => {
             <TextInput style={styles.bInputBox} 
               placeholder='Insira sua nova Senha'
               secureTextEntry={true}
-              value={data.senha}
-              onChangeText={value => setData(prev => { return {...prev, senha: value} })}
             />
           </View>  
           
@@ -88,20 +66,20 @@ const Edit_Profile = () => {
             <TextInput style={styles.bInputBox}
               placeholder='Insira novamente a Senha'
               secureTextEntry={true}
-              value={data.confSenha}
-              onChangeText={value => setData(prev => { return {...prev, confSenha: value} })}
             />
           </View>
 
           <TouchableOpacity style={styles.bButton}
-            onPress={update}
+            onPress={() => {
+              console.log('me clickaram')
+            }}
           >
             <Text style={styles.bLabel}>Salvar Alterações</Text>
           </TouchableOpacity >
 
           <TouchableOpacity style={styles.bButton}
             onPress={() => {
-              deleteAuth({ id: data.id })
+              console.log('me clickaram')
             }}
           >
             <Text style={styles.bLabel}>Deletar Conta</Text>

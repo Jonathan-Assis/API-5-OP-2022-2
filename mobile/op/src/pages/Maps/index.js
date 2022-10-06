@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Alert, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, FlatList } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { Loading } from '../../components'
+import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { latlng } from "../Registros/axios";
@@ -10,15 +10,14 @@ import styles from "./styles";
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {faXmark, faLocationDot} from "@fortawesome/free-solid-svg-icons";
 import GeoIcon from "../../assets/Icons/geo-alt";
 import GeoIconFill from "../../assets/Icons/geo-alt-fill";
-import stylesVar from "../../styles/stylesVar";
 
 const Maps = () => {
   const navigation = useNavigation();
   const [pin, setPin] = useState({});
-  const [loading,setLoading] = useState(true)
+  const [loading,setLoading] = useState(false)
   const [pinSelected, setPinSelected] = useState(false);
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
@@ -27,35 +26,45 @@ const Maps = () => {
 
   const filterData = markers.filter((e) => e.category === filterMarkers);
 
+ 
+  const close = () =>{
+  navigation.goBack()
+  setVisible(false)
+  }
+  const [visible,setVisible]=useState(false)
+
+
+
   useEffect(() => {
     permission();
   }, []);
 
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
+
     if (status !== "granted") {
-      Alert.alert(
-        "Permissão de localização negada!",
-        "É necessário a permissão para o uso do Mapa.",
-        [{ text: "Ok" }]
-      );
-      return navigation.goBack();
+      setVisible(true)
     } else {
-      const { coords } = await Location.getCurrentPositionAsync({
-        enableHighAccuracy: true,
-      });
-      if (coords) {
-        setCoordinate({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
+      try {
+        setLoading(true)
+        const { coords } = await Location.getCurrentPositionAsync({
+          enableHighAccuracy: true,
         });
-        setOrigin({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          latitudeDelta: 0.004,
-          longitudeDelta: 0.004,
-        });
+        if (coords) {
+          setCoordinate({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          });
+          setOrigin({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            latitudeDelta: 0.004,
+            longitudeDelta: 0.004,
+          });
+        }
         setLoading(false)
+      } catch(e) {
+        setVisible(true)
       }
     }
 
@@ -65,6 +74,17 @@ const Maps = () => {
 
   return (
     <>
+        <PopUpAlert 
+         icon={
+          <FontAwesomeIcon icon={faLocationDot} size={60} color='white' />
+          }
+          title='Permissão de Localização Negada! ' 
+          description='É necessário a habilitar a permissão de localização para o uso do Mapa.'
+          buttonPrimaryTitle='Fechar'
+          onClose={close}
+          visible={visible}
+          setVisible={setVisible}
+        />
       <Loading loading={loading}>
         <MapView
           style={{ flex: 1 }}

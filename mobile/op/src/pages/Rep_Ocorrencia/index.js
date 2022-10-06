@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faImage, faCircleCheck, IconDefinition, faCamera } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 
 import { useRoute } from '@react-navigation/native';
@@ -28,7 +28,6 @@ const Rep_Ocorrencia = (props) => {
   useEffect(()=>{
     tipoPrincipal()
   },[])
-
 
 
   function tipoPrincipal(){
@@ -105,15 +104,24 @@ if (hasGalleryPermission === false){
           <Image source={{uri:image}} style={{width:150, height:150}}/>
         </TouchableOpacity>
       :
+      <View style={{display: 'flex', flexDirection: 'row'}}>
         <TouchableOpacity style={styles.header}
         onPress={()=> pickImage()}
-        
         >
           <View style={styles.hImage}>
-            <FontAwesomeIcon icon={faImage} size={150} color='black' />
-            <Text style={styles.hTitle}>Selecione ou tire uma Foto.</Text>  
+            <FontAwesomeIcon icon={faImage} size={80} color='black'></FontAwesomeIcon>
+            <Text style={styles.hTitle}>Selecionar foto</Text>  
         </View>
         </TouchableOpacity>
+        <TouchableOpacity style={styles.header}
+        onPress={()=> pickImage()}
+        >
+          <View style={styles.hImage}>
+            <FontAwesomeIcon icon={faCamera} size={80} color='black' />
+            <Text style={styles.hTitle}>Tirar uma Foto</Text>  
+        </View>
+        </TouchableOpacity>
+        </View>
       }
 
         <View style={styles.body}> 

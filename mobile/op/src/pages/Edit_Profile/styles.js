@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
-        padding: 5,
+        padding: 8,
         paddingHorizontal:15,
     },
 
@@ -39,10 +39,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 
-    bEndereçoBox:{
-        flex:0.4,
-    },
-
     bLabel:{
         textAlign:'center',
         ...stylesVar.titleTertiary
@@ -50,7 +46,7 @@ const styles = StyleSheet.create({
     
     bButton:{
         ...stylesVar.boxPrimary,
-        padding: 10,
+        padding: 12,
         marginVertical:10
     },
 })

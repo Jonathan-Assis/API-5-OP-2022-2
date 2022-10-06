@@ -25,8 +25,8 @@ export const AuthProvider = ({children}) =>{
         setLoading(true);
         await ServerConnection.login({cpf,senha})
         .then(({data}) => {
-            setAuth(String.toString(data));
-            AsyncStorage.setItem('@AuthData',(String.toString(data)));
+            setAuth(JSON.stringify(data));
+            AsyncStorage.setItem('@AuthData',(JSON.stringify(data)));
             console.log("Cidadão acessou a conta!")
         })
         .catch(() => {
@@ -51,6 +51,45 @@ export const AuthProvider = ({children}) =>{
         });
     }
 
+    async function updateAuth(data) {
+        const { id, nome, email, cpf, senha } = data;
+
+        setLoading(true);
+        await ServerConnection.editarPerfil({
+            id, nome, email, cpf, senha
+        })
+        .then(res => {
+            if(!!res.data.modifiedCount) {
+                setAuth(JSON.stringify(data));
+                AsyncStorage.setItem('@AuthData',(JSON.stringify(data)));
+            }
+            else {
+                throw false;
+            }
+        })
+        .finally(() => {
+            setLoading(false);
+        })
+        .catch(() => {});
+    }
+
+    async function deleteAuth(id) {
+        setLoading(true);
+        await ServerConnection.deletePerfil({ id: id })
+        .then(({data}) => {
+            if(!!data.deletedCount) {
+                console.log('Conta deletada com sucesso');
+            }
+            else throw 'Falha ao deletar a conta';
+        })
+        .finally(() => {
+            setAuth(undefined);
+            AsyncStorage.removeItem('@AuthData');
+            setLoading(false);
+        })
+        .catch(e => Alert.alert('Erro', e));
+    }
+
     async function signOut() {
         setAuth(undefined)
         AsyncStorage.removeItem('@AuthData')
@@ -58,7 +97,7 @@ export const AuthProvider = ({children}) =>{
     }
 
     return (
-        <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp}}>
+        <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
             {children}
         </AuthContext.Provider>
     )

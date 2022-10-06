@@ -1,51 +1,56 @@
 import React, {useState} from 'react'
-import {View, Text, Modal, TouchableOpacity, Alert} from 'react-native'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
+import {View, Text, Modal, TouchableOpacity} from 'react-native'
+
 import styles from './styles'
 
-export default function PopUp(){
-    const [visible,setVisible]=useState(true)
+const PopUpActions = ({ 
+    icon, 
+    title, 
+    description, 
+    buttonPrimaryTitle, 
+    buttonSecondaryTitle, 
+    onConfirm, 
+    onClose,
+    visible,
+    setVisible
+    }) => {
 
 return(
     <Modal
-        animationType="slide"
+        animationType="fade"
         visible={visible}
         onRequestClose={()=>setVisible(false)}
+        hardwareAccelerated={true}
         transparent
     >
         <View style={styles.container}>
             <View style={styles.modal}>
                 <View style={styles.header}>
                     <View style={styles.hIcon}>
-                        <FontAwesomeIcon icon={faLocationDot} size={60} color='white' />
+                        {icon}
                     </View>
-                    <Text style={styles.hTitle}>Titulo do Modal</Text>
+                    <Text style={styles.hTitle}>{title}</Text>
                 </View>
                 <View style={styles.body}>
-                    <Text>Descrição do modalaaaaa
-                    Descrição do modal
-                    Descrição do modal
-                    Descrição do modal
-                    </Text>
+                    <Text style={styles.bDescription}>{description}</Text>
                 </View>
                 
                 <View style={styles.footer}>
                     <TouchableOpacity
                         style={styles.fButtonSecondary}
-                        onPress={()=>{
-                            setVisible(false);
-                        }}
+                        onPress={
+                            onClose
+                        }
                         >
-                        <Text style={styles.fButtonSecondaryLabel}>Fechar</Text>
+                        <Text style={styles.fButtonSecondaryLabel}>{buttonSecondaryTitle}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.fButtonPrimary}
-                        onPress={()=>{
-                            Alert.alert("Testado","Teste testado")
-                        }}
+                        onPress={
+                            onConfirm
+                        }
                         >
-                        <Text style={styles.fButtonPrimaryLabel}>Confirmar</Text>
+                        <Text style={styles.fButtonPrimaryLabel}>{buttonPrimaryTitle}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -54,3 +59,52 @@ return(
     </Modal>
     )
 }
+
+const PopUpAlert = ({
+    icon, 
+    title, 
+    description, 
+    buttonPrimaryTitle, 
+    onClose,
+    visible,
+    setVisible
+}) => {
+
+return(
+    <Modal
+        animationType="fade"
+        visible={visible}
+        onRequestClose={()=>setVisible(false)}
+        hardwareAccelerated={true}
+        transparent
+    >
+        <View style={styles.container}>
+            <View style={styles.modal}>
+                <View style={styles.header}>
+                    <View style={styles.hIcon}>
+                        {icon}
+                    </View>
+                    <Text style={styles.hTitle}>{title}</Text>
+                </View>
+                <View style={styles.body}>
+                    <Text style={styles.bDescription}>{description}</Text>
+                </View>
+                
+                <View style={styles.footer}>
+                    <TouchableOpacity
+                        style={styles.fButtonSecondary}
+                        onPress={
+                            onClose
+                        }
+                        >
+                        <Text style={styles.fButtonSecondaryLabel}>{buttonPrimaryTitle}</Text>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        </View>
+    </Modal>
+    )
+}
+
+export { PopUpActions, PopUpAlert }

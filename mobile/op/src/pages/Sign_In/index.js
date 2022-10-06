@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
-
-import MegaphoneIcon from '../../assets/Icons/megaphone-fill';
 
 const Sign_In = () => {
   const navigation = useNavigation();
@@ -16,7 +14,7 @@ const Sign_In = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <MegaphoneIcon size={120} fill='white' />
+        <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.hLogotype} />
         <Text style={styles.hTitle}>Ocorrências Públicas</Text>
       </View>
 

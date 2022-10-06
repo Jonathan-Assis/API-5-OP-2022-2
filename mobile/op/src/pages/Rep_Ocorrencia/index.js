@@ -40,6 +40,7 @@ const Rep_Ocorrencia = (props) => {
   },[TipoOcorrencia])
 
    //Busca de subCategoria
+   useEffect(() => {
    if(TipoOcorrencia !== "Outros")
    {
    datas.map(categoria =>
@@ -54,7 +55,7 @@ const Rep_Ocorrencia = (props) => {
     else  
       Alert.alert("Aviso","Categoria não encontrada"); 
     return categoria
-  })}
+  })}  },[])
 
   const [local,setLocal]=useState({lat:0,long:0})
 

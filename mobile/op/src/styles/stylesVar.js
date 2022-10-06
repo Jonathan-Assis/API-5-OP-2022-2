@@ -58,20 +58,25 @@ const stylesVar = {
 
     buttonLabel:{
         color: "#000000",
+        fontWeight: '500',
         fontSize: 16
     },
     buttonLabelPrimary:{
-        color: "#E9E9E9"
+        color: "#E9E9E9",
+        fontWeight: '500',
+        fontSize: 16
     },
     buttonLabelSecondary:{
-        color: "#3429A8"
+        color: "#3429A8",
+        fontWeight: '500',
+        fontSize: 16
     },
-
+    
     placeholderPrimary:{
         color: "#E9E9E9",
         fontSize: 16
     },
-
+    
     placeholderSecondary:{
         color: "#000000",
         fontSize: 16

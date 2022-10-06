@@ -25,13 +25,13 @@ const styles = StyleSheet.create({
 
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
-        padding: 5,
+        padding: 8,
         paddingHorizontal:15,
     },
 
     bButton:{
         ...stylesVar.boxPrimary,
-        padding: 10,
+        padding: 12,
         marginVertical:10
     },
 

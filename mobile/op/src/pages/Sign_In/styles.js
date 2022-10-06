@@ -5,25 +5,30 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         ...stylesVar.backgroundPrimary,
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
     },
     header:{
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom:20
+        marginBottom:10,
+
+    },
+    hLogotype:{
+        width:150, height:150
     },
 
     hTitle:{
         ...stylesVar.titlePrimary,
+        fontWeight:'500',
         color: '#E9E9E9',
     },
 
     body: {
-        flexDirection: 'row',
+        justifyContent: 'flex-end',
     },
 
     bForm:{
-        flex: 1,
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
@@ -35,6 +40,7 @@ const styles = StyleSheet.create({
     },
     bDescription:{
         ...stylesVar.titleSecondary,
+        fontSize:16,
         opacity:0.5,
         marginBottom:5    
     },
@@ -46,7 +52,7 @@ const styles = StyleSheet.create({
 
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
-        padding: 5,
+        padding: 8,
         paddingHorizontal:15,
     },
 
@@ -57,7 +63,7 @@ const styles = StyleSheet.create({
     
     bButton:{
         ...stylesVar.boxPrimary,
-        padding: 10,
+        padding: 12,
         marginVertical:10
     },
 })

@@ -96,8 +96,7 @@ if (hasGalleryPermission === false){
 }
 
   return (
-  <ScrollView>
-    <View style={styles.container}>
+  <ScrollView style={styles.container}>
       { image ?
         <TouchableOpacity style={styles.header}
           onPress={()=> setImage(null)}
@@ -146,7 +145,7 @@ if (hasGalleryPermission === false){
             <View style={styles.bInput}>
               <Text style={styles.bTitle}>Título:</Text>  
               <TextInput style={styles.bInputStrokeBox} 
-                multiple={true}
+                multiline={true}
                 numberOfLines={1}
                 onChangeText={setTitulo}
                 value={titulo}
@@ -195,7 +194,6 @@ if (hasGalleryPermission === false){
 
           </View>
         </View>
-      </View>
     </ScrollView>
   );
 }

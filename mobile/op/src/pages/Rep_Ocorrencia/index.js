@@ -187,7 +187,7 @@ if (hasGalleryPermission === false){
             </TouchableOpacity>
              
             <View style={styles.bInput}>
-              <Text style={styles.bTitle}>Sobre o ocorrido:</Text>  
+              <Text style={styles.bTitle}>Sobre o Ocorrido:</Text>  
               <TextInput style={styles.bInputBox} 
                 placeholder='Descrição do Problema'
                 multiline={true}

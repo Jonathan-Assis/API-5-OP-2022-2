@@ -5,12 +5,12 @@ import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import { latlng } from "../Registros/axios";
-import { categorias } from "../Registros/categorias";
+//import { categorias } from "../Registros/categorias";
 import styles from "./styles";
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {faXmark, faLocationDot} from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import GeoIcon from "../../assets/Icons/geo-alt";
 import GeoIconFill from "../../assets/Icons/geo-alt-fill";
 
@@ -26,14 +26,21 @@ const Maps = () => {
 
   const filterData = markers.filter((e) => e.category === filterMarkers);
 
+  const [visible,setVisible]=useState(false)
+  const [popUpPermission, setPopUpPermission] = useState({
+    icon: undefined,
+    title: undefined,
+    description: undefined,
+    buttonPrimaryTitle: undefined,
+    buttonSecondaryTitle: undefined,
+    onConfirm: ()=>{},
+    onClose: ()=>{},
+  })
  
   const close = () =>{
-  navigation.goBack()
-  setVisible(false)
+    navigation.goBack()
+    setVisible(false)
   }
-  const [visible,setVisible]=useState(false)
-
-
 
   useEffect(() => {
     permission();
@@ -43,6 +50,13 @@ const Maps = () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== "granted") {
+      setPopUpPermission({
+        onClose: close,
+        icon: faLocationDot,
+        title: 'Permissão Negada!',
+        description: 'As permissões de localização foram negadas, é necessário aceitar as permissões para o uso mapa',
+        buttonPrimaryTitle: 'Fechar'
+      })
       setVisible(true)
     } else {
       try {
@@ -64,6 +78,13 @@ const Maps = () => {
         }
         setLoading(false)
       } catch(e) {
+        setPopUpPermission({
+          onClose: close,
+          icon: faLocationDot,
+          title: 'Localização Desativa!',
+          description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
+          buttonPrimaryTitle: 'Fechar'
+        })
         setVisible(true)
       }
     }
@@ -76,12 +97,12 @@ const Maps = () => {
     <>
         <PopUpAlert 
          icon={
-          <FontAwesomeIcon icon={faLocationDot} size={60} color='white' />
+          <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
           }
-          title='Permissão de Localização Negada! ' 
-          description='É necessário a habilitar a permissão de localização para o uso do Mapa.'
-          buttonPrimaryTitle='Fechar'
-          onClose={close}
+          title={popUpPermission.title}
+          description={popUpPermission.description}
+          buttonPrimaryTitle={popUpPermission.buttonPrimaryTitle}
+          onClose={popUpPermission.onClose}
           visible={visible}
           setVisible={setVisible}
         />

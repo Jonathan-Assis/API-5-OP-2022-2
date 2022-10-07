@@ -3,7 +3,6 @@ import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert } from 'react
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleUser, faUserPen, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
 import { PopUpActions } from '../../components'
-import ServerConnection from '../../services';
 import { useAuth } from '../../contexts/Auth'
 import styles from './styles';
 

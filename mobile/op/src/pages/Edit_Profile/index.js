@@ -36,7 +36,7 @@ const Edit_Profile = () => {
     else Alert.alert('Falha ao editar o Perfil', 'Senhas diferentes');
   }
 
-const [visible,setVisible]=useState(false)
+  const [visible,setVisible]=useState(false)
   const [popUpData, setPopUpData] = useState({
     icon: undefined,
     title: undefined,
@@ -69,7 +69,7 @@ const [visible,setVisible]=useState(false)
         <View style={styles.body} > 
 
           <View style={styles.bImage}>
-            <FontAwesomeIcon icon={ faCircleUser } size={140} color={'black'}/>
+            <FontAwesomeIcon icon={ faCircleUser } size={120} color={'black'}/>
           </View>
 
           <View style={styles.bInput}>

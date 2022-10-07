@@ -56,13 +56,14 @@ const Home = () => {
               <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
                 name: 'Rep_Ocorrencia',
                 params:{
-                  TipoOcorrencia:'Esgoto'
+                  TipoOcorrencia:'Saneamento'
                 }
               })}>
                 <PipeIcon size={50} />
-                <Text style={styles.bButtonTitle}>Esgoto</Text>
+                <Text style={styles.bButtonTitle}>Saneamento</Text>
               </TouchableOpacity>
             </View>
+            
             <View style={styles.bColumn}>
               <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
                 name: 'Rep_Ocorrencia',

@@ -7,6 +7,7 @@ import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMapLocationDot, faImage, faCircleCheck, IconDefinition, faCamera } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
+import {Loading} from '../../components'
 
 import { useRoute } from '@react-navigation/native';
 import { text } from '@fortawesome/fontawesome-svg-core';
@@ -39,6 +40,7 @@ const Rep_Ocorrencia = (props) => {
     })
   },[TipoOcorrencia])
 
+
    //Busca de subCategoria
    useEffect(() => {
    if(TipoOcorrencia !== "Outros")
@@ -48,21 +50,19 @@ const Rep_Ocorrencia = (props) => {
     if (categoria.tipo===TipoOcorrencia)
       {
         setSubType
-        (
-          categoria.subCategorias
-        )
+          (
+            categoria.subCategorias
+          )
       }
-    else  
-      Alert.alert("Aviso","Categoria não encontrada"); 
     return categoria
-  })}  },[])
+  })}  },[datas])
 
   const [local,setLocal]=useState({lat:0,long:0})
 
   const [selectedSubType, setSelectedSubType] = useState([]);
 
-  const newOcorrencia = () => {
-    /* if(titulo !== '' && descricao !== '') {
+/*   const newOcorrencia = () => {
+ if(titulo !== '' && descricao !== '') {
         setLoading(true);
         ServerConnection.ocorrencia({
             cpf, titulo, categoria:selectedType,foto:arquivo, descricao, local
@@ -71,8 +71,8 @@ const Rep_Ocorrencia = (props) => {
         ).finally(() => {
             setLoading(false);
         });
-    } */
-}
+    } 
+} */
 
 const [hasGalleryPermission,setHasGalleryPermission]=useState(null)
 const [image,setImage] = useState(null)
@@ -97,7 +97,10 @@ if (hasGalleryPermission === false){
   navigation.navigate('Home');
 }
 
+console.log(subType)
+
   return (
+    <Loading loading={loading}>
   <ScrollView style={styles.container}>
       { image ?
         <TouchableOpacity style={styles.header}
@@ -130,38 +133,42 @@ if (hasGalleryPermission === false){
         <View style={styles.body}> 
           <View style={styles.bContainer}> 
 
-            { !!subType ? (<>
-              <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
-              <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
-              <TouchableOpacity style={styles.bPickerBox}> 
-              <Picker
-                style={styles.bPickerTitle}
-                dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
-                selectedValue={selectedSubType}
-                onValueChange={(itemValue, index) =>
-                  setSelectedSubType(itemValue, index)
-                }
-              >
-                {subType.map((subType, index) =>
-                  {
-                    return (
-                      <Picker
-                        style={{ flex: 1 }}
-                        label={subType}
-                        value={subType}
-                        key={index}
-                      />
-                    );
-                  })
-                }
-              </Picker>
-            </TouchableOpacity>
-            </>)
-            : (<>
-           <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
-            </>)
+          
+            {!!subType && !!subType.length ? 
+              (<>
+                <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+                <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
+                <TouchableOpacity style={styles.bPickerBox}> 
+                  <Picker
+                    style={styles.bPickerTitle}
+                    dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
+                    selectedValue={selectedSubType}
+                    onValueChange={(itemValue, index) =>
+                      setSelectedSubType(itemValue, index)
+                    }
+                  >
+                    {subType.map((subType, index) =>
+                      {
+                        return (
+                          <Picker
+                            style={{ flex: 1 }}
+                            label={subType}
+                            value={subType}
+                            key={index}
+                          />
+                        );
+                      })
+                    }
+                  </Picker>
+                </TouchableOpacity>
+              </>)
+              :
+              (<>
+                <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+              </>) 
             }
-
+          
+          
             <View style={styles.bInput}>
               <Text style={styles.bTitle}>Título:</Text>  
               <TextInput style={styles.bInputStrokeBox} 
@@ -215,6 +222,7 @@ if (hasGalleryPermission === false){
           </View>
         </View>
     </ScrollView>
+    </Loading>
   );
 }
 

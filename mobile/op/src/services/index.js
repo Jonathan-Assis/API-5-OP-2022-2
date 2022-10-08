@@ -30,4 +30,7 @@ export default class ServerConnection {
     static async ocorrencia(data) {
         return await conn.post('/ocorrencia/new', data);
     }
+    static async getAllOcorrencia() {
+        return await conn.post('/ocorrencia/get');
+    }
 }

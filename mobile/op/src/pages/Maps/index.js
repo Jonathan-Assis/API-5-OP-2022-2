@@ -4,8 +4,7 @@ import MapView, { Marker } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
-import { latlng } from "../Registros/axios";
-//import { categorias } from "../Registros/categorias";
+import ServerConnection from "../../services"
 import styles from "./styles";
 
 //Icons
@@ -21,10 +20,9 @@ const Maps = () => {
   const [pinSelected, setPinSelected] = useState(false);
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
-  const [markers, setMarkers] = useState(latlng);
   const [filterMarkers, setFilterMarkers] = useState("");
 
-  const filterData = markers.filter((e) => e.category === filterMarkers);
+ // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
 
   const [visible,setVisible]=useState(false)
   const [popUpPermission, setPopUpPermission] = useState({
@@ -43,7 +41,13 @@ const Maps = () => {
   }
 
   useEffect(() => {
-    permission();
+    setLoading(true);
+    getOcorrencias().then(() => {
+      permission();
+    })
+    .finally(() => {
+      setLoading(false);
+    })
   }, []);
 
   const permission = async () => {
@@ -88,10 +92,18 @@ const Maps = () => {
         setVisible(true)
       }
     }
+  }
+  const [ocorrencias,setOcorrencias]= useState([])
 
-    //let backPerm = await Location.requestBackgroundPermissionsAsync();
-    //console.log(backPerm);
-  };
+  async function getOcorrencias(){
+    await ServerConnection.getAllOcorrencia()
+    .then(({data}) => {
+      setOcorrencias(data)
+    })
+    .catch(() => {
+        Alert.alert('Falha', 'Falhada Falhou')
+    })
+  }
 
   return (
     <>
@@ -120,31 +132,42 @@ const Maps = () => {
             setPinSelected(true);
           }}
         >
-          {pinSelected && (
-            <Marker
-            pinColor='#3429A8'
-            coordinate={pin}
-            onPress={(e) => {
-              setPinSelected(false);
-            }}
-            />
+          { (ocorrencias).map((item)=>{
+            return(
+              <Marker
+                key={item._id}
+                coordinate={{
+                  latitude: item.local.latitude,
+                  longitude: item.local.longitude,
+                }}
+              />
             )}
+          )}
+            {pinSelected && (
+              <Marker
+              pinColor='#3429A8'
+              coordinate={pin}
+              onPress={(e) => {
+                setPinSelected(false);
+              }}
+              />
+              )}
 
-          {(filterMarkers ? filterData : markers).map((item) => {
+{/*           {(filterMarkers ? filterData : ocorrencias).map((item) => {
             return (
               <Marker
-              key={item.id}
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-              /* onPress={()=>{
+                key={item._id}
+                coordinate={{
+                  latitude: item.local.latitude,
+                  longitude: item.local.longitude,
+                }}
+               onPress={()=>{
                 navigation.navigate("Rep_Ocorrencia", item)
                 //console.log('item',item)
-              }} */
+              }} 
               />
               );
-            })}
+            })} */}
         </MapView>
         <View style={styles.container}>
           <View style={styles.footer}>

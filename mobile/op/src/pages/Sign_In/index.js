@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
@@ -9,7 +11,8 @@ const Sign_In = () => {
   const [cpf,setCpf]=useState('')
   const [senha, setSenha]=useState('')
 
-  const { signIn } = useAuth()   
+  const { signIn } = useAuth()
+  const [showPassword, setShowPassword]=useState(true)
 
   return (
     <View style={styles.container}>
@@ -34,12 +37,34 @@ const Sign_In = () => {
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>Senha</Text>
-            <TextInput style={styles.bInputBox}
-              placeholder="Insira a sua senha" 
-              secureTextEntry={true}
-              value={senha} 
-              onChangeText={setSenha}
-            ></TextInput>  
+            <View style={styles.bInputPassword}>
+              <TextInput style={styles.bInputPasswordBox}
+                placeholder="Insira a sua senha" 
+                secureTextEntry={showPassword}
+                value={senha} 
+                onChangeText={setSenha}
+                >
+                </TextInput>
+                
+              { showPassword ? 
+                <TouchableOpacity style={styles.bPasswordIcon}
+                onPress={()=>{
+                  setShowPassword(false)
+                }}
+                >
+                <FontAwesomeIcon icon={faEyeSlash} size={30} color='black' />
+              </TouchableOpacity>
+               : 
+               <TouchableOpacity style={styles.bPasswordIcon}
+               onPress={()=>{
+                 setShowPassword(true)
+                }}
+                >
+                <FontAwesomeIcon icon={faEye} size={28} color='black' />
+              </TouchableOpacity>
+              }
+              
+            </View>
           </View>
           
           <TouchableOpacity style={styles.bButton}

@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import { View, Text,TextInput,TouchableOpacity, ScrollView, Alert, Image} from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import {useNavigation} from '@react-navigation/native'
-import * as ImagePicker from 'expo-image-picker'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMapLocationDot, faImage, faCircleCheck, faCamera } from '@fortawesome/free-solid-svg-icons'
 import {PopUpAlert,PopUpActions, BottomSheetImage} from '../../components'
 import styles from './styles';
+import {Loading} from '../../components'
 
 import { useRoute } from '@react-navigation/native';
 
@@ -39,6 +39,7 @@ const Rep_Ocorrencia = (props) => {
     })
   },[TipoOcorrencia])
 
+
    //Busca de subCategoria
    useEffect(() => {
    if(TipoOcorrencia !== "Outros")
@@ -48,21 +49,19 @@ const Rep_Ocorrencia = (props) => {
     if (categoria.tipo===TipoOcorrencia)
       {
         setSubType
-        (
-          categoria.subCategorias
-        )
+          (
+            categoria.subCategorias
+          )
       }
-    else  
-     // Alert.alert("Aviso","Categoria não encontrada"); 
     return categoria
-  })}  },[])
+  })}  },[datas])
 
   const [local,setLocal]=useState({lat:0,long:0})
 
   const [selectedSubType, setSelectedSubType] = useState([]);
 
-  const newOcorrencia = () => {
-    /* if(titulo !== '' && descricao !== '') {
+/*   const newOcorrencia = () => {
+ if(titulo !== '' && descricao !== '') {
         setLoading(true);
         ServerConnection.ocorrencia({
             cpf, titulo, categoria:selectedType,foto:arquivo, descricao, local
@@ -71,8 +70,8 @@ const Rep_Ocorrencia = (props) => {
         ).finally(() => {
             setLoading(false);
         });
-    } */
-}
+    } 
+} */
 
 const [visible,setVisible]=useState(false)
 const [popUpPermission, setPopUpPermission] = useState({
@@ -94,121 +93,129 @@ const imageOptions = () => {
 }
 console.log('minha imagem',BottomSheetImage.image)
 
+console.log(subType)
+
   return (
     <>
-    <BottomSheetImage 
-      visible={imageModal}
-      setVisible={setImageModal}
-    />
-  <ScrollView style={styles.container}>
-      {/*  image ?
-        <TouchableOpacity style={styles.header}
-          onPress={()=> setImage(null)}
-        >
-          <Text style={styles.hTitle}>Imagem do Ocorrido.</Text>  
-          <Image source={{uri:image}} style={{width:160, height:160}}/>
-        </TouchableOpacity> */
-  }
-      <View style={{display: 'flex', flexDirection: 'row'}}>
-        <TouchableOpacity style={styles.header}
-        onPress={()=> imageOptions()}
-        >
-          <View style={styles.hImage}>
-            <FontAwesomeIcon icon={faImage} size={160} color='#3429A8' />
-            <Text style={styles.hTitle}>Selecionar foto</Text>  
-        </View>
-        </TouchableOpacity>
-        </View>
-      
-
-        <View style={styles.body}> 
-          <View style={styles.bContainer}> 
-
-            { !!subType ? (<>
-              <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
-              <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
-              <TouchableOpacity style={styles.bPickerBox}> 
-              <Picker
-                style={styles.bPickerTitle}
-                dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
-                selectedValue={selectedSubType}
-                onValueChange={(itemValue, index) =>
-                  setSelectedSubType(itemValue, index)
-                }
-              >
-                {subType.map((subType, index) =>
-                  {
-                    return (
-                      <Picker
-                        style={{ flex: 1 }}
-                        label={subType}
-                        value={subType}
-                        key={index}
-                      />
-                    );
-                  })
-                }
-              </Picker>
-            </TouchableOpacity>
-            </>)
-            : (<>
-           <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
-            </>)
-            }
-
-            <View style={styles.bInput}>
-              <Text style={styles.bTitle}>Título:</Text>  
-              <TextInput style={styles.bInputStrokeBox} 
-                multiline={true}
-                numberOfLines={1}
-                onChangeText={setTitulo}
-                value={titulo}
-                placeholder='Título da Ocorrência'
-                placeholderTextColor={styles.bInputStrokeBox.color}
-              ></TextInput>
-            </View>
-            
-            
-             <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
-              onPress={() =>  {
-                navigation.navigate({
-                  name: 'Maps',
-                  params: {
-                    idPage: route.name
-                  }
-              })
-              }}>
-                {!!props.route.params?.coordinate ? (<>
-                  <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
-                  <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
-                    </>
-                  )
-                  : 
-                  (
-                  <>
-                    <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
-                    <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
-                  </>)
-                }
-            </TouchableOpacity>
-             
-            <View style={styles.bInput}>
-              <Text style={styles.bTitle}>Sobre o Ocorrido:</Text>  
-              <TextInput style={styles.bInputBox} 
-                placeholder='Descrição do Problema'
-                multiline={true}
-              ></TextInput>  
-            </View>  
-                
-            <TouchableOpacity style={styles.bButton}
-            onPress={() => {
-            }}>
-            <Text style={styles.bLabel}>Finalizar Ocorrência</Text>
-            </TouchableOpacity >
-
+    <Loading loading={loading}>
+      <BottomSheetImage 
+        visible={imageModal}
+        setVisible={setImageModal}
+      />
+      <ScrollView style={styles.container}>
+          {/*  image ?
+            <TouchableOpacity style={styles.header}
+              onPress={()=> setImage(null)}
+            >
+              <Text style={styles.hTitle}>Imagem do Ocorrido.</Text>  
+              <Image source={{uri:image}} style={{width:160, height:160}}/>
+            </TouchableOpacity> */
+      }
+        <View style={{display: 'flex', flexDirection: 'row'}}>
+          <TouchableOpacity style={styles.header}
+          onPress={()=> imageOptions()}
+          >
+            <View style={styles.hImage}>
+              <FontAwesomeIcon icon={faImage} size={160} color='#3429A8' />
+              <Text style={styles.hTitle}>Selecionar foto</Text>  
           </View>
-        </View>
-    </ScrollView>
+          </TouchableOpacity>
+          </View>
+        
+
+          <View style={styles.body}> 
+            <View style={styles.bContainer}> 
+
+            
+              {!!subType && !!subType.length ? 
+                (<>
+                  <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+                  <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
+                  <TouchableOpacity style={styles.bPickerBox}> 
+                    <Picker
+                      style={styles.bPickerTitle}
+                      dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
+                      selectedValue={selectedSubType}
+                      onValueChange={(itemValue, index) =>
+                        setSelectedSubType(itemValue, index)
+                      }
+                    >
+                      {subType.map((subType, index) =>
+                        {
+                          return (
+                            <Picker
+                              style={{ flex: 1 }}
+                              label={subType}
+                              value={subType}
+                              key={index}
+                            />
+                          );
+                        })
+                      }
+                    </Picker>
+                  </TouchableOpacity>
+                </>)
+                :
+                (<>
+                  <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+                </>) 
+              }
+            
+            
+              <View style={styles.bInput}>
+                <Text style={styles.bTitle}>Título:</Text>  
+                <TextInput style={styles.bInputStrokeBox} 
+                  multiline={true}
+                  numberOfLines={1}
+                  onChangeText={setTitulo}
+                  value={titulo}
+                  placeholder='Título da Ocorrência'
+                  placeholderTextColor={styles.bInputStrokeBox.color}
+                ></TextInput>
+              </View>
+              
+              
+              <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
+                onPress={() =>  {
+                  navigation.navigate({
+                    name: 'Maps',
+                    params: {
+                      idPage: route.name
+                    }
+                })
+                }}>
+                  {!!props.route.params?.coordinate ? (<>
+                    <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
+                    <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
+                      </>
+                    )
+                    : 
+                    (
+                    <>
+                      <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
+                      <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
+                    </>)
+                  }
+              </TouchableOpacity>
+              
+              <View style={styles.bInput}>
+                <Text style={styles.bTitle}>Sobre o Ocorrido:</Text>  
+                <TextInput style={styles.bInputBox} 
+                  placeholder='Descrição do Problema'
+                  multiline={true}
+                ></TextInput>  
+              </View>  
+                  
+              <TouchableOpacity style={styles.bButton}
+              onPress={() => {
+              }}>
+              <Text style={styles.bLabel}>Finalizar Ocorrência</Text>
+              </TouchableOpacity >
+
+            </View>
+          </View>
+      </ScrollView>
+    </Loading>
     </>
   );
 }

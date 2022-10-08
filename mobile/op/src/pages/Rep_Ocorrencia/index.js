@@ -5,11 +5,11 @@ import {useNavigation} from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck, IconDefinition, faCamera } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faImage, faCircleCheck, faCamera } from '@fortawesome/free-solid-svg-icons'
+import {PopUpAlert,PopUpActions, BottomSheetImage} from '../../components'
 import styles from './styles';
 
 import { useRoute } from '@react-navigation/native';
-import { text } from '@fortawesome/fontawesome-svg-core';
 
 const Rep_Ocorrencia = (props) => {
   const navigation = useNavigation();
@@ -53,7 +53,7 @@ const Rep_Ocorrencia = (props) => {
         )
       }
     else  
-      Alert.alert("Aviso","Categoria não encontrada"); 
+     // Alert.alert("Aviso","Categoria não encontrada"); 
     return categoria
   })}  },[])
 
@@ -74,58 +74,52 @@ const Rep_Ocorrencia = (props) => {
     } */
 }
 
-const [hasGalleryPermission,setHasGalleryPermission]=useState(null)
-const [image,setImage] = useState(null)
+const [visible,setVisible]=useState(false)
+const [popUpPermission, setPopUpPermission] = useState({
+  icon: undefined,
+  title: undefined,
+  description: undefined,
+  buttonPrimaryTitle: undefined,
+  buttonSecondaryTitle: undefined,
+  onConfirm: ()=>{},
+  onClose: ()=>{},
+})
 
-
-const pickImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.Images,
-    allowsEditing: true,
-    base64: true,
-    aspect: [100,100],
-    quality:1,
-  });
-
-  if(!result.cancelled){
-    setImage(result.uri);
-  }
+const close = () =>{
+  setVisible(false)
 }
-
-if (hasGalleryPermission === false){
-  Alert.alert('Permissão Negada!','A Permissão da galeria foi negada.')
-  navigation.navigate('Home');
+const [imageModal,setImageModal] = useState(false)
+const imageOptions = () => {
+  setImageModal(true)
 }
+console.log('minha imagem',BottomSheetImage.image)
 
   return (
+    <>
+    <BottomSheetImage 
+      visible={imageModal}
+      setVisible={setImageModal}
+    />
   <ScrollView style={styles.container}>
-      { image ?
+      {/*  image ?
         <TouchableOpacity style={styles.header}
           onPress={()=> setImage(null)}
         >
           <Text style={styles.hTitle}>Imagem do Ocorrido.</Text>  
-          <Image source={{uri:image}} style={{width:150, height:150}}/>
-        </TouchableOpacity>
-      :
+          <Image source={{uri:image}} style={{width:160, height:160}}/>
+        </TouchableOpacity> */
+  }
       <View style={{display: 'flex', flexDirection: 'row'}}>
         <TouchableOpacity style={styles.header}
-        onPress={()=> pickImage()}
+        onPress={()=> imageOptions()}
         >
           <View style={styles.hImage}>
-            <FontAwesomeIcon icon={faImage} size={80} color='black'></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faImage} size={160} color='#3429A8' />
             <Text style={styles.hTitle}>Selecionar foto</Text>  
         </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.header}
-        onPress={()=> pickImage()}
-        >
-          <View style={styles.hImage}>
-            <FontAwesomeIcon icon={faCamera} size={80} color='black' />
-            <Text style={styles.hTitle}>Tirar uma Foto</Text>  
         </View>
-        </TouchableOpacity>
-        </View>
-      }
+      
 
         <View style={styles.body}> 
           <View style={styles.bContainer}> 
@@ -215,6 +209,7 @@ if (hasGalleryPermission === false){
           </View>
         </View>
     </ScrollView>
+    </>
   );
 }
 

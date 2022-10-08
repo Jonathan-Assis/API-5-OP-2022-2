@@ -18,13 +18,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    bInput:{
-        marginBottom:7
+    bImageLabel:{
+        ...stylesVar.buttonLabelSecondary,
+        fontSize:18,
+        marginBottom:3
     },
-
+    
     bTitle:{
         ...stylesVar.titleSecondary,
         marginBottom:3
+    },
+    
+    bInput:{
+        marginBottom:7
     },
 
     bInputBox:{

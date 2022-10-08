@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleUser, faUserPen, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
-import { PopUpActions } from '../../components'
+import { PopUpActions, BottomSheetImage } from '../../components'
 import { useAuth } from '../../contexts/Auth'
 import styles from './styles';
 
@@ -46,7 +46,10 @@ const Edit_Profile = () => {
     onClose: ()=>{},
   }) 
 
-
+  const [imageModal,setImageModal] = useState(false)
+  const imageOptions = () => {
+    setImageModal(true)
+  }
 
   return (
     <>
@@ -63,16 +66,25 @@ const Edit_Profile = () => {
         visible={visible}
         setVisible={setVisible}
       />
+    <BottomSheetImage 
+      visible={imageModal}
+      setVisible={setImageModal}
+    />
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.body} > 
 
-          <View style={styles.bImage}>
-            <FontAwesomeIcon icon={ faCircleUser } size={120} color={'black'}/>
-          </View>
+          <TouchableOpacity style={styles.bImage}
+            onPress={() =>{
+              imageOptions()
+            }}
+          >
+            <FontAwesomeIcon icon={ faCircleUser } size={120} color={'#3429A8'}/>
+            <Text style={styles.bImageLabel}>Adicionar foto</Text>
+          </TouchableOpacity>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Nome</Text>  
+            <Text style={styles.bTitle}>Nome:</Text>  
             <TextInput
               style={styles.bInputBox}
               placeholder='Nome Completo'
@@ -82,7 +94,7 @@ const Edit_Profile = () => {
           </View>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Email</Text>
+            <Text style={styles.bTitle}>Email:</Text>
             <TextInput
               style={styles.bInputBox}
               placeholder='Insira seu Email'
@@ -92,7 +104,7 @@ const Edit_Profile = () => {
           </View>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>CPF</Text>
+            <Text style={styles.bTitle}>CPF:</Text>
             <TextInput
               style={styles.bInputBox}
               placeholder='Insira seu CPF'
@@ -102,7 +114,7 @@ const Edit_Profile = () => {
           </View>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Senha</Text>  
+            <Text style={styles.bTitle}>Senha:</Text>  
             <TextInput style={styles.bInputBox} 
               placeholder='Insira sua nova Senha'
               secureTextEntry={true}
@@ -112,7 +124,7 @@ const Edit_Profile = () => {
           </View>  
           
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Confirmar Senha</Text>  
+            <Text style={styles.bTitle}>Confirmar Senha:</Text>  
             <TextInput style={styles.bInputBox}
               placeholder='Insira novamente a Senha'
               secureTextEntry={true}
@@ -143,7 +155,7 @@ const Edit_Profile = () => {
                 onClose: setVisible,
                 icon: faTriangleExclamation,
                 title:'Deseja Excluir Sua Conta?',
-                description: 'Ao excluir sua conta, todos os dados salvos serão deletados permanentemente!',
+                description: 'Ao excluir sua conta, todos os dados salvos serão permanentemente deletados!',
                 buttonPrimaryTitle: 'Deletar',
                 buttonSecondaryTitle: 'Cancelar'
               })

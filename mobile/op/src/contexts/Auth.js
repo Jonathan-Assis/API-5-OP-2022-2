@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ServerConnection from '../services'
+import { SHA256 } from 'crypto-js';
 import { Alert } from "react-native";
 
 export const AuthContext = createContext({});
@@ -23,7 +24,8 @@ export const AuthProvider = ({children}) =>{
 
     async function signIn(cpf,senha) {
         setLoading(true);
-        await ServerConnection.login({cpf,senha})
+        let aux = SHA256(senha).toString();
+        await ServerConnection.login({ cpf, senha: aux })
         .then(({data}) => {
             setAuth(JSON.stringify(data));
             AsyncStorage.setItem('@AuthData',(JSON.stringify(data)));
@@ -39,14 +41,16 @@ export const AuthProvider = ({children}) =>{
 
     async function signUp(nome, cpf, email, senha) {
         setLoading(true);
+        let aux = SHA256(senha).toString();
+        
         await ServerConnection.cadastro({
-            nome, cpf, email, senha
+            nome, cpf, email, senha: aux
         })
-        .catch(() => {
-            Alert.alert('Falha no cadastro', 'Campo(s) obrigatório(s) vazio(s).')
+        .catch((e) => {
+            console.error(e);
         })
         .finally(async () => {
-            await signIn(cpf, senha);
+            await signIn(cpf, aux);
             setLoading(false);
         });
     }
@@ -55,8 +59,9 @@ export const AuthProvider = ({children}) =>{
         const { id, nome, email, cpf, senha } = data;
 
         setLoading(true);
+        let aux = SHA256(senha).toString();
         await ServerConnection.editarPerfil({
-            id, nome, email, cpf, senha
+            id, nome, email, cpf, senha: aux
         })
         .then(res => {
             if(!!res.data.modifiedCount) {

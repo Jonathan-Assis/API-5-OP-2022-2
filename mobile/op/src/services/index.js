@@ -11,6 +11,10 @@ export default class ServerConnection {
         return await conn.post('/cidadao/cadastro', data);
     }
 
+    static async validarCpf(data) {
+        return await conn.post('/cidadao/validar', data)
+    }
+
     static async categorias(data) {
         return await conn.post('/ocorrencia/getCategoria', data);
     }

@@ -17,7 +17,7 @@ const Settings = () => {
       <View style={styles.body}>
         <View style={styles.header}>
           <View style={styles.hImage}>
-              <FontAwesomeIcon icon={ faCircleUser } size={120} color={'white'}/>
+              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
           </View>
           <Text style={styles.hTitle}>{authData.nome}</Text>
         </View>

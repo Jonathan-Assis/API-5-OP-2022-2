@@ -3,7 +3,7 @@ import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert, Image } from
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCircleUser, faUserPen, faTriangleExclamation, faPlus, faXmark, faEye, faEyeSlash, faKey } from '@fortawesome/free-solid-svg-icons'
 import { PopUpActions, PopUpAlert, BottomSheetImage } from '../../components'
-import { useAuth } from '../../contexts/Auth'
+import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
 
 const Edit_Profile = () => {
@@ -38,7 +38,7 @@ const Edit_Profile = () => {
     if(!!nome && !!email && !!cpf) {
       if((!senha && !confSenha) || senha === confSenha) {
         updateAuth({
-          _id, nome, email, cpf, senha
+          _id, nome, email, cpf, senha, imagem: imagem?.base64/* aux?.base64 */
         }).then(() => {
           setVisible(false)
         })
@@ -59,20 +59,20 @@ const Edit_Profile = () => {
         description: 'Informe um Nome, Email e CPF.',
         buttonPrimaryTitle: 'Fechar'
       });
-      //Alert.alert('Falha ao editar o Perfil', 'Senhas diferentes');
     }
   }
 
-  const [imagem,setImagem]=useState(false)
+  const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
   const [imageModal,setImageModal] = useState(false)
   const imageOptions = () => {
     setImageModal(true)
   }
   
-  const [imageSelected,setImageSelected]=useState(false)
+  const [ imageSelected, setImageSelected ] = useState(!!authData?.imagem)
   
   useEffect(() => {
     if(imagem === false || imagem.cancelled === true){
+      console.log('não temos uma imagem')
     }
     else if (imagem.cancelled == false) {
       setImageSelected(true)
@@ -126,7 +126,7 @@ const Edit_Profile = () => {
             >
               <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
               <View style={styles.hIconPlus}>
-                    <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
+                <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
               </View>
               <Text style={styles.bImageLabel}>Adicionar foto</Text>
             </TouchableOpacity>
@@ -140,7 +140,7 @@ const Edit_Profile = () => {
                 <FontAwesomeIcon icon={faXmark} size={40} color='black' />
               </TouchableOpacity>
               <View style={styles.bImage}>
-                <Image source={{uri:imagem.uri}} resizeMode="cover" style={{width:140,height:140,borderRadius: 100, overflow: "hidden", borderWidth: 2,borderColor:'#3429A8'}}/>
+                <Image source={{uri: `data:image/png;base64,${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
               </View>
             </>
           )}

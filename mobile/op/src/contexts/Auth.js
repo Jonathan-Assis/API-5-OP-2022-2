@@ -55,20 +55,21 @@ export const AuthProvider = ({children}) =>{
             });
             //console.log("Cidadão acessou a conta!")
         })
-        .catch(() => {
+        .catch((e) => {
             Alert.alert('Falha no acesso', 'CPF ou Senha inválidos.')
+            console.error({...e})
         })
         .finally(() => {
             setLoading(false);
         });
     }
 
-    async function signUp(nome, cpf, email, senha) {
+    async function signUp(nome, cpf, email, senha, imagem) {
         setLoading(true);
         let aux = SHA256(senha).toString();
         
         await ServerConnection.cadastro({
-            nome, cpf, email, senha: aux
+            nome, cpf, email, senha: aux, imagem
         })
         .catch((e) => {
             console.error(e);
@@ -80,18 +81,18 @@ export const AuthProvider = ({children}) =>{
     }
 
     async function updateAuth(data) {
-        let { _id, nome, email, cpf, senha } = data;
+        let { _id, nome, email, cpf, senha, imagem } = data;
 
         setLoading(true);
-        if(senha !== undefined) senha = SHA256(senha).toString();  
+        if(senha !== undefined) senha = SHA256(senha).toString();
         
         await ServerConnection.editarPerfil({
-            id: _id, nome, email, cpf, senha
+            id: _id, nome, email, cpf, senha, imagem
         })
         .then(res => {
             if(!!res.data.modifiedCount) {
                 setAuth(JSON.stringify({
-                    _id, nome, email, cpf, senha
+                    _id, nome, email, cpf, senha, imagem
                 }));
                 AsyncStorage.setItem('@AuthData',(JSON.stringify(data)));
             }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUserPen, faCircleUser, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
@@ -17,7 +17,10 @@ const Settings = () => {
       <View style={styles.body}>
         <View style={styles.header}>
           <View style={styles.hImage}>
-              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
+              {!!authData?.imagem
+                ? <Image style={styles.hImageStyle} resizeMode='cover' source={{uri: `data:image/png;base64,${authData?.imagem}`}}/>
+                : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
+              }              
           </View>
           <Text style={styles.hTitle}>{authData.nome}</Text>
         </View>

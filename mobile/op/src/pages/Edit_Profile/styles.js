@@ -25,6 +25,15 @@ const styles = StyleSheet.create({
         ...stylesVar.backgroundSecondary
     },
 
+    bImageStyle: {
+        width: 140,
+        height: 140,
+        borderRadius: 100,
+        overflow: "hidden",
+        borderWidth: 2,
+        borderColor:'#3429A8'
+    },
+
     bImageLabel:{
         textAlign: 'center',
         fontSize:20,

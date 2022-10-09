@@ -47,6 +47,22 @@ const styles = StyleSheet.create({
         paddingHorizontal:15,
     },
 
+    bInputPassword: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        ...stylesVar.strokeBoxPrimary
+    },
+
+    bInputPasswordBox: {
+        flex: 1,
+        padding: 8,
+        paddingHorizontal: 15
+    },
+
+    bPasswordIcon: {
+        marginHorizontal: 8
+    },
+
     bEndereço:{
         flex:1,
         flexDirection:'row',

@@ -21,9 +21,9 @@ const Maps = () => {
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
   const [filterMarkers, setFilterMarkers] = useState("");
-
- // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
-
+  
+  // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
+  
   const [visible,setVisible]=useState(false)
   const [popUpPermission, setPopUpPermission] = useState({
     icon: undefined,
@@ -39,7 +39,7 @@ const Maps = () => {
     navigation.goBack()
     setVisible(false)
   }
-
+  
   useEffect(() => {
     setLoading(true);
     getOcorrencias().then(() => {
@@ -49,10 +49,10 @@ const Maps = () => {
       setLoading(false);
     })
   }, []);
-
+  
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-
+    
     if (status !== "granted") {
       setPopUpPermission({
         onClose: close,
@@ -94,22 +94,37 @@ const Maps = () => {
     }
   }
   const [ocorrencias,setOcorrencias]= useState([])
-
+  
   async function getOcorrencias(){
     await ServerConnection.getAllOcorrencia()
     .then(({data}) => {
       setOcorrencias(data)
+      console.log(ocorrencias[0].categoria)
     })
     .catch(() => {
-        Alert.alert('Falha', 'Falhada Falhou')
+      Alert.alert('Falha', 'Falhada Falhou')
     })
   }
 
+  async function getCurrentLocation(){
+
+    const { coords } = await Location.getCurrentPositionAsync({
+      enableHighAccuracy: true,
+    })
+    navigation.navigate({
+      name: "Rep_Ocorrencia",
+      params: {
+        coordinate: coordinate,
+      },
+    })
+  }
+
+  
   return (
     <>
         <PopUpAlert 
          icon={
-          <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
+           <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
           }
           title={popUpPermission.title}
           description={popUpPermission.description}

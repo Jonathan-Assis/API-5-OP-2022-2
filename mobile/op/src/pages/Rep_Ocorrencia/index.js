@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text,TextInput,TouchableOpacity, ScrollView, Alert, Image} from 'react-native';
+import { View, Text,TextInput,TouchableOpacity, ScrollView, Image} from 'react-native';
 import { Picker } from "@react-native-picker/picker";
 import {useNavigation} from '@react-navigation/native'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck, faCamera, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import {PopUpAlert,PopUpActions, BottomSheetImage} from '../../components'
 import styles from './styles';
 import {Loading} from '../../components'

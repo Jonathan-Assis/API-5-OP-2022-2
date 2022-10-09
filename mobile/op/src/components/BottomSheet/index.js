@@ -18,7 +18,7 @@ const BottomSheetImage = ({
         const { status } = await ImagePicker.requestCameraPermissionsAsync()
         
         if (status !== "granted"){
-            Alert.alert('Permissão de camera','negada!')
+            Alert.alert('Permissão de câmera','negada!')
             setPermission(false)
         } else {
             try {
@@ -26,15 +26,15 @@ const BottomSheetImage = ({
                 const cameraEnabled = await ImagePicker.launchCameraAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
-                    base64: false,
+                    base64: true,
                     quality:1,
                 })
                 if(cameraEnabled){
                     setImagem(cameraEnabled)
-                    console.log('image camera',cameraEnabled)
+                    //console.log('image camera',cameraEnabled)
                 }
             } catch (e) {
-                console.log('erro camera',e)
+                console.log('erro na camera',e)
             }
 
         }
@@ -52,15 +52,15 @@ const BottomSheetImage = ({
                 const galleryEnabled = await ImagePicker.launchImageLibraryAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
+                    base64: true,
                     quality:1,
                 })
                 if(galleryEnabled){
                     setImagem(galleryEnabled)
-
                    // console.log('image camera',galleryEnabled)
                 }
             } catch (e) {
-                console.log('erro gallery',e)
+                console.log('erro na galeria',e)
             }
 
         }

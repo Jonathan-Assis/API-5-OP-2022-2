@@ -4,17 +4,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCamera, faImages, faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as ImagePicker from 'expo-image-picker';
 
-
 import styles from './styles'
 
 const BottomSheetImage = ({
     visible,
-    setVisible
-    }
-) => {
-    const [image,setImage]=useState(null)
+    setVisible,
+    imagem,
+    setImagem
+    }) => {
     const [permission,setPermission]=useState(undefined)    
-
 
     const requestCamera = async () => {
         const { status } = await ImagePicker.requestCameraPermissionsAsync()
@@ -28,14 +26,13 @@ const BottomSheetImage = ({
                 const cameraEnabled = await ImagePicker.launchCameraAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
-                    base64: true,
-                    aspect: [100,100],
+                    base64: false,
                     quality:1,
-                }).then((data) => {
-                    setImage(data.base64)
-
-                    console.log('image camera',data.base64)
                 })
+                if(cameraEnabled){
+                    setImagem(cameraEnabled)
+                    console.log('image camera',cameraEnabled)
+                }
             } catch (e) {
                 console.log('erro camera',e)
             }
@@ -43,7 +40,7 @@ const BottomSheetImage = ({
         }
     }
 
-    const requestGallery = async () => {
+    const requestGallery = async (img) => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         
         if (status !== "granted"){
@@ -55,14 +52,13 @@ const BottomSheetImage = ({
                 const galleryEnabled = await ImagePicker.launchImageLibraryAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
-                    base64: true,
-                    aspect: [100,100],
-                    quality:1,  
-                }).then((data) => {
-                    setImage(data.base64)
-
-                    console.log('image camera',image)
+                    quality:1,
                 })
+                if(galleryEnabled){
+                    setImagem(galleryEnabled)
+
+                   // console.log('image camera',galleryEnabled)
+                }
             } catch (e) {
                 console.log('erro gallery',e)
             }
@@ -94,6 +90,7 @@ return(
                         style={styles.fButton}
                         onPress={()=>{
                             requestCamera()
+                            setVisible(false)
                         }}
                         >
                     <FontAwesomeIcon icon={faCamera} size={30} color='white' />
@@ -103,6 +100,7 @@ return(
                         style={styles.fButton}
                         onPress={()=>{
                             requestGallery()
+                            setVisible(false)
                         }}
                         >
                         <FontAwesomeIcon icon={faImages} size={30} color='white' />

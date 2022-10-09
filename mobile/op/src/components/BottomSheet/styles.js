@@ -34,7 +34,7 @@ footer:{
         ...stylesVar.boxPrimary
     },
     fButtonLabel:{
-        padding:15,
+        padding:16,
         alignItems: 'center',
         ...stylesVar.buttonLabelPrimary
     },

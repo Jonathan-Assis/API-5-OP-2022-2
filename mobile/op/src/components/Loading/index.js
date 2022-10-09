@@ -13,17 +13,17 @@ export default function Loading({ loading, children }) {
     function onAnimate(animation, nextAnimation){
         Animated.sequence([
             Animated.timing(animation, {
-                toValue:-12,
-                duration:400,
+                toValue:-15,
+                duration:390,
                 useNativeDriver: true,
             }),
             Animated.timing(animation, {
-                toValue:12,
-                duration:400,
+                toValue:15,
+                duration:390,
                 useNativeDriver: true,
             })
         ]).start()
-        setTimeout(nextAnimation, 350)
+        setTimeout(nextAnimation, 300)
     }
 
     function onStartAnimate(){

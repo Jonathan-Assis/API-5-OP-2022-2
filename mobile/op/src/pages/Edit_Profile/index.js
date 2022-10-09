@@ -13,19 +13,20 @@ const Edit_Profile = () => {
   const [ data, setData ] = useState({
     id: authData._id || undefined,
     nome: authData.nome || undefined,
-    email: authData.email || undefined,
     cpf: authData.cpf || undefined,
+    email: authData.email || undefined,
     senha: undefined,
-    confSenha: undefined
+    confSenha: undefined,
+    imagem: undefined,
   });
   
   const update = async () => {
-    const { id, nome, email, cpf, senha, confSenha } = data;
+    const { id, nome, cpf, email, senha, confSenha, imagem } = data;
     if(senha === confSenha) {
       if(!!nome && !!email && !!cpf) {
         let aux = !!senha ? senha : authData.senha;
         updateAuth({
-          id, nome, email, cpf, senha: aux
+          id, nome, email, cpf, senha: aux, imagem: imagem.base64
         }).then(() => {
           setVisible(false)
         })
@@ -46,21 +47,23 @@ const Edit_Profile = () => {
     onClose: ()=>{},
   }) 
   
-  const [imagem,setImagem]=useState(false)
+  const [imagem,setImagem]=useState({})
   const [imageModal,setImageModal] = useState(false)
+  const [imageSelected,setImageSelected]=useState(false)
+
   const imageOptions = () => {
     setImageModal(true)
   }
   
-  const [imageSelected,setImageSelected]=useState(false)
-  
   useEffect(() => {
-    if(imagem === false || imagem.cancelled === true){
+    if( Object.keys(imagem).length === 0 || imagem.cancelled === true){
+      setImageSelected(false)
     }
-    else if (imagem.cancelled == false) {
+    else {
       setImageSelected(true)
     }
   },[imagem])
+  
 
   return (
     <>
@@ -88,7 +91,7 @@ const Edit_Profile = () => {
         <View style={styles.body} > 
 
           { !imageSelected ? (
-            <TouchableOpacity style={styles.bImage}
+            <TouchableOpacity style={styles.bImageIcon}
               onPress={() =>{
                 imageOptions()
               }}
@@ -101,15 +104,15 @@ const Edit_Profile = () => {
             </TouchableOpacity>
             ) : (
               <>
-              <TouchableOpacity style={{position:'absolute',alignItems: 'flex-end', top:10, right:10}}
+              <TouchableOpacity style={styles.bRemoveImageButton}
                 onPress={()=>{
-                  setImageSelected(false)
+                  setImagem({})
                 }}
                 >
                 <FontAwesomeIcon icon={faXmark} size={40} color='black' />
               </TouchableOpacity>
-              <View style={styles.bImage}>
-                <Image source={{uri:imagem.uri}} resizeMode="cover" style={{width:140,height:140,borderRadius: 100, overflow: "hidden", borderWidth: 2,borderColor:'#3429A8'}}/>
+              <View style={styles.bImageIcon}>
+                <Image source={{uri:imagem.uri}} resizeMode="cover" style={styles.hImage}/>
               </View>
             </>
           )}

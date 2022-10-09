@@ -1,7 +1,7 @@
-import React,{useState} from 'react';
-import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React,{useState, useEffect} from 'react';
+import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircleUser, faUserPen, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import { faCircleUser, faUserPen, faTriangleExclamation, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { PopUpActions, BottomSheetImage } from '../../components'
 import { useAuth } from '../../contexts/Auth'
 import styles from './styles';
@@ -9,7 +9,7 @@ import styles from './styles';
 const Edit_Profile = () => {
   const authData = JSON.parse(useAuth().authData);
   const { updateAuth, deleteAuth } = useAuth();
-
+  
   const [ data, setData ] = useState({
     id: authData._id || undefined,
     nome: authData.nome || undefined,
@@ -18,7 +18,7 @@ const Edit_Profile = () => {
     senha: undefined,
     confSenha: undefined
   });
-
+  
   const update = async () => {
     const { id, nome, email, cpf, senha, confSenha } = data;
     if(senha === confSenha) {
@@ -34,7 +34,7 @@ const Edit_Profile = () => {
     }
     else Alert.alert('Falha ao editar o Perfil', 'Senhas diferentes');
   }
-
+  
   const [visible,setVisible]=useState(false)
   const [popUpData, setPopUpData] = useState({
     icon: undefined,
@@ -45,11 +45,22 @@ const Edit_Profile = () => {
     onConfirm: ()=>{},
     onClose: ()=>{},
   }) 
-
+  
+  const [imagem,setImagem]=useState(false)
   const [imageModal,setImageModal] = useState(false)
   const imageOptions = () => {
     setImageModal(true)
   }
+  
+  const [imageSelected,setImageSelected]=useState(false)
+  
+  useEffect(() => {
+    if(imagem === false || imagem.cancelled === true){
+    }
+    else if (imagem.cancelled == false) {
+      setImageSelected(true)
+    }
+  },[imagem])
 
   return (
     <>
@@ -66,7 +77,9 @@ const Edit_Profile = () => {
         visible={visible}
         setVisible={setVisible}
       />
-    <BottomSheetImage 
+    <BottomSheetImage
+      imagem={imagem}
+      setImagem={setImagem} 
       visible={imageModal}
       setVisible={setImageModal}
     />
@@ -74,14 +87,32 @@ const Edit_Profile = () => {
       <View style={styles.container}>
         <View style={styles.body} > 
 
-          <TouchableOpacity style={styles.bImage}
-            onPress={() =>{
-              imageOptions()
-            }}
-          >
-            <FontAwesomeIcon icon={ faCircleUser } size={120} color={'#3429A8'}/>
-            <Text style={styles.bImageLabel}>Adicionar foto</Text>
-          </TouchableOpacity>
+          { !imageSelected ? (
+            <TouchableOpacity style={styles.bImage}
+              onPress={() =>{
+                imageOptions()
+              }}
+            >
+              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
+              <View style={styles.hIconPlus}>
+                    <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
+              </View>
+              <Text style={styles.bImageLabel}>Adicionar foto</Text>
+            </TouchableOpacity>
+            ) : (
+              <>
+              <TouchableOpacity style={{position:'absolute',alignItems: 'flex-end', top:10, right:10}}
+                onPress={()=>{
+                  setImageSelected(false)
+                }}
+                >
+                <FontAwesomeIcon icon={faXmark} size={40} color='black' />
+              </TouchableOpacity>
+              <View style={styles.bImage}>
+                <Image source={{uri:imagem.uri}} resizeMode="cover" style={{width:140,height:140,borderRadius: 100, overflow: "hidden", borderWidth: 2,borderColor:'#3429A8'}}/>
+              </View>
+            </>
+          )}
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>Nome:</Text>  

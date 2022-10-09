@@ -17,11 +17,19 @@ const styles = StyleSheet.create({
     bImage:{
         alignItems: 'center',
     },
+    hIconPlus:{
+        position:'absolute',
+        bottom:22,
+        right:85,
+        borderRadius:100,
+        ...stylesVar.backgroundSecondary
+    },
 
     bImageLabel:{
-        ...stylesVar.buttonLabelSecondary,
-        fontSize:18,
-        marginBottom:3
+        textAlign: 'center',
+        fontSize:20,
+        fontWeight:'bold',
+        color: '#3429A8',
     },
     
     bTitle:{

@@ -1,10 +1,7 @@
-import { StyleSheet,Dimensions } from 'react-native';
+import { StyleSheet} from 'react-native';
 import stylesVar from "../../styles/stylesVar";
 
-const { width , height } = Dimensions.get('window');
-
-
-const styles = {
+const styles = StyleSheet.create({
 
   container:{
     flex:1,
@@ -24,9 +21,9 @@ const styles = {
     fontSize: 18
 },
   body: {
+    flex:1,
     marginTop: 15,
     marginBottom: 15,
-    height: height * .7,
     marginLeft: 10,
     marginRight: 10,
     ... stylesVar.backgroundSecondary,
@@ -34,7 +31,7 @@ const styles = {
   },
   button:{
         margin: 16,
-        ... stylesVar.boxTertiary,
+        ... stylesVar.boxTertiary.backgroundColor,
         ... stylesVar.strokeBoxSecondary,
         padding: 8
   },
@@ -51,6 +48,6 @@ const styles = {
       textAlign: 'center',
   }
 
-}
+});
 
 export default styles;

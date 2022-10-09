@@ -11,6 +11,10 @@ export default class ServerConnection {
         return await conn.post('/cidadao/cadastro', data);
     }
 
+    static async categorias(data) {
+        return await conn.post('/ocorrencia/getCategoria', data);
+    }
+
     static async login(data) {
         return await conn.post('/cidadao/login', data);
     }
@@ -25,5 +29,8 @@ export default class ServerConnection {
 
     static async ocorrencia(data) {
         return await conn.post('/ocorrencia/new', data);
+    }
+    static async getAllOcorrencia() {
+        return await conn.post('/ocorrencia/get');
     }
 }

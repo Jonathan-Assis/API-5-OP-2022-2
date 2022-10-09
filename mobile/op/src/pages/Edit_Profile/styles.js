@@ -17,14 +17,28 @@ const styles = StyleSheet.create({
     bImage:{
         alignItems: 'center',
     },
-
-    bInput:{
-        marginBottom:7
+    hIconPlus:{
+        position:'absolute',
+        bottom:22,
+        right:85,
+        borderRadius:100,
+        ...stylesVar.backgroundSecondary
     },
 
+    bImageLabel:{
+        textAlign: 'center',
+        fontSize:20,
+        fontWeight:'bold',
+        color: '#3429A8',
+    },
+    
     bTitle:{
         ...stylesVar.titleSecondary,
         marginBottom:3
+    },
+    
+    bInput:{
+        marginBottom:7
     },
 
     bInputBox:{

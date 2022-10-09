@@ -1,16 +1,15 @@
-import React,{useState} from 'react';
-import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import React,{useState, useEffect} from 'react';
+import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircleUser, faUserPen, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
-import { PopUpActions } from '../../components'
-import ServerConnection from '../../services';
+import { faCircleUser, faUserPen, faTriangleExclamation, faPlus, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { PopUpActions, BottomSheetImage } from '../../components'
 import { useAuth } from '../../contexts/Auth'
 import styles from './styles';
 
 const Edit_Profile = () => {
   const authData = JSON.parse(useAuth().authData);
   const { updateAuth, deleteAuth } = useAuth();
-
+  
   const [ data, setData ] = useState({
     id: authData._id || undefined,
     nome: authData.nome || undefined,
@@ -19,7 +18,7 @@ const Edit_Profile = () => {
     senha: undefined,
     confSenha: undefined
   });
-
+  
   const update = async () => {
     const { id, nome, email, cpf, senha, confSenha } = data;
     if(senha === confSenha) {
@@ -35,8 +34,8 @@ const Edit_Profile = () => {
     }
     else Alert.alert('Falha ao editar o Perfil', 'Senhas diferentes');
   }
-
-const [visible,setVisible]=useState(false)
+  
+  const [visible,setVisible]=useState(false)
   const [popUpData, setPopUpData] = useState({
     icon: undefined,
     title: undefined,
@@ -46,8 +45,22 @@ const [visible,setVisible]=useState(false)
     onConfirm: ()=>{},
     onClose: ()=>{},
   }) 
-
-
+  
+  const [imagem,setImagem]=useState(false)
+  const [imageModal,setImageModal] = useState(false)
+  const imageOptions = () => {
+    setImageModal(true)
+  }
+  
+  const [imageSelected,setImageSelected]=useState(false)
+  
+  useEffect(() => {
+    if(imagem === false || imagem.cancelled === true){
+    }
+    else if (imagem.cancelled == false) {
+      setImageSelected(true)
+    }
+  },[imagem])
 
   return (
     <>
@@ -64,16 +77,45 @@ const [visible,setVisible]=useState(false)
         visible={visible}
         setVisible={setVisible}
       />
+    <BottomSheetImage
+      imagem={imagem}
+      setImagem={setImagem} 
+      visible={imageModal}
+      setVisible={setImageModal}
+    />
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.body} > 
 
-          <View style={styles.bImage}>
-            <FontAwesomeIcon icon={ faCircleUser } size={140} color={'black'}/>
-          </View>
+          { !imageSelected ? (
+            <TouchableOpacity style={styles.bImage}
+              onPress={() =>{
+                imageOptions()
+              }}
+            >
+              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
+              <View style={styles.hIconPlus}>
+                    <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
+              </View>
+              <Text style={styles.bImageLabel}>Adicionar foto</Text>
+            </TouchableOpacity>
+            ) : (
+              <>
+              <TouchableOpacity style={{position:'absolute',alignItems: 'flex-end', top:10, right:10}}
+                onPress={()=>{
+                  setImageSelected(false)
+                }}
+                >
+                <FontAwesomeIcon icon={faXmark} size={40} color='black' />
+              </TouchableOpacity>
+              <View style={styles.bImage}>
+                <Image source={{uri:imagem.uri}} resizeMode="cover" style={{width:140,height:140,borderRadius: 100, overflow: "hidden", borderWidth: 2,borderColor:'#3429A8'}}/>
+              </View>
+            </>
+          )}
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Nome</Text>  
+            <Text style={styles.bTitle}>Nome:</Text>  
             <TextInput
               style={styles.bInputBox}
               placeholder='Nome Completo'
@@ -83,7 +125,7 @@ const [visible,setVisible]=useState(false)
           </View>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Email</Text>
+            <Text style={styles.bTitle}>Email:</Text>
             <TextInput
               style={styles.bInputBox}
               placeholder='Insira seu Email'
@@ -93,7 +135,7 @@ const [visible,setVisible]=useState(false)
           </View>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>CPF</Text>
+            <Text style={styles.bTitle}>CPF:</Text>
             <TextInput
               style={styles.bInputBox}
               placeholder='Insira seu CPF'
@@ -103,7 +145,7 @@ const [visible,setVisible]=useState(false)
           </View>
 
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Senha</Text>  
+            <Text style={styles.bTitle}>Senha:</Text>  
             <TextInput style={styles.bInputBox} 
               placeholder='Insira sua nova Senha'
               secureTextEntry={true}
@@ -113,7 +155,7 @@ const [visible,setVisible]=useState(false)
           </View>  
           
           <View style={styles.bInput}>
-            <Text style={styles.bTitle}>Confirmar Senha</Text>  
+            <Text style={styles.bTitle}>Confirmar Senha:</Text>  
             <TextInput style={styles.bInputBox}
               placeholder='Insira novamente a Senha'
               secureTextEntry={true}
@@ -144,7 +186,7 @@ const [visible,setVisible]=useState(false)
                 onClose: setVisible,
                 icon: faTriangleExclamation,
                 title:'Deseja Excluir Sua Conta?',
-                description: 'Ao excluir sua conta, todos os dados salvos serão deletados permanentemente!',
+                description: 'Ao excluir sua conta, todos os dados salvos serão permanentemente deletados!',
                 buttonPrimaryTitle: 'Deletar',
                 buttonSecondaryTitle: 'Cancelar'
               })

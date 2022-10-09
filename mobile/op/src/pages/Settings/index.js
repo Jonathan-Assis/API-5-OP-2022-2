@@ -15,12 +15,17 @@ const Settings = () => {
   return (
     <View style={styles.container}>
       <View style={styles.body}>
-        <View style={styles.image}>
-            <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
+        <View style={styles.header}>
+          <View style={styles.hImage}>
+              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
+          </View>
+          <Text style={styles.hTitle}>{authData.nome}</Text>
         </View>
 
-        <Text style={styles.bText}>{authData.nome}</Text>
+      <View style={styles.bEmailBox}>
+        <Text style={styles.bTitle}>Email:</Text>
         <Text style={styles.bText}>{authData.email}</Text>
+      </View>
 
         <View style={styles.footer}>
           <TouchableOpacity style={styles.fButton}

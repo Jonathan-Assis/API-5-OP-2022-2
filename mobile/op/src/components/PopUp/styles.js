@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     },
     bDescription:{
         ...stylesVar.titleSecondary,
+        textAlign: 'center',
         opacity:0.6,
         flexWrap:'wrap',
         fontSize:17,

@@ -4,13 +4,12 @@ import MapView, { Marker } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
-import { latlng } from "../Registros/axios";
-import { categorias } from "../Registros/categorias";
+import ServerConnection from "../../services"
 import styles from "./styles";
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import {faXmark, faLocationDot} from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import GeoIcon from "../../assets/Icons/geo-alt";
 import GeoIconFill from "../../assets/Icons/geo-alt-fill";
 
@@ -21,28 +20,47 @@ const Maps = () => {
   const [pinSelected, setPinSelected] = useState(false);
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
-  const [markers, setMarkers] = useState(latlng);
   const [filterMarkers, setFilterMarkers] = useState("");
 
-  const filterData = markers.filter((e) => e.category === filterMarkers);
+ // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
 
+  const [visible,setVisible]=useState(false)
+  const [popUpPermission, setPopUpPermission] = useState({
+    icon: undefined,
+    title: undefined,
+    description: undefined,
+    buttonPrimaryTitle: undefined,
+    buttonSecondaryTitle: undefined,
+    onConfirm: ()=>{},
+    onClose: ()=>{},
+  })
  
   const close = () =>{
-  navigation.goBack()
-  setVisible(false)
+    navigation.goBack()
+    setVisible(false)
   }
-  const [visible,setVisible]=useState(false)
-
-
 
   useEffect(() => {
-    permission();
+    setLoading(true);
+    getOcorrencias().then(() => {
+      permission();
+    })
+    .finally(() => {
+      setLoading(false);
+    })
   }, []);
 
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== "granted") {
+      setPopUpPermission({
+        onClose: close,
+        icon: faLocationDot,
+        title: 'Permissão Negada!',
+        description: 'As permissões de localização foram negadas, é necessário aceitar as permissões para o uso mapa',
+        buttonPrimaryTitle: 'Fechar'
+      })
       setVisible(true)
     } else {
       try {
@@ -64,24 +82,39 @@ const Maps = () => {
         }
         setLoading(false)
       } catch(e) {
+        setPopUpPermission({
+          onClose: close,
+          icon: faLocationDot,
+          title: 'Localização Desativa!',
+          description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
+          buttonPrimaryTitle: 'Fechar'
+        })
         setVisible(true)
       }
     }
+  }
+  const [ocorrencias,setOcorrencias]= useState([])
 
-    //let backPerm = await Location.requestBackgroundPermissionsAsync();
-    //console.log(backPerm);
-  };
+  async function getOcorrencias(){
+    await ServerConnection.getAllOcorrencia()
+    .then(({data}) => {
+      setOcorrencias(data)
+    })
+    .catch(() => {
+        Alert.alert('Falha', 'Falhada Falhou')
+    })
+  }
 
   return (
     <>
         <PopUpAlert 
          icon={
-          <FontAwesomeIcon icon={faLocationDot} size={60} color='white' />
+          <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
           }
-          title='Permissão de Localização Negada! ' 
-          description='É necessário a habilitar a permissão de localização para o uso do Mapa.'
-          buttonPrimaryTitle='Fechar'
-          onClose={close}
+          title={popUpPermission.title}
+          description={popUpPermission.description}
+          buttonPrimaryTitle={popUpPermission.buttonPrimaryTitle}
+          onClose={popUpPermission.onClose}
           visible={visible}
           setVisible={setVisible}
         />
@@ -99,31 +132,42 @@ const Maps = () => {
             setPinSelected(true);
           }}
         >
-          {pinSelected && (
-            <Marker
-            pinColor='#3429A8'
-            coordinate={pin}
-            onPress={(e) => {
-              setPinSelected(false);
-            }}
-            />
+          { (ocorrencias).map((item)=>{
+            return(
+              <Marker
+                key={item._id}
+                coordinate={{
+                  latitude: item.local.latitude,
+                  longitude: item.local.longitude,
+                }}
+              />
             )}
+          )}
+            {pinSelected && (
+              <Marker
+              pinColor='#3429A8'
+              coordinate={pin}
+              onPress={(e) => {
+                setPinSelected(false);
+              }}
+              />
+              )}
 
-          {(filterMarkers ? filterData : markers).map((item) => {
+{/*           {(filterMarkers ? filterData : ocorrencias).map((item) => {
             return (
               <Marker
-              key={item.id}
-              coordinate={{
-                latitude: item.latitude,
-                longitude: item.longitude,
-              }}
-              /* onPress={()=>{
+                key={item._id}
+                coordinate={{
+                  latitude: item.local.latitude,
+                  longitude: item.local.longitude,
+                }}
+               onPress={()=>{
                 navigation.navigate("Rep_Ocorrencia", item)
                 //console.log('item',item)
-              }} */
+              }} 
               />
               );
-            })}
+            })} */}
         </MapView>
         <View style={styles.container}>
           <View style={styles.footer}>

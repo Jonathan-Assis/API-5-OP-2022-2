@@ -18,7 +18,7 @@ const Maps = () => {
   const [pin, setPin] = useState({});
   const [loading,setLoading] = useState(false)
   const [pinSelected, setPinSelected] = useState(false);
-  const [origin, setOrigin] = useState();
+  const [origin, setOrigin] = useState({});
   const [coordinate, setCoordinate] = useState({});
   const [filterMarkers, setFilterMarkers] = useState("");
   
@@ -40,7 +40,7 @@ const Maps = () => {
     setVisible(false)
   }
   
-  useEffect(() => {
+/*   useEffect(() => {
     setLoading(true);
     getOcorrencias().then(() => {
       permission();
@@ -49,7 +49,7 @@ const Maps = () => {
       setLoading(false);
     })
   }, []);
-  
+   */
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     
@@ -68,7 +68,7 @@ const Maps = () => {
         const { coords } = await Location.getCurrentPositionAsync({
           enableHighAccuracy: true,
         });
-        if (coords) {
+        if (coords && Object.keys(origin).length === 0) {
           setCoordinate({
             latitude: coords.latitude,
             longitude: coords.longitude,
@@ -79,13 +79,20 @@ const Maps = () => {
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
           });
+          console.log('origin vazia', Object.keys(origin).length)
+        } else {
+          setCoordinate({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+          });
+          console.log('local atual origin', Object.keys(origin).length)
         }
         setLoading(false)
       } catch(e) {
         setPopUpPermission({
           onClose: close,
           icon: faLocationDot,
-          title: 'Localização Desativa!',
+          title: 'Localização Desativada!',
           description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
           buttonPrimaryTitle: 'Fechar'
         })
@@ -93,7 +100,8 @@ const Maps = () => {
       }
     }
   }
-  const [ocorrencias,setOcorrencias]= useState([])
+
+/*   const [ocorrencias,setOcorrencias]= useState([])
   
   async function getOcorrencias(){
     await ServerConnection.getAllOcorrencia()
@@ -104,20 +112,7 @@ const Maps = () => {
     .catch(() => {
       Alert.alert('Falha', 'Falhada Falhou')
     })
-  }
-
-  async function getCurrentLocation(){
-
-    const { coords } = await Location.getCurrentPositionAsync({
-      enableHighAccuracy: true,
-    })
-    navigation.navigate({
-      name: "Rep_Ocorrencia",
-      params: {
-        coordinate: coordinate,
-      },
-    })
-  }
+  } */
 
   
   return (
@@ -147,7 +142,7 @@ const Maps = () => {
             setPinSelected(true);
           }}
         >
-          { (ocorrencias).map((item)=>{
+          {/* { (ocorrencias).map((item)=>{
             return(
               <Marker
                 key={item._id}
@@ -157,7 +152,7 @@ const Maps = () => {
                 }}
               />
             )}
-          )}
+          )} */}
             {pinSelected && (
               <Marker
               pinColor='#3429A8'
@@ -228,7 +223,6 @@ const Maps = () => {
                         coordinate: null,
                       },
                     }))
-                    
                   }}
                   >
                   <FontAwesomeIcon icon={faXmark} size={22} color="black" />
@@ -239,12 +233,15 @@ const Maps = () => {
                   style={styles.fButtonPrimary}
                   event={true}
                   onPress={() => {
-                    navigation.navigate({
+                    async function coord() {
+                      permission()
+                    }
+                    coord().then(() => navigation.navigate({
                       name: "Rep_Ocorrencia",
                       params: {
                         coordinate: coordinate,
                       },
-                    });
+                    }))
                   }}
                 >
                   <GeoIconFill size={22} fill="white" />

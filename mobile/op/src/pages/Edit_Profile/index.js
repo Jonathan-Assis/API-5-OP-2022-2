@@ -17,16 +17,15 @@ const Edit_Profile = () => {
     email: authData.email || undefined,
     senha: undefined,
     confSenha: undefined,
-    imagem: undefined,
   });
   
   const update = async () => {
-    const { id, nome, cpf, email, senha, confSenha, imagem } = data;
+    const { id, nome, cpf, email, senha, confSenha } = data;
     if(senha === confSenha) {
       if(!!nome && !!email && !!cpf) {
         let aux = !!senha ? senha : authData.senha;
         updateAuth({
-          id, nome, email, cpf, senha: aux, imagem: imagem.base64
+          id, nome, email, cpf, senha: aux
         }).then(() => {
           setVisible(false)
         })

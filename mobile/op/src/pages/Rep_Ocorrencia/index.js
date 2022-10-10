@@ -114,7 +114,7 @@ useEffect(() => {
 
   return (
     <>
-      <PopUpAlert
+{/*       <PopUpAlert
         icon={
           <FontAwesomeIcon icon={popUp.icon} size={60} color='white' />
         }
@@ -124,7 +124,7 @@ useEffect(() => {
         onClose={popUp.onClose}
         visible={visible}
         setVisible={setVisible}
-      />
+      /> */}
       <PopUpActions 
         icon={
           <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />

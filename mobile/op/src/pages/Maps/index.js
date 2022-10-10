@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
@@ -18,7 +18,7 @@ const Maps = () => {
   const [pin, setPin] = useState({});
   const [loading,setLoading] = useState(false)
   const [pinSelected, setPinSelected] = useState(false);
-  const [origin, setOrigin] = useState({});
+  const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
   const [filterMarkers, setFilterMarkers] = useState("");
   
@@ -40,16 +40,16 @@ const Maps = () => {
     setVisible(false)
   }
   
-/*   useEffect(() => {
+  useEffect(() => {
     setLoading(true);
     getOcorrencias().then(() => {
-      permission();
-    })
+       permission();
+    }) 
     .finally(() => {
-      setLoading(false);
+      setLoading(false); 
     })
   }, []);
-   */
+   
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     
@@ -68,7 +68,7 @@ const Maps = () => {
         const { coords } = await Location.getCurrentPositionAsync({
           enableHighAccuracy: true,
         });
-        if (coords && Object.keys(origin).length === 0) {
+        if (coords) {
           setCoordinate({
             latitude: coords.latitude,
             longitude: coords.longitude,
@@ -79,14 +79,7 @@ const Maps = () => {
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
           });
-          console.log('origin vazia', Object.keys(origin).length)
-        } else {
-          setCoordinate({
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-          });
-          console.log('local atual origin', Object.keys(origin).length)
-        }
+        } 
         setLoading(false)
       } catch(e) {
         setPopUpPermission({
@@ -100,19 +93,16 @@ const Maps = () => {
       }
     }
   }
-
-/*   const [ocorrencias,setOcorrencias]= useState([])
+   const [ocorrencias,setOcorrencias]= useState([])
   
   async function getOcorrencias(){
     await ServerConnection.getAllOcorrencia()
     .then(({data}) => {
       setOcorrencias(data)
-      console.log(ocorrencias[0].categoria)
     })
     .catch(() => {
-      Alert.alert('Falha', 'Falhada Falhou')
     })
-  } */
+  } 
 
   
   return (
@@ -163,7 +153,7 @@ const Maps = () => {
               />
               )}
 
-{/*           {(filterMarkers ? filterData : ocorrencias).map((item) => {
+        {(filterMarkers ? filterData : ocorrencias).map((item) => {
             return (
               <Marker
                 key={item._id}
@@ -177,7 +167,7 @@ const Maps = () => {
               }} 
               />
               );
-            })} */}
+            })}
         </MapView>
         <View style={styles.container}>
           <View style={styles.footer}>
@@ -233,15 +223,7 @@ const Maps = () => {
                   style={styles.fButtonPrimary}
                   event={true}
                   onPress={() => {
-                    async function coord() {
                       permission()
-                    }
-                    coord().then(() => navigation.navigate({
-                      name: "Rep_Ocorrencia",
-                      params: {
-                        coordinate: coordinate,
-                      },
-                    }))
                   }}
                 >
                   <GeoIconFill size={22} fill="white" />

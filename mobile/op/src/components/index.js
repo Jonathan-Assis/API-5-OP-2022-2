@@ -1,5 +1,11 @@
+import { BottomSheetImage, BottomSheetSlider } from './BottomSheet'
 import Loading from './Loading';
+import { PopUpActions, PopUpAlert } from './PopUp'
 
 export {
-    Loading
+    BottomSheetImage,
+    BottomSheetSlider,
+    Loading,
+    PopUpActions,
+    PopUpAlert,
 }

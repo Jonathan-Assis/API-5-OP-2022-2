@@ -4,31 +4,31 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        ...stylesVar.backgroundPrimary
+        ...stylesVar.backgroundPrimary,
+        justifyContent: 'space-between',
     },
     header:{
+        flex:1,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom:10,
 
     },
-    
-    hLogo:{
-        maxHeight:300,
-        maxWidth:300,
+    hLogotype:{
+        width:150, height:150
     },
 
     hTitle:{
         ...stylesVar.titlePrimary,
+        fontWeight:'500',
         color: '#E9E9E9',
-        top:-50
     },
 
     body: {
-        flex: 1,      
-        flexDirection: 'row',
+        justifyContent: 'flex-end',
     },
+
     bForm:{
-        flex: 1,      
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
@@ -38,6 +38,12 @@ const styles = StyleSheet.create({
     bInput:{
         marginBottom:7
     },
+    bDescription:{
+        ...stylesVar.titleSecondary,
+        fontSize:16,
+        opacity:0.5,
+        marginBottom:5    
+    },
 
     bTitle:{
         ...stylesVar.titleSecondary,
@@ -46,10 +52,22 @@ const styles = StyleSheet.create({
 
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
-        padding: 5,
+        padding: 8,
         paddingHorizontal:15,
     },
-
+    bInputPassword:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        ...stylesVar.strokeBoxPrimary,
+    },
+    bInputPasswordBox:{
+        flex:1,
+        padding: 8,
+        paddingHorizontal:15,
+    },
+    bPasswordIcon:{
+        marginHorizontal:8
+    },
     bLabel:{
         textAlign:'center',
         ...stylesVar.titleTertiary
@@ -57,7 +75,7 @@ const styles = StyleSheet.create({
     
     bButton:{
         ...stylesVar.boxPrimary,
-        padding: 10,
+        padding: 12,
         marginVertical:10
     },
 })

@@ -2,58 +2,68 @@ import { StyleSheet } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
 
 const styles = StyleSheet.create({
-    container:{
+    container:{ 
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        padding: 18,
         ...stylesVar.backgroundPrimary
     },
 
     header:{
-        flex:0.4,
         alignItems: 'center',
-        width:'60%',
-        justifyContent: 'space-around',
-        margin:10,
     },
 
-    hButton:{
-        paddingHorizontal:30,
-        alignItems: 'center',
-        justifyContent: 'center',
-        ...stylesVar.boxSecondary
-    },
-
-    hText:{
-        ...stylesVar.titleSecondary,
-        padding:6,
-        fontWeight:'bold'
+    hTitle:{
+        marginBottom: 10,
+        ...stylesVar.titleTertiary
     },
 
     body:{
-        justifyContent: 'space-around',
+        flex: 1,
+        width: '100%',
+        marginHorizontal: 0,
+    },
+    
+    
+    hImage:{
+        marginBottom: 10,
         alignItems: 'center',
+
     },
 
-    footer:{
-        flex:0.1,
-        alignItems: 'center',
-        bottom: 10,
-        width:'60%',
-        justifyContent: 'center',
+    bEmailBox:{
+        padding:10,
     },
 
+    bTitle:{
+        marginBottom:5,
+        ...stylesVar.titleTertiary
+    },
+    
+    bText:{
+        ...stylesVar.textSecondary
+    },
+    
+    fLabel:{
+        textAlign:'center',
+        paddingHorizontal:10,
+        ...stylesVar.titleTertiary
+    },
+    
     fButton:{
-        paddingHorizontal:50,
+        flexDirection: 'row',
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        padding: 10,
+        margin:10,
         ...stylesVar.strokeBoxSecondary
     },
 
-    fText:{
-        ...stylesVar.titleTertiary,
-        padding:5,
-        fontWeight:'bold'
+    footer:{
+        flex: 1,
+        width: '100%',
+        justifyContent: 'flex-end',
+        alignItems: 'center'        
     },
 })
 

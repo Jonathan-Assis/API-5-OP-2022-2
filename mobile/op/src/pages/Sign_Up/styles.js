@@ -2,17 +2,16 @@ import { StyleSheet } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
-        flexDirection: 'row',
-        alignItems: 'center', 
-        justifyContent: 'center',
         ...stylesVar.backgroundSecondary,
     },
     
     body: {
         flex: 1,
-        padding: 16
+        justifyContent: 'center',
+        padding: 16,
+        
     },
 
     bInput:{
@@ -26,13 +25,13 @@ const styles = StyleSheet.create({
 
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
-        padding: 5,
+        padding: 8,
         paddingHorizontal:15,
     },
 
     bButton:{
         ...stylesVar.boxPrimary,
-        padding: 10,
+        padding: 12,
         marginVertical:10
     },
 

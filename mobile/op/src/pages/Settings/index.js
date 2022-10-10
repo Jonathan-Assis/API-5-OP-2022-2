@@ -1,32 +1,47 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faUserPen, faCircleUser, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
 
-import ProfileIcon from '../../assets/Icons/file-person'
 
 const Settings = () => {
   const navigation = useNavigation();
-
   const { signOut } = useAuth()
+  const authData = JSON.parse(useAuth().authData)
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <ProfileIcon size={120} />
-        <TouchableOpacity style={styles.hButton}
-          onPress={ () => navigation.navigate('Edit_Profile')}
-        >
-          <Text style={styles.hText}>Editar Perfil</Text>  
-        </TouchableOpacity>
+      <View style={styles.body}>
+        <View style={styles.header}>
+          <View style={styles.hImage}>
+              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
+          </View>
+          <Text style={styles.hTitle}>{authData.nome}</Text>
+        </View>
+
+      <View style={styles.bEmailBox}>
+        <Text style={styles.bTitle}>Email:</Text>
+        <Text style={styles.bText}>{authData.email}</Text>
       </View>
-      <View style={styles.footer}>
-        <TouchableOpacity style={styles.fButton}
-          onPress={signOut}
-        >
-            <Text style={styles.fText}>Sair</Text>  
-        </TouchableOpacity>
+
+        <View style={styles.footer}>
+          <TouchableOpacity style={styles.fButton}
+            onPress={() => navigation.navigate('Edit_Profile')}
+          >
+            <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
+            <Text style={styles.fLabel}>Editar Perfil</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.fButton}
+            onPress={signOut}
+          >
+            <FontAwesomeIcon icon={ faArrowRightFromBracket } size={24} color={'white'}/>
+            <Text style={styles.fLabel}>Sair da Conta</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );

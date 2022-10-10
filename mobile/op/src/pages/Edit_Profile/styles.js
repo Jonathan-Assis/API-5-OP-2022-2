@@ -14,22 +14,51 @@ const styles = StyleSheet.create({
         padding:16,
     },
 
-    bImage:{
+    bImageIcon:{
         alignItems: 'center',
     },
-
-    bInput:{
-        marginBottom:7
+    bRemoveImageButton:{
+        position:'absolute',
+        alignItems: 'flex-end', 
+        top:10, 
+        right:10
+    },
+    hImage:{
+        width:140,
+        height:140,
+        borderRadius: 100, 
+        overflow: "hidden", 
+        borderWidth: 2,
+        borderColor:'#3429A8'
     },
 
+    hIconPlus:{
+        position:'absolute',
+        bottom:22,
+        right:85,
+        borderRadius:100,
+        ...stylesVar.backgroundSecondary
+    },
+
+    bImageLabel:{
+        textAlign: 'center',
+        fontSize:20,
+        fontWeight:'bold',
+        color: '#3429A8',
+    },
+    
     bTitle:{
         ...stylesVar.titleSecondary,
         marginBottom:3
     },
+    
+    bInput:{
+        marginBottom:7
+    },
 
     bInputBox:{
         ...stylesVar.strokeBoxPrimary,
-        padding: 5,
+        padding: 8,
         paddingHorizontal:15,
     },
 
@@ -39,10 +68,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 
-    bEndereçoBox:{
-        flex:0.4,
-    },
-
     bLabel:{
         textAlign:'center',
         ...stylesVar.titleTertiary
@@ -50,7 +75,7 @@ const styles = StyleSheet.create({
     
     bButton:{
         ...stylesVar.boxPrimary,
-        padding: 10,
+        padding: 12,
         marginVertical:10
     },
 })

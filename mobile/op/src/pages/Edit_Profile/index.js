@@ -16,12 +16,11 @@ const Edit_Profile = () => {
   const [ data, setData ] = useState({
     _id: authData._id || undefined,
     nome: authData.nome || undefined,
-    email: authData.email || undefined,
     cpf: authData.cpf || undefined,
+    email: authData.email || undefined,
     senha: undefined,
-    confSenha: undefined
+    confSenha: undefined,
   });
-
   const [visible,setVisible]=useState(false)
   const [popUpData, setPopUpData] = useState({
     icon: undefined,
@@ -64,6 +63,7 @@ const Edit_Profile = () => {
 
   const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
   const [imageModal,setImageModal] = useState(false)
+
   const imageOptions = () => {
     setImageModal(true)
   }
@@ -74,10 +74,11 @@ const Edit_Profile = () => {
     if(imagem === false || imagem.cancelled === true){
       console.log('não temos uma imagem')
     }
-    else if (imagem.cancelled == false) {
+    else {
       setImageSelected(true)
     }
   },[imagem])
+  
 
   return (
     <>
@@ -119,7 +120,7 @@ const Edit_Profile = () => {
         <View style={styles.body} > 
 
           { !imageSelected ? (
-            <TouchableOpacity style={styles.bImage}
+            <TouchableOpacity style={styles.bImageIcon}
               onPress={() =>{
                 imageOptions()
               }}
@@ -132,9 +133,9 @@ const Edit_Profile = () => {
             </TouchableOpacity>
             ) : (
               <>
-              <TouchableOpacity style={{position:'absolute',alignItems: 'flex-end', top:10, right:10}}
+              <TouchableOpacity style={styles.bRemoveImageButton}
                 onPress={()=>{
-                  setImageSelected(false)
+                  setImagem({})
                 }}
                 >
                 <FontAwesomeIcon icon={faXmark} size={40} color='black' />

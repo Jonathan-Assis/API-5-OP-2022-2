@@ -12,17 +12,30 @@ const styles = StyleSheet.create({
         width:60, height:60
     },
 
-    header:{
-        flex:1,
-        width: '100%',
-        alignItems: 'center',
-        margin:10
+    hRemove:{
+        marginVertical:10,
+    },
+    hRemoveButton:{
+        position:'absolute',
+        alignItems: 'flex-end', 
+        top:10, 
+        right:10
     },
 
-    hImage:{
+    header:{
+        flex:1,
+        alignItems: 'center',
+        margin:10,
+    },
+
+    hImageIcon:{
         flex:1,
         margin:15,
         alignItems: 'center'
+    },
+    hImage:{
+        width:180,
+        height:180
     },
 
     hIconPlus:{

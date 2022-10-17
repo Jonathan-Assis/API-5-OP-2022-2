@@ -42,21 +42,23 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 
 
 # 📂 Documentação <a name="documentacao"></a>
-## PRODUCT BACKLOG <a name="backlog"></a>
+
+- ## PRODUCT BACKLOG <a name="backlog"></a>
 <img src='Referências/Documentação/Backlog/BacklogTotal1.jpg' width=100% >
 <img src='Referências/Documentação/Backlog/BacklogTotal2.jpg' width=100% >
 
-## Sprint Backlog <a name="sprintBacklog"></a>
+- ## Sprint Backlog <a name="sprintBacklog"></a>
 
 <div align=center>
-    <img src='Referências\Documentação\Backlog\EquipeNoxTimeline.png' width=600px >
+    <img src='Referências\Documentação\Backlog\EquipeNoxTimeline.jpg' width=600px >
 </div>
+
 # 📅 Cronograma de Entregas <a name="cronograma"></a>
 
 > Datas definidas sobre as entregas das sprints.
 
-- [ ] [SPRINT 1](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%201/) - 29/08/2022 a 18/09/2022;
-- [ ] SPRINT 2 - 19/09/2022 a 09/10/2022;
+- [x] [SPRINT 1 - 29/08/2022 a 18/09/2022; - Concluído](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%201/)
+- [x] [SPRINT 2 - 19/09/2022 a 09/10/2022; - Concluído](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%202/)
 - [ ] SPRINT 3 - 13/10/2022 a 06/11/2022;
 - [ ] SPRINT 4 - 07/11/2022 a 27/11/2022.
 

@@ -14,9 +14,24 @@ const styles = StyleSheet.create({
         padding:16,
     },
 
-    bImage:{
+    bImageIcon:{
         alignItems: 'center',
     },
+    bRemoveImageButton:{
+        position:'absolute',
+        alignItems: 'flex-end', 
+        top:10, 
+        right:10
+    },
+    hImage:{
+        width:140,
+        height:140,
+        borderRadius: 100, 
+        overflow: "hidden", 
+        borderWidth: 2,
+        borderColor:'#3429A8'
+    },
+
     hIconPlus:{
         position:'absolute',
         bottom:22,

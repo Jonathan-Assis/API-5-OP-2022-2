@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
@@ -21,9 +21,9 @@ const Maps = () => {
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
   const [filterMarkers, setFilterMarkers] = useState("");
-
- // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
-
+  
+  // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
+  
   const [visible,setVisible]=useState(false)
   const [popUpPermission, setPopUpPermission] = useState({
     icon: undefined,
@@ -39,20 +39,20 @@ const Maps = () => {
     navigation.goBack()
     setVisible(false)
   }
-
+  
   useEffect(() => {
     setLoading(true);
     getOcorrencias().then(() => {
-      permission();
-    })
+       permission();
+    }) 
     .finally(() => {
-      setLoading(false);
+      setLoading(false); 
     })
   }, []);
-
+   
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-
+    
     if (status !== "granted") {
       setPopUpPermission({
         onClose: close,
@@ -79,13 +79,13 @@ const Maps = () => {
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
           });
-        }
+        } 
         setLoading(false)
       } catch(e) {
         setPopUpPermission({
           onClose: close,
           icon: faLocationDot,
-          title: 'Localização Desativa!',
+          title: 'Localização Desativada!',
           description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
           buttonPrimaryTitle: 'Fechar'
         })
@@ -93,23 +93,23 @@ const Maps = () => {
       }
     }
   }
-  const [ocorrencias,setOcorrencias]= useState([])
-
+   const [ocorrencias,setOcorrencias]= useState([])
+  
   async function getOcorrencias(){
     await ServerConnection.getAllOcorrencia()
     .then(({data}) => {
       setOcorrencias(data)
     })
     .catch(() => {
-        Alert.alert('Falha', 'Falhada Falhou')
     })
-  }
+  } 
 
+  
   return (
     <>
         <PopUpAlert 
          icon={
-          <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
+           <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
           }
           title={popUpPermission.title}
           description={popUpPermission.description}
@@ -132,7 +132,7 @@ const Maps = () => {
             setPinSelected(true);
           }}
         >
-          { (ocorrencias).map((item)=>{
+          {/* { (ocorrencias).map((item)=>{
             return(
               <Marker
                 key={item._id}
@@ -142,7 +142,7 @@ const Maps = () => {
                 }}
               />
             )}
-          )}
+          )} */}
             {pinSelected && (
               <Marker
               pinColor='#3429A8'
@@ -153,7 +153,7 @@ const Maps = () => {
               />
               )}
 
-{/*           {(filterMarkers ? filterData : ocorrencias).map((item) => {
+        {(filterMarkers ? filterData : ocorrencias).map((item) => {
             return (
               <Marker
                 key={item._id}
@@ -167,7 +167,7 @@ const Maps = () => {
               }} 
               />
               );
-            })} */}
+            })}
         </MapView>
         <View style={styles.container}>
           <View style={styles.footer}>
@@ -213,7 +213,6 @@ const Maps = () => {
                         coordinate: null,
                       },
                     }))
-                    
                   }}
                   >
                   <FontAwesomeIcon icon={faXmark} size={22} color="black" />
@@ -224,12 +223,7 @@ const Maps = () => {
                   style={styles.fButtonPrimary}
                   event={true}
                   onPress={() => {
-                    navigation.navigate({
-                      name: "Rep_Ocorrencia",
-                      params: {
-                        coordinate: coordinate,
-                      },
-                    });
+                      permission()
                   }}
                 >
                   <GeoIconFill size={22} fill="white" />

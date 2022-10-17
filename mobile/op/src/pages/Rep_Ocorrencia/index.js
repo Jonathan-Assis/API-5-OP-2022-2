@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import {useNavigation} from '@react-navigation/native'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus,faLightbulb } from '@fortawesome/free-solid-svg-icons'
 import {PopUpAlert,PopUpActions, BottomSheetImage} from '../../components'
 import styles from './styles';
 import {Loading} from '../../components'
@@ -16,7 +16,8 @@ const Rep_Ocorrencia = (props) => {
   const route = useRoute()
 
   //form
-  const [imagem,setImagem]=useState(false)
+  const [imagem,setImagem]=useState({})
+  const [categoria, setCategoria]=useState()
   const [selectedSubType, setSelectedSubType] = useState([]);
   const [titulo,setTitulo]=useState('')
   const [local,setLocal]=useState({})
@@ -36,6 +37,7 @@ const Rep_Ocorrencia = (props) => {
     {
       setDatas(data/* JSON.parse(data) */)
     }).finally (()=>{
+      setCategoria(TipoOcorrencia)
       setLoading (false)
     })
   },[TipoOcorrencia])
@@ -67,7 +69,7 @@ const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-            cpf, foto: imagem, titulo: titulo, categoria:TipoOcorrencia, subcategoria: selectedSubType, local: local, descricao: descricao
+            cpf, foto: imagem, titulo: titulo, categoria:categoria, subcategoria: selectedSubType, local: local, descricao: descricao
         }).then(data => 
             console.log(data.response)//mudar depois
         ).finally(() => {
@@ -101,20 +103,18 @@ const imageOptions = () => {
 const [imageSelected,setImageSelected]=useState(false)
 
 useEffect(() => {
-  if(imagem === false || imagem.cancelled === true){
+  if( Object.keys(imagem).length === 0 || imagem.cancelled === true){
+    setImageSelected(false)
   }
-  else if (imagem.cancelled == false) {
+  else {
     setImageSelected(true)
   }
 },[imagem])
 
-const ocorrencia = () => {}
-
-
 
   return (
     <>
-      <PopUpAlert
+{/*       <PopUpAlert
         icon={
           <FontAwesomeIcon icon={popUp.icon} size={60} color='white' />
         }
@@ -124,7 +124,7 @@ const ocorrencia = () => {}
         onClose={popUp.onClose}
         visible={visible}
         setVisible={setVisible}
-      />
+      /> */}
       <PopUpActions 
         icon={
           <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />
@@ -150,7 +150,7 @@ const ocorrencia = () => {}
             <TouchableOpacity style={styles.header}
               onPress={()=> imageOptions()}
             >
-               <View style={styles.hImage}>
+               <View style={styles.hImageIcon}>
                 <FontAwesomeIcon icon={faImage} size={170} color='#3429A8' />
                 <View style={styles.hIconPlus}>
                   <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
@@ -159,27 +159,26 @@ const ocorrencia = () => {}
               </View>
             </TouchableOpacity>
           :
-          <View style={{ marginVertical:10}}>
-            <TouchableOpacity style={{position:'absolute',alignItems: 'flex-end', top:10, right:10}}
+          <View style={styles.hRemove}>
+            <TouchableOpacity style={styles.hRemoveButton}
               onPress={()=>{
-                setImageSelected(false)
+                setImagem({})
               }}
             >
               <FontAwesomeIcon icon={faXmark} size={40} color='black' />
             </TouchableOpacity>
             <View style={styles.header}>
-              <Image source={{uri:imagem.uri}} resizeMode='contain' style={{width:180,height:180}}/>
+              <Image source={{uri:imagem.uri}} resizeMode='contain' style={styles.hImage}/>
               <Text style={styles.hTitle}>Imagem do Ocorrido</Text>  
             </View>
           </View>
           }
             <View style={styles.body}> 
               <View style={styles.bContainer}> 
-
               
                 {!!subType && !!subType.length ? 
                   (<>
-                    <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+                    <Text style={styles.bTitle2}>{categoria}</Text> 
                     <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
                     <TouchableOpacity style={styles.bPickerBox}> 
                       <Picker
@@ -207,10 +206,9 @@ const ocorrencia = () => {}
                   </>)
                   :
                   (<>
-                    <Text style={styles.bTitle2}>{TipoOcorrencia}</Text> 
+                    <Text style={styles.bTitle2}>{categoria}</Text> 
                   </>) 
                 }
-              
               
                 <View style={styles.bInput}>
                   <Text style={styles.bTitle}>Título:</Text>  
@@ -223,7 +221,6 @@ const ocorrencia = () => {}
                     placeholderTextColor={styles.bInputStrokeBox.color}
                   ></TextInput>
                 </View>
-                
                 
                 <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
                   onPress={() =>  {
@@ -263,7 +260,7 @@ const ocorrencia = () => {}
                     setPopUp({
                       onConfirm:  close,
                       onClose: setVisible,
-                      icon: faTriangleExclamation,
+                      //icon: faTriangleExclamation,
                       title:'Deseja Finalizar a Ocorrência?',
                       buttonPrimaryTitle: 'Finalizar',
                       buttonSecondaryTitle: 'Cancelar',

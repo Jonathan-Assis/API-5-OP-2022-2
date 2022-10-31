@@ -1,7 +1,10 @@
 import React,{useState, useEffect} from 'react';
 import { View, Text,TextInput, TouchableOpacity, ScrollView, Alert, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCircleUser, faUserPen, faTriangleExclamation, faPlus, faXmark, faEye, faEyeSlash, faKey } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCircleUser, faUserPen, faTriangleExclamation, faPlus, faXmark, faEye, faEyeSlash, faKey,
+  faPenToSquare, faTrashCan
+} from '@fortawesome/free-solid-svg-icons'
 import { PopUpActions, PopUpAlert, BottomSheetImage } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
@@ -62,23 +65,11 @@ const Edit_Profile = () => {
   }
 
   const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
-  const [imageModal,setImageModal] = useState(false)
+  const [ imageModal, setImageModal ] = useState(false)
 
   const imageOptions = () => {
     setImageModal(true)
   }
-  
-  const [ imageSelected, setImageSelected ] = useState(!!authData?.imagem)
-  
-  useEffect(() => {
-    if(imagem === false || imagem.cancelled === true){
-      console.log('não temos uma imagem')
-    }
-    else {
-      setImageSelected(true)
-    }
-  },[imagem])
-  
 
   return (
     <>
@@ -118,33 +109,31 @@ const Edit_Profile = () => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.body} > 
+            <View style={styles.bImageIcon}>
+              <TouchableOpacity 
+                onPress={() =>{
+                  imageOptions();
+                }}
+              >
+                {!!imagem?.base64
+                  ? <View style={styles.bImageIcon}>
+                    <Image source={{uri: `data:image/png;base64,${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
+                  </View>
+                  : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
+                }
+              </TouchableOpacity>
 
-          { !imageSelected ? (
-            <TouchableOpacity style={styles.bImageIcon}
-              onPress={() =>{
-                imageOptions()
-              }}
-            >
-              <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
-              <View style={styles.hIconPlus}>
-                <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
-              </View>
-              <Text style={styles.bImageLabel}>Adicionar foto</Text>
-            </TouchableOpacity>
-            ) : (
-              <>
-              <TouchableOpacity style={styles.bRemoveImageButton}
+              <TouchableOpacity style={styles.bBottomImageButton}
                 onPress={()=>{
-                  setImagem({})
+                  !!imagem?.base64
+                  ? setImagem(undefined)
+                  : imageOptions()
                 }}
                 >
-                <FontAwesomeIcon icon={faXmark} size={40} color='black' />
+                <FontAwesomeIcon icon={!!imagem?.base64 ? faTrashCan : faPenToSquare} size={25} color='#3429A8' />
               </TouchableOpacity>
-              <View style={styles.bImage}>
-                <Image source={{uri: `data:image/png;base64,${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
-              </View>
-            </>
-          )}
+            </View>
+
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>Nome:</Text>  

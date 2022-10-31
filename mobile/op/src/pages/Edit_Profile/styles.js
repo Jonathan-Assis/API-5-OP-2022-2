@@ -10,19 +10,15 @@ const styles = StyleSheet.create({
     },
 
     body: {
-        flex: 1,      
+        flex: 1,
+        alignItems: 'center',
         padding:16,
     },
 
     bImageIcon:{
-        alignItems: 'center',
+        width: 140
     },
-    bRemoveImageButton:{
-        position:'absolute',
-        alignItems: 'flex-end', 
-        top:10, 
-        right:10
-    },
+
     hImage:{
         width:140,
         height:140,
@@ -31,11 +27,15 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor:'#3429A8'
     },
-
-    hIconPlus:{
+    
+    bBottomImageButton:{
         position:'absolute',
-        bottom:22,
-        right:85,
+        alignItems: 'flex-end', 
+        bottom: 0, 
+        right: -10,
+        padding: 5,
+        borderWidth: 2,
+        borderColor:'#3429A8',
         borderRadius:100,
         ...stylesVar.backgroundSecondary
     },
@@ -62,7 +62,8 @@ const styles = StyleSheet.create({
     },
     
     bInput:{
-        marginBottom:7
+        marginBottom:7,
+        width: '100%'
     },
 
     bInputBox:{
@@ -101,7 +102,8 @@ const styles = StyleSheet.create({
     bButton:{
         ...stylesVar.boxPrimary,
         padding: 12,
-        marginVertical:10
+        marginVertical:10,
+        width: '100%'
     },
 })
 

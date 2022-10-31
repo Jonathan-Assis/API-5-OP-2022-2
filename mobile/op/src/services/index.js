@@ -24,7 +24,15 @@ export default class ServerConnection {
     }
 
     static async editarPerfil(data) {
-        return await conn.put('/cidadao/update', data);
+        let form = new FormData();
+        
+        for(let key in data) {
+            form.append(Object.keys(data)[key], data[key]);
+        }
+        
+        return await conn.put('/cidadao/update', form, {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        });
     }
 
     static async deletePerfil(data) {

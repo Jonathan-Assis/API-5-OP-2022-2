@@ -6,7 +6,7 @@ import styles from './styles';
 
 //Icons
 import { faTree, faPersonDigging, faLightbulb, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons'
-import PipeIcon from '../../assets/Icons/pipeline-32-regular'
+import PipeIcon from '../../assets/Icons/Saneamento.svg'
 
 const Home = () => {  
   const navigation = useNavigation();
@@ -59,7 +59,7 @@ const Home = () => {
                   TipoOcorrencia:'Saneamento'
                 }
               })}>
-                <PipeIcon size={50} />
+                <PipeIcon width="58" height="58" />
                 <Text style={styles.bButtonTitle}>Saneamento</Text>
               </TouchableOpacity>
             </View>

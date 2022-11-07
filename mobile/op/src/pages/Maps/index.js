@@ -120,6 +120,8 @@ const Maps = () => {
         />
       <Loading loading={loading}>
         <MapView
+          showsCompass={false}
+          toolbarEnabled={false}
           style={{ flex: 1 }}
           initialRegion={origin}
           showsUserLocation={true}
@@ -162,7 +164,7 @@ const Maps = () => {
                   longitude: item.local.longitude,
                 }}
                onPress={()=>{
-                navigation.navigate("Rep_Ocorrencia", item)
+                //navigation.navigate("Rep_Ocorrencia", item)
                 //console.log('item',item)
               }} 
               />

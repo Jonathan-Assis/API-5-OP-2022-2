@@ -1,230 +1,320 @@
-import React, {useEffect, useState} from 'react';
-import { View, Text,TextInput,TouchableOpacity, ScrollView, Alert, Image} from 'react-native';
-/* import { Picker } from "@react-native-picker/picker";
-import {useNavigation} from '@react-navigation/native'
-import ServerConnection from '../../services'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck, faCamera, faTriangleExclamation, faXmark, faMagnifyingGlassPlus, faPlus, faCirclePlus } from '@fortawesome/free-solid-svg-icons'
-import {PopUpAlert,PopUpActions, BottomSheetImage} from '../../components'
-import styles from './styles';
-import {Loading} from '../../components'
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { View, Text, TouchableOpacity, FlatList, Animated, Image,TextInput, ScrollView, Dimensions } from "react-native";
+import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
+import { Loading, PopUpAlert } from '../../components'
+import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/native";
+import ServerConnection from "../../services"
+import styles from "./styles";
+import {categorias, op} from '../Registros/categorias'
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
+import {BottomSheetSlider} from '../../components/BottomSheet'
+import Logo from '../../assets/Logotype/LogoOP.svg'
 
-import { useRoute } from '@react-navigation/native';
- */
+//Icons
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
+import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 
-const Chamados = (props) => {
- /*  const navigation = useNavigation();
-  const route = useRoute()
-
-  //form
-  const [imagem,setImagem]=useState(false)
-  const [titulo,setTitulo]=useState('')
-  const [latlng,setLatlng]=useState({})
-  const [descricao,setDescricao]=useState('')
-  let coordinate = props.route.params?.coordinate
-
+const Chamados = () => {
+  const navigation = useNavigation();
+  const [loading,setLoading] = useState(false)
+  const [pinData, setPinData] = useState({});
+  const [pinSelected, setPinSelected] = useState(false);
+  const [origin, setOrigin] = useState();
+  const [filterMarkers, setFilterMarkers] = useState(op);
+  const [ocorrencias,setOcorrencias]= useState(op)
+  const [mapPermissionView, setMapPermissionView] = useState(false);
   
-
+  const [visible,setVisible]=useState(false)
+  const [popUpPermission, setPopUpPermission] = useState({
+    icon: undefined,
+    title: undefined,
+    description: undefined,
+    buttonPrimaryTitle: undefined,
+    buttonSecondaryTitle: undefined,
+    onConfirm: ()=>{},
+    onClose: ()=>{},
+  })
   
-  //Define o tipo da ocorrência
+ 
+  const close = () =>{
+    setVisible(false)
+  }
   
-  //Define coordenadas
   useEffect(() => {
-    if(coordinate !== undefined){
-      setLatlng(coordinate)
+    //setLoading(true);
+    permission();
+/*     getOcorrencias().then(() => {
+    }) 
+    .finally(() => {
+      //setLoading(false); 
+    }) */
+  }, []);
+   
+  const permission = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    
+    if (status !== "granted") {
+      setPopUpPermission({
+        onClose: close,
+        icon: faLocationDot,
+        title: 'Permissão Negada!',
+        description: 'As permissões de localização foram negadas, é necessário aceitar as permissões para o uso mapa',
+        buttonPrimaryTitle: 'Fechar'
+      })
+      //setVisible(true)
+      setMapPermissionView(false)
+    } else {
+      try {
+        //setLoading(true)
+        const { coords } = await Location.getCurrentPositionAsync({
+          enableHighAccuracy: true,
+        });
+        if (coords) {
+          setOrigin({
+            latitude: coords.latitude,
+            longitude: coords.longitude,
+            latitudeDelta: 0.004,
+            longitudeDelta: 0.004,
+          });
+          setMapPermissionView(true)
+        } 
+        //setLoading(false)
+      } catch(e) {
+        setPopUpPermission({
+          onClose: close,
+          icon: faLocationDot,
+          title: 'Localização Desativada!',
+          description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
+          buttonPrimaryTitle: 'Fechar'
+        })
+        setMapPermissionView(false)
+        //setVisible(true)
+      }
     }
-  },[coordinate])
-
-const [visible,setVisible]=useState(false)
-const [popUp, setPopUp] = useState({
-  icon: undefined,
-  title: undefined,
-  description: undefined,
-  buttonPrimaryTitle: undefined,
-  buttonSecondaryTitle: undefined,
-  onConfirm: ()=>{},
-  onClose: ()=>{},
-})
-
-const close = () =>{
-  setVisible(false)
-}
-
-const [imageModal,setImageModal] = useState(false)
-const imageOptions = () => {
-  setImageModal(true)
-}
-
-const [imageSelected,setImageSelected]=useState(false)
-
-useEffect(() => {
-  if(imagem === false || imagem.cancelled === true){
   }
-  else if (imagem.cancelled == false) {
-    setImageSelected(true)
-  }
-},[imagem])
+  
+/*   async function getOcorrencias(){
+    await ServerConnection.getAllOcorrencia()
+    .then(({data}) => {
+      setOcorrencias(data)
+      //console.log(data)
+    })
+    .catch(() => {
+    })
+  } */
+ 
+  const [mapShown,setMapShown]=useState(origin)
 
-const ocorrencia = () => {} */
+  const sliderRef = useRef(null)
+
+  const gestureHandler = useCallback(()=>{
+    const isActive = sliderRef?.current?.isActive();
+    if(isActive){
+      sliderRef?.current?.scrollTo(-80)
+    } else {
+      sliderRef?.current?.scrollTo(-320)
+    }
+  },[])
+
+  const [scrollToIndex,setScrollToIndex]=useState(0)
 
 
   return (
     <>
-    <View>
-      <Text>...</Text>
-    </View>
-    {/* <PopUpAlert
-        icon={
-          <FontAwesomeIcon icon={popUp.icon} size={60} color='white' />
-        }
-        title={popUp.title}
-        description={popUp.description}
-        buttonPrimaryTitle={popUp.buttonPrimaryTitle}
-        onClose={popUp.onClose}
-        visible={visible}
-        setVisible={setVisible}
-      />
-    <PopUpActions 
-        icon={
-          <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />
-        }
-        title={popUp.title}
-        description={popUp.description}
-        buttonPrimaryTitle={popUp.buttonPrimaryTitle}
-        buttonSecondaryTitle={popUp.buttonSecondaryTitle}
-        onConfirm={popUp.onConfirm}
-        onClose={popUp.onClose}
-        visible={visible}
-        setVisible={setVisible}
-      />
-        <BottomSheetImage
-          imagem={imagem}
-          setImagem={setImagem}
-          visible={imageModal}
-          setVisible={setImageModal}
+       <PopUpAlert 
+         icon={
+           <FontAwesomeIcon icon={popUpPermission.icon} size={60} color='white' />
+          }
+          title={popUpPermission.title}
+          description={popUpPermission.description}
+          buttonPrimaryTitle={popUpPermission.buttonPrimaryTitle}
+          onClose={popUpPermission.onClose}
+          visible={visible}
+          setVisible={setVisible}
         />
-        <ScrollView style={styles.container}>
+      <Loading loading={loading}>
+      {mapPermissionView? 
+      (
+        <GestureHandlerRootView style={{flex:1}}>
+         <MapView
+          showsCompass={false}
+          showsMyLocationButton={false}
+          toolbarEnabled={false}
+          provider={PROVIDER_GOOGLE}
+          style={{ flex: 1 }}
+          initialRegion={origin}
+          showsUserLocation={true}
+          region={origin}
+          zoomEnabled={true}
+          loadingEnabled={true}
+          mapType="hybrid"
+        >
 
-          { !imageSelected ? 
-            <TouchableOpacity style={styles.header}
-              onPress={()=> imageOptions()}
-            >
-              <View style={styles.hImage}>
-                <FontAwesomeIcon icon={faImage} size={170} color='#3429A8' />
-                <View style={styles.hIconPlus}>
-                  <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
-                </View>
-                <Text style={styles.hTitle}>Adicionar foto</Text>  
-              </View>
-            </TouchableOpacity>
-          :
-            <View style={{ marginVertical:10}}>
-              <TouchableOpacity style={{position:'absolute',alignItems: 'flex-end', top:10, right:10}}
+{/*         {(filterMarkers).map((item,index) => {
+            return (
+              <Marker
+                key={item.key}
+                //title={item.categoria}
+                pinColor={item.color}
+                //description={item.descricao}
+                //<PinStrokeWhite style={{color: '#000', width:20, height:22}} />
+                coordinate={{
+                  latitude: item.local.latitude,
+                  longitude: item.local.longitude,
+                }}
+                
                 onPress={()=>{
-                  setImageSelected(false)
+                  setPinSelected(true)
+                  setPinData(item)
+                  console.log(item.categoria)        
+                }} 
+                >
+                 <PinStrokeBlack style={{color: item.color, width:23, height:32}} /> 
+
+            <Callout tooltip>
+                  <View>
+                    <View style={styles.markerCallout}>
+                      <Text>{item.titulo}
+                      </Text>
+                      <Image 
+                          style={styles.image}
+                          source={require('../../assets/Logotype/LogoOP.png')} resizeMode='cover'
+                      />
+                    </View>
+                    <View style={styles.arrowBorder} />
+                    <View style={styles.arrow} />
+                  </View>
+                </Callout> 
+              </Marker>
+              );
+            })
+          } */}
+      {(filterMarkers).map((item) => {
+          return (
+            <Marker
+              key={item.key}
+              title={item.categoria}
+              description={item.subCategoria}
+              coordinate={{
+                latitude: item.local.latitude,
+                longitude: item.local.longitude,
+              }}
+               onPress={()=>{
+                setScrollToIndex(item.key)
                 }}
               >
-                <FontAwesomeIcon icon={faXmark} size={40} color='black' />
+               <PinStrokeBlack style={{color: item.color, width:23, height:32}} /> 
+              </Marker>
+              )
+            })}
+
+        </MapView>
+
+
+        <View style={styles.header}>
+          <FlatList 
+            data={categorias}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{
+              alignItems: 'center'
+            }}
+            renderItem={({ item }) => (
+              <TouchableOpacity style={[
+                styles.hCategory,
+                ocorrencias === item.key ? styles.hSelectedCategory : null
+              ]}
+              key={item.key}
+              onPress={()=>{
+                setOcorrencias(filterMarkers.categoria === item.key ? "" : item.key);
+              }}
+              >
+              <View style={styles.hMarkerTitle}>
+                {item.key === 'Meus' && ocorrencias === item.key ?
+                <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
+                :
+                <PinStrokeBlack style={{color: item.color, width:20, height:22}} />
+                }
+                <Text style={[
+                  styles.hSubCategoryTitle,
+                  ocorrencias === item.key ? styles.hSelectedCategoryTitle : null
+                ]}>
+                  {item.key}
+                  </Text>
+                </View>
               </TouchableOpacity>
-              <View style={styles.header}>
-                <Image source={{uri:imagem.uri}} resizeMode='contain' style={{width:180,height:180}}/>
-                <Text style={styles.hTitle}>Imagem do Ocorrido</Text>  
-              </View>
-            </View>
-          }
-          
-            <View style={styles.body}> 
-              <View style={styles.bContainer}> 
+              )}
+            /> 
+        </View>
 
-              
-              
-              
-                <View style={styles.bInput}>
-                  <Text style={styles.bTitle}>subtipo</Text>  
-                  <TextInput style={styles.bInputStrokeBox} 
-                    multiline={true}
-                    numberOfLines={1}
-                    onChangeText={setTitulo}
-                    value={titulo}
-                    placeholder='subtipo da Ocorrência'
-                    placeholderTextColor={styles.bInputStrokeBox.color}
-                  ></TextInput>
-                </View>
+        <BottomSheetSlider ref={sliderRef}
+        slider={
+          <TouchableOpacity 
+            style={styles.lineHandler}
+            onPress={gestureHandler}
+          >
+            <View style={styles.line}/>
+          </TouchableOpacity>
+        }
+        >
+        <View style={styles.bottomList}>
 
-                <View style={styles.bInput}>
-                  <Text style={styles.bTitle}>Título:</Text>  
-                  <TextInput style={styles.bInputStrokeBox} 
-                    multiline={true}
-                    numberOfLines={1}
-                    onChangeText={setTitulo}
-                    value={titulo}
-                    placeholder='Título da Ocorrência'
-                    placeholderTextColor={styles.bInputStrokeBox.color}
-                  ></TextInput>
+          <FlatList 
+            data={filterMarkers}
+            style={{flex:1}}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, index }) => (
+              <View style={styles.bottomCardContainer}>
+                <View style={styles.bottomCard}>
+                  <View style={styles.bCardLeft}>
+                    <Logo width={100} height={100} />
+                  </View>
+
+                  <View style={styles.bCardRight}>
+                      <View style={styles.bCardRightHeader}>
+                        <Text style={styles.bCardRightTextHeader}>#{index}</Text>
+                        <View style={styles.bCardRightHeaderPinDateTime}>
+                          <PinStrokeBlack style={{color: item.color, width:15, height:17}} />
+                          <Text style={styles.bCardRightTextHeader}>{item.data}</Text>
+                        </View>
+                      </View>
+
+                      <Text numberOfLines={1} style={styles.bCardRightTextBody}>{item.titulo}</Text>
+                      <Text style={styles.bCardRightTextBody}>{item.subCategoria}</Text>
+
+                      <View style={styles.bCardRightBodyApoio}>
+                        <Logo width={25} height={25} />
+                        <Text style={styles.bCardRightTextBodyApoio}>+{item.apoio} Pessoas contribuíram</Text>
+                      </View>
+
+                  </View>
                 </View>
-                
-                
-                <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
-                  onPress={() =>  {
-                    navigation.navigate({
-                      name: 'Maps',
-                      params: {
-                        idPage: route.name
-                      }
-                  })
-                  }}>
-                    {!!props.route.params?.coordinate ? (<>
-                      <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
-                      <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  
-                        </>
-                      )
-                      : 
-                      (
-                      <>
-                        <FontAwesomeIcon icon={faMapLocationDot} size={30} color='white' />
-                        <Text style={styles.bButtonMapLabel}>Selecionar o Local</Text>  
-                      </>)
-                    }
+                <TouchableOpacity style={styles.bCardFooter}
+                  onPress={()=>{
+
+                  }}
+                >
+                  <Text style={styles.bCardTextFooter}>Ver mais detalhes</Text>
                 </TouchableOpacity>
-                
-                <View style={styles.bInput}>
-                  <Text style={styles.bTitle}>Sobre o Ocorrido:</Text>  
-                  <TextInput style={styles.bInputBox} 
-                    placeholder='Descrição do Problema'
-                    multiline={true}
-                    onChangeText={setDescricao}
-                    value={descricao}
-                  ></TextInput>  
-                </View>  
-                    
-                <TouchableOpacity style={styles.bButton}
-                onPress={() => {
-                  setPopUp({
-                    onConfirm:  close,
-                    onClose: setVisible,
-                    icon: faTriangleExclamation,
-                    title:'Deseja Finalizar a Ocorrência?',
-                    buttonPrimaryTitle: 'Finalizar',
-                    buttonSecondaryTitle: 'Cancelar',
-                  })
-                   setPopUp({
-                    onConfirm:  close,
-                    onClose: setVisible,
-                    icon: faTriangleExclamation,
-                    title:'Ainda Não É Possível Finalizar!',
-                    description: 'Há campos que não foram preenchidos ou selecionados, por favor preencha todos os campos.',
-                    buttonPrimaryTitle: 'Fechar',
-                  }) 
-                  setVisible(true)
-                }}>
-                <Text style={styles.bLabel}>Finalizar Ocorrência</Text>
-                </TouchableOpacity >
-
               </View>
-            </View>
-        </ScrollView> */}
+            )}
+            /> 
+          </View>
+          </BottomSheetSlider>
+        </GestureHandlerRootView>
+      ) : (
+        <View>
+          <Text>Permissão negada</Text>
+        </View>
+      )
+      }
+      
+      </Loading>
+
     </>
   );
-}
+};
 
-export default Chamados
+export default Chamados;

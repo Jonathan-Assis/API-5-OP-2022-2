@@ -1,9 +1,10 @@
-import React, {useState} from 'react'
-import {View, Text, Modal, TouchableOpacity, Alert} from 'react-native'
+import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState} from 'react'
+import {View, Text, Modal, TouchableOpacity, Alert, Dimensions} from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCamera, faImages, faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as ImagePicker from 'expo-image-picker';
-
+import { Gesture, GestureDetector, } from 'react-native-gesture-handler'
+import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import styles from './styles'
 
 const BottomSheetImage = ({
@@ -114,51 +115,81 @@ return(
     )
 }
 
-const BottomSheetSlider = ({
-    icon, 
-    title, 
-    description, 
-    buttonPrimaryTitle, 
-    onClose,
-    visible,
-    setVisible
-}) => {
+const {height:SCREEN_HEIGHT}=Dimensions.get('window')
+const MAX_TRANSLATE_Y = -SCREEN_HEIGHT
+//const MAX_TO_CATEGORY_TRANSLATE_Y = -SCREEN_HEIGHT + 60
+
+const BottomSheetSlider = forwardRef(({children, slider}, sliderRef) => {
+    const translateY = useSharedValue(0)
+    const active = useSharedValue(false)
+
+    const scrollTo = useCallback((destination)=>{
+        'worklet';
+        active.value = destination !== -80;
+
+        translateY.value = withSpring(destination, { damping: 50 });
+    },[])
+
+    const isActive = useCallback(()=>{
+        return active.value
+    },[])
+
+    useImperativeHandle(sliderRef,()=>({scrollTo, isActive}), [
+        scrollTo, 
+        isActive
+    ])
+
+    const context = useSharedValue({y:0})
+    const gesture = Gesture.Pan()
+        .onStart(()=>{
+            context.value = { y: translateY.value }
+        })
+        .onUpdate((event)=>{
+            translateY.value = event.translationY + context.value.y;
+            translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
+        })
+        .onEnd(()=>{
+            if (translateY.value > -SCREEN_HEIGHT / 3) {
+                scrollTo(-80);
+              } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
+                scrollTo(MAX_TRANSLATE_Y);
+              } else if (translateY.value > -SCREEN_HEIGHT / 1.5 && translateY.value < -SCREEN_HEIGHT / 3){
+                scrollTo(-320)
+              }
+        })
+
+    const animationBottomSheet=useAnimatedStyle(()=>{
+        const borderRadius = interpolate(
+            translateY.value, 
+            [MAX_TRANSLATE_Y + 50, MAX_TRANSLATE_Y],
+            [25,5],
+            Extrapolate.CLAMP
+            )
+
+        return {
+            borderRadius,
+            transform: [{ translateY: translateY.value }]
+        }
+    })
+
+    useEffect(()=>{
+        if((-SCREEN_HEIGHT/2) > -320){
+            scrollTo(-320)
+        } else {
+            scrollTo(-SCREEN_HEIGHT/2)
+        }
+    },[])
 
 return(
-    <Modal
-        animationType="fade"
-        visible={visible}
-        onRequestClose={()=>setVisible(false)}
-        hardwareAccelerated={true}
-        transparent
-    >
-        <View style={styles.container}>
-            <View style={styles.modal}>
-                <View style={styles.header}>
-                    <View style={styles.hIcon}>
-                        {icon}
-                    </View>
-                    <Text style={styles.hTitle}>{title}</Text>
-                </View>
-                <View style={styles.body}>
-                    <Text style={styles.bDescription}>{description}</Text>
-                </View>
-                
-                <View style={styles.footer}>
-                    <TouchableOpacity
-                        style={styles.fButtonSecondary}
-                        onPress={
-                            onClose
-                        }
-                        >
-                        <Text style={styles.fButtonSecondaryLabel}>{buttonPrimaryTitle}</Text>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
-        </View>
-    </Modal>
+    <>
+        <Animated.View style={[styles.bottomSheetContainer, animationBottomSheet]}>
+            <GestureDetector gesture={gesture}>
+                    {slider}
+            </GestureDetector>
+                    {children}
+        </Animated.View>
+    </>
     )
-}
+})
 
 export { BottomSheetImage, BottomSheetSlider }

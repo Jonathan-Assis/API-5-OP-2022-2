@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
+
+const {height:SCREEN_HEIGHT}=Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container:{
@@ -37,6 +39,15 @@ footer:{
         padding:16,
         alignItems: 'center',
         ...stylesVar.buttonLabelPrimary
+    },
+
+    bottomSheetContainer:{
+        ...stylesVar.backgroundSecondary,
+        height:SCREEN_HEIGHT,
+        width:'100%',
+        position: 'absolute',
+        top: SCREEN_HEIGHT,
+        borderRadius: 25
     },
 })
 export default styles

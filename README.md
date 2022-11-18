@@ -58,10 +58,18 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 > Datas definidas sobre as entregas das sprints.
 
 
+<details>
+<summary>SPRINT 1 - 29/08/2022 a 18/09/2022;</summary>
+<br>
+
+[![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%201/) 
+[![](https://img.shields.io/badge/📝%20Tag-79D70F?style=for-the-badge)](https://github.com/Jonathan-Assis/API-5-OP-2022-2/releases/tag/Sprint1) 
+</details>
+
 - [x] [SPRINT 1 - 29/08/2022 a 18/09/2022; - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%201/)
 
 - [x] [SPRINT 2 - 19/09/2022 a 09/10/2022; - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%202/)
-- [ ] [SPRINT 3 - 13/10/2022 a 06/11/2022; - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%203/)
+- [x] [SPRINT 3 - 13/10/2022 a 06/11/2022; - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%203/)
 - [ ] SPRINT 4 - 07/11/2022 a 27/11/2022.
 
 Feira de Soluções & Apresentação Final - 05/12/2022

@@ -1,6 +1,6 @@
 //import React from 'react';
 import axios from 'axios';
-const url = 'https://ocorrencias-publicas-server.herokuapp.com/';
+const url = 'https://teste-nmqy.onrender.com';
 let conn = axios.create({
     baseURL: url,
     timeout: 30000

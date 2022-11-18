@@ -10,6 +10,7 @@ import {categorias, op} from '../Registros/categorias'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {BottomSheetSlider} from '../../components/BottomSheet'
 import Logo from '../../assets/Logotype/LogoOP.svg'
+import {categoria, oc} from '../Registros/axios'
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -25,6 +26,8 @@ const Chamados = () => {
   const [filterMarkers, setFilterMarkers] = useState(op);
   const [ocorrencias,setOcorrencias]= useState(op)
   const [mapPermissionView, setMapPermissionView] = useState(false);
+  const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
+  
   
   const [visible,setVisible]=useState(false)
   const [popUpPermission, setPopUpPermission] = useState({
@@ -44,6 +47,7 @@ const Chamados = () => {
   
   useEffect(() => {
     //setLoading(true);
+    //filterData()
     permission();
 /*     getOcorrencias().then(() => {
     }) 
@@ -51,6 +55,27 @@ const Chamados = () => {
       //setLoading(false); 
     }) */
   }, []);
+
+
+/*  const c = categoria
+const o = oc
+  const filterData = ({categoria}) => {
+    const tipo = o.filter((ocorrencia)=>{
+      return ocorrencia.categoria === categoria
+    })
+    return tipo
+  }
+ */
+
+
+
+
+
+
+
+
+
+
    
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
@@ -95,7 +120,7 @@ const Chamados = () => {
     }
   }
   
-/*   async function getOcorrencias(){
+/* async function getOcorrencias(){
     await ServerConnection.getAllOcorrencia()
     .then(({data}) => {
       setOcorrencias(data)
@@ -104,7 +129,7 @@ const Chamados = () => {
     .catch(() => {
     })
   } */
- 
+
   const [mapShown,setMapShown]=useState(origin)
 
   const sliderRef = useRef(null)
@@ -202,7 +227,6 @@ const Chamados = () => {
                 longitude: item.local.longitude,
               }}
                onPress={()=>{
-                setScrollToIndex(item.key)
                 }}
               >
                <PinStrokeBlack style={{color: item.color, width:23, height:32}} /> 
@@ -224,11 +248,11 @@ const Chamados = () => {
             renderItem={({ item }) => (
               <TouchableOpacity style={[
                 styles.hCategory,
-                ocorrencias === item.key ? styles.hSelectedCategory : null
+                ocorrencias === item.key ? styles.hSelectedCategory : styles.hCategory,
               ]}
               key={item.key}
               onPress={()=>{
-                setOcorrencias(filterMarkers.categoria === item.key ? "" : item.key);
+                setOcorrencias(item.key)  
               }}
               >
               <View style={styles.hMarkerTitle}>
@@ -249,7 +273,7 @@ const Chamados = () => {
             /> 
         </View>
 
-        <BottomSheetSlider ref={sliderRef}
+        {/* <BottomSheetSlider ref={sliderRef}
         slider={
           <TouchableOpacity 
             style={styles.lineHandler}
@@ -302,7 +326,7 @@ const Chamados = () => {
             )}
             /> 
           </View>
-          </BottomSheetSlider>
+          </BottomSheetSlider> */}
         </GestureHandlerRootView>
       ) : (
         <View>

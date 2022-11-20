@@ -30,10 +30,20 @@ const Settings = () => {
         <Text style={styles.bText}>{authData.email}</Text>
       </View>
 
+      <View style={styles.footer}>
+          <TouchableOpacity style={styles.tButton}
+            onPress={() => navigation.navigate('Walkthrough')}
+          >
+
+            <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
+            <Text style={styles.fLabel}>Tutorial do Aplicativo</Text>
+          </TouchableOpacity>
+
         <View style={styles.footer}>
           <TouchableOpacity style={styles.fButton}
             onPress={() => navigation.navigate('Edit_Profile')}
           >
+
             <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
             <Text style={styles.fLabel}>Editar Perfil</Text>
           </TouchableOpacity>
@@ -47,6 +57,8 @@ const Settings = () => {
         </View>
       </View>
     </View>
+  </View>
+    
   );
 }
 

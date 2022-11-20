@@ -67,6 +67,16 @@ const styles = StyleSheet.create({
         ...stylesVar.strokeBoxSecondary
     },
 
+    tButton:{
+        flexDirection: 'row',
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 10,
+        marginTop:220,
+        ...stylesVar.strokeBoxSecondary
+    },
+
     footer:{
         flex: 1,
         width: '100%',

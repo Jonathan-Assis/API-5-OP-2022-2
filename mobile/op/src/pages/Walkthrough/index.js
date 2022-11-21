@@ -9,7 +9,7 @@ const Walkthrough = () =>{
 
   return(
     <View style={styles.container}>
-      <Image source={require('../../assets/Logotype/OP.png')} style={styles.header}/>
+      <Image source={require('../../assets/Logotype/LogoOP.png')} style={styles.header}/>
       <Text style={styles.body}>Ocorrências Públicas</Text>
     <Text style={styles.body}> Este é um tutorial e poderá ser revisto na aba de opções </Text>
     <Button style={styles.proximo}> Próximo</Button>

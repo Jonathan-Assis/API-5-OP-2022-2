@@ -12,7 +12,7 @@ A imagem abaixo descreve as Users Story do usuário entregues nesta sprint.
 
 O gráfico abaixo representa o desempenho da equipe com base no período de 13/10/2022 a 06/11/2022 na realização das tarefas atribuídas para a entrega.
 
-<img src='https://github.com/Jonathan-Assis/API-5-OP-2022-2/blob/main/Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%203/Imagens/3sprint.png' width=100%>
+<img src='./Imagens/BurndownSprint3.png' width=100%>
 
 - ## ✒️ Wireframe
 

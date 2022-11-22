@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
     },
     hLogotype:{
-        width:150, height:150
+        width:175, height:175
     },
 
     hTitle:{

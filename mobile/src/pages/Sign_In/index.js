@@ -5,6 +5,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
+import LogoOP from '../../assets/Logotype/LogoOP.svg'
 
 const Sign_In = () => {
   const navigation = useNavigation();
@@ -17,7 +18,7 @@ const Sign_In = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.hLogotype} />
+        <LogoOP  style={styles.hLogotype} />
         <Text style={styles.hTitle}>Ocorrências Públicas</Text>
       </View>
 

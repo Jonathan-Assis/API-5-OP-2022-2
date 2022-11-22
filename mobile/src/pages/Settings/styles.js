@@ -26,8 +26,16 @@ const styles = StyleSheet.create({
     
     hImage:{
         marginBottom: 10,
-        alignItems: 'center',
+        alignItems: 'center'
+    },
 
+    hImageStyle: {
+        width: 140,
+        height: 140,
+        borderRadius: 100,
+        overflow: "hidden",
+        borderWidth: 2,
+        borderColor:'#3429A8'
     },
 
     bEmailBox:{

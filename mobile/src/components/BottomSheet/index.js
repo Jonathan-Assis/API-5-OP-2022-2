@@ -28,7 +28,7 @@ const BottomSheetImage = ({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
                     base64: true,
-                    quality:1,
+                    quality: 0.5,
                 })
                 if(cameraEnabled){
                     setImagem(cameraEnabled)
@@ -54,7 +54,7 @@ const BottomSheetImage = ({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
                     base64: true,
-                    quality:1,
+                    quality: 0.5,
                 })
                 if(galleryEnabled){
                     setImagem(galleryEnabled)

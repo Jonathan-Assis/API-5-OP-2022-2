@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",
+    "dev": "react-native start",
     "expo": "expo start --tunnel",
     "android": "react-native run-android",
     "ios": "react-native run-ios",

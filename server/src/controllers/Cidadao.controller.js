@@ -5,7 +5,7 @@ const url = process.env.DB;
 class CidadaoController {
     static async newCidadao(req, res) {
         const client = new MongoClient(url);
-        const { cpf, nome, email, senha, imagem } = req.body;
+        const { cpf, nome, email, senha } = req.body;
 
         try {
             const opdb = client.db('opdb');
@@ -14,19 +14,9 @@ class CidadaoController {
                 if(err) throw err;
                 try {
                     if(!value.length) {
-                        const temp_path = __dirname + '/temp.txt';
-
                         opdb.collection('cidadao')
                         .insertOne({ cpf, nome, email, senha })
                         .then(async result => {
-                            const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
-                            fs.writeFileSync(temp_path, Buffer.from(imagem))
-                            fs.createReadStream(temp_path)
-                            .pipe(bucket.openUploadStream(result.insertedId.toString(), {
-                                chunkSizeBytes: 1048576
-                            }))
-                            .once('close', () => fs.unlinkSync(temp_path));
-                            
                             res.json(!!result)
                         });
                     }
@@ -62,11 +52,15 @@ class CidadaoController {
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
                     
                     bucket.openDownloadStreamByName(result._id.toString())
+                    .once('error', err => {
+                        err?.code === 'ENOENT' && console.error(err)
+                        client.close();
+                        res.json(result);
+                    })
                     .once('data', data => {
                         result.imagem = data.toString();
                     })
-                    .once('end', err => {
-                        err && console.error(err)
+                    .once('end', () => {
                         client.close();
                         res.json(result);
                     });
@@ -126,7 +120,6 @@ class CidadaoController {
                 } }
             );
 
-            let image_resp = false;
             if(data.imagem) {
                 const temp_path = __dirname + '/temp.txt';
                 const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
@@ -134,25 +127,30 @@ class CidadaoController {
                 const clear = bucket.find({ filename: data.id })
                 clear.forEach(doc => bucket.delete(doc._id))
 
-                fs.writeFileSync(temp_path, Buffer.from(data.imagem))
-                fs.createReadStream(temp_path)
-                .pipe(bucket.openUploadStream(data.id, {
-                    chunkSizeBytes: 1048576
-                }))
-                .once('close', () => {
-                    fs.unlinkSync(temp_path);
-                    image_resp = true;
-                    client.close();
-                })
-                .once('error', err => {
-                    if(err) {
-                        console.error(err);
-                    }
-                });
+                if(data.imagem !== 'null') {
+                    fs.writeFileSync(temp_path, Buffer.from(data.imagem))
+                    fs.createReadStream(temp_path)
+                    .pipe(bucket.openUploadStream(data.id, {
+                        chunkSizeBytes: 1048576
+                    }))
+                    .once('close', () => {
+                        fs.unlinkSync(temp_path);
+                        client.close();
+                        res.json({ modifiedCount: true });
+                    })
+                    .once('error', err => {
+                        if(err) throw err;
+                    });
+                }
+                else {
+                    //client.close();
+                    res.json({ modifiedCount: true });
+                }
             }
-            else client.close();
-
-            res.json({ modifiedCount: !!result.modifiedCount || image_resp });
+            else {
+                client.close();
+                res.json({ modifiedCount: !!result.modifiedCount });
+            };
         }
         catch(e) {
             console.error(e);

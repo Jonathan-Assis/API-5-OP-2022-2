@@ -283,49 +283,7 @@ const o = oc
           </TouchableOpacity>
         }
         >
-        <View style={styles.bottomList}>
-
-          <FlatList 
-            data={filterMarkers}
-            style={{flex:1}}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => (
-              <View style={styles.bottomCardContainer}>
-                <View style={styles.bottomCard}>
-                  <View style={styles.bCardLeft}>
-                    <Logo width={100} height={100} />
-                  </View>
-
-                  <View style={styles.bCardRight}>
-                      <View style={styles.bCardRightHeader}>
-                        <Text style={styles.bCardRightTextHeader}>#{index}</Text>
-                        <View style={styles.bCardRightHeaderPinDateTime}>
-                          <PinStrokeBlack style={{color: item.color, width:15, height:17}} />
-                          <Text style={styles.bCardRightTextHeader}>{item.data}</Text>
-                        </View>
-                      </View>
-
-                      <Text numberOfLines={1} style={styles.bCardRightTextBody}>{item.titulo}</Text>
-                      <Text style={styles.bCardRightTextBody}>{item.subCategoria}</Text>
-
-                      <View style={styles.bCardRightBodyApoio}>
-                        <Logo width={25} height={25} />
-                        <Text style={styles.bCardRightTextBodyApoio}>+{item.apoio} Pessoas contribuíram</Text>
-                      </View>
-
-                  </View>
-                </View>
-                <TouchableOpacity style={styles.bCardFooter}
-                  onPress={()=>{
-
-                  }}
-                >
-                  <Text style={styles.bCardTextFooter}>Ver mais detalhes</Text>
-                </TouchableOpacity>
-              </View>
-            )}
-            /> 
-          </View>
+        
           </BottomSheetSlider> */}
         </GestureHandlerRootView>
       ) : (

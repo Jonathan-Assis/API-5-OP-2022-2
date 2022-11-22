@@ -18,7 +18,7 @@ const Settings = () => {
         <View style={styles.header}>
           <View style={styles.hImage}>
               {!!authData?.imagem
-                ? <Image style={styles.hImageStyle} resizeMode='cover' source={{uri: `data:image/png;base64,${authData?.imagem}`}}/>
+                ? <Image style={styles.hImageStyle} resizeMode='cover' source={{uri: `${authData?.imagem}`}}/>
                 : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'white'}/>
               }              
           </View>

@@ -40,7 +40,7 @@ const Edit_Profile = () => {
     if(!!nome && !!email && !!cpf) {
       if((!senha && !confSenha) || senha === confSenha) {
         updateAuth({
-          _id, nome, email, cpf, senha, imagem: imagem?.base64/* aux?.base64 */
+          _id, nome, email, cpf, senha, imagem
         }).then(() => {
           setVisible(false)
         })
@@ -70,6 +70,10 @@ const Edit_Profile = () => {
   const imageOptions = () => {
     setImageModal(true)
   }
+
+  /* useEffect(() => {
+    if(imagem) console.log(imagem)
+  }, [imagem]) */
 
   return (
     <>
@@ -117,7 +121,7 @@ const Edit_Profile = () => {
               >
                 {!!imagem?.base64
                   ? <View style={styles.bImageIcon}>
-                    <Image source={{uri: `data:image/png;base64,${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
+                    <Image source={{uri: `${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
                   </View>
                   : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
                 }

@@ -30,7 +30,9 @@ const BottomSheetImage = ({
                     quality: 0.5,
                 })
                 if(cameraEnabled){
-                    setImagem(cameraEnabled)
+                    const image_aux = cameraEnabled;
+                    image_aux.base64 = 'data:image/png;base64,' + image_aux.base64;
+                    setImagem(image_aux)
                     //console.log('image camera',cameraEnabled)
                 }
             } catch (e) {
@@ -56,7 +58,9 @@ const BottomSheetImage = ({
                     quality: 0.5,
                 })
                 if(galleryEnabled){
-                    setImagem(galleryEnabled)
+                    const image_aux = galleryEnabled;
+                    image_aux.base64 = 'data:image/png;base64,' + image_aux.base64;
+                    setImagem(image_aux)
                    // console.log('image camera',galleryEnabled)
                 }
             } catch (e) {

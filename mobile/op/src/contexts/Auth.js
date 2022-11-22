@@ -81,29 +81,38 @@ export const AuthProvider = ({children}) =>{
     }
 
     async function updateAuth(data) {
-        let { _id, nome, email, cpf, senha, imagem } = data;
+        let aux = data;
+        aux.imagem = aux.imagem?.assetId === null ? aux.imagem.base64 : ''
 
         setLoading(true);
-        if(senha !== undefined) senha = SHA256(senha).toString();
+        if(aux.senha !== undefined) {
+            aux.senha = SHA256(aux.senha).toString();
+        }
         
-        await ServerConnection.editarPerfil({
-            id: _id, nome, email, cpf, senha, imagem
-        })
+
+        /* const aux = {
+            id, nome, email, cpf, senha,
+            imagem: imagem?.assetId === null ? imagem.base64 : ''
+        } */
+        //console.log(aux)
+        
+        await ServerConnection.editarPerfil(aux)
         .then(res => {
-            if(!!res.data.modifiedCount) {
-                setAuth(JSON.stringify({
+            console.log(res)
+            if(res.modifiedCount) {
+                setAuth(JSON.stringify(aux/* {
                     _id, nome, email, cpf, senha, imagem
-                }));
-                AsyncStorage.setItem('@AuthData',(JSON.stringify(data)));
+                } */));
+                AsyncStorage.setItem('@AuthData',(JSON.stringify(aux)));
             }
-            else {
+            /* else {
                 throw false;
-            }
+            } */
         })
         .finally(() => {
             setLoading(false);
         })
-        .catch(() => {});
+        .catch(() => {})
     }
 
     async function deleteAuth(id) {

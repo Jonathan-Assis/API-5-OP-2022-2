@@ -12,10 +12,7 @@ const client = new MongoClient(uri,
 client.connect(err => {
     if(err) console.error(err);
 
-    const collections = [
-        client.db('opdb').collection('cidadao'),
-        client.db('opdb').collection('ocorrencias'),
-    ]
+    const collection = client.db('opdb').collection('ocorrencias');
     client.close();
 });
 

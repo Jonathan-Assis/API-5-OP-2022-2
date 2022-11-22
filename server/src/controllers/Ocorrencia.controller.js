@@ -5,7 +5,6 @@ class OcorrenciaController {
     /*
     {
         cidadao: ObjectID,
-        foto: string,
         local: {
             lat: number,
             long: number
@@ -122,10 +121,6 @@ class OcorrenciaController {
                       $unwind: {
                         path: '$categorias', 
                         preserveNullAndEmptyArrays: true//
-                      }
-                    }, {
-                      $match: {
-                        'categorias.id': data.tipo_id
                       }
                     },
                     { $limit: 1 }

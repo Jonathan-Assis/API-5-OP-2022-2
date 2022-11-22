@@ -31,8 +31,8 @@ A tela de Chamados tem por objetivo mostrar ao cidadão suas ocorrências report
 
 <br>
 
-- ## 📱 App
+- ## 📱 Versão do Projeto
 
-[![](https://img.shields.io/badge/%20-%20React%20Native%20App%20OP-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](/mobile/op)
+[![](https://img.shields.io/badge/GitHub%20Sprint%203%20Version-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Jonathan-Assis/API-5-OP-2022-2/releases/tag/Sprint3)
 
 <hr>

@@ -36,11 +36,12 @@ const Edit_Profile = () => {
   }) 
   
   const update = async () => {
-    const { _id, nome, email, cpf, senha, confSenha } = data;
+    const { _id: id, nome, email, cpf, senha, confSenha } = data;
     if(!!nome && !!email && !!cpf) {
       if((!senha && !confSenha) || senha === confSenha) {
         updateAuth({
-          _id, nome, email, cpf, senha, imagem
+          id, nome, email, cpf, imagem, senha,
+          senha_prev: authData.senha
         }).then(() => {
           setVisible(false)
         })

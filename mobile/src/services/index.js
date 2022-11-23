@@ -20,24 +20,12 @@ export default class ServerConnection {
     }
 
     static async login(data) {
-        //return await conn.post('/cidadao/login', data);
         return await conn.post('/cidadao/login', data);
-
     }
 
     static async editarPerfil(data) {
-        let form = new FormData();
-        
-        for(let i = 0; i < Object.keys(data).length; i++) {
-            const key = Object.keys(data)[i];
-            form.append(key, data[key]);
-        }
-
-        return await conn.put('/cidadao/update', form, {
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        })
-        .then(({ data }) => data)
-        .catch(e => console.error('==>',e));
+        return await conn.put('/cidadao/update', data)
+        .then(({ data }) => data);
     }
 
     static async deletePerfil(data) {

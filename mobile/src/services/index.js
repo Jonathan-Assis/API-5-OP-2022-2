@@ -1,6 +1,6 @@
 //import React from 'react';
 import axios from 'axios';
-const url = 'https://teste-nmqy.onrender.com';
+const url = 'https://api5-op-server.onrender.com';
 let conn = axios.create({
     baseURL: url,
     timeout: 30000
@@ -24,15 +24,8 @@ export default class ServerConnection {
     }
 
     static async editarPerfil(data) {
-        let form = new FormData();
-        
-        for(let key in data) {
-            form.append(Object.keys(data)[key], data[key]);
-        }
-        
-        return await conn.put('/cidadao/update', form, {
-            headers: { 'Content-Type': 'multipart/form-data' }
-        });
+        return await conn.put('/cidadao/update', data)
+        .then(({ data }) => data);
     }
 
     static async deletePerfil(data) {

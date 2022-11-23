@@ -81,29 +81,42 @@ export const AuthProvider = ({children}) =>{
     }
 
     async function updateAuth(data) {
-        let { _id, nome, email, cpf, senha, imagem } = data;
-
-        setLoading(true);
-        if(senha !== undefined) senha = SHA256(senha).toString();
+        let aux = data;
         
-        await ServerConnection.editarPerfil({
-            id: _id, nome, email, cpf, senha, imagem
-        })
-        .then(res => {
-            if(!!res.data.modifiedCount) {
-                setAuth(JSON.stringify({
-                    _id, nome, email, cpf, senha, imagem
-                }));
-                AsyncStorage.setItem('@AuthData',(JSON.stringify(data)));
+        aux.senha = aux.senha
+        ? aux.senha === aux.senha_prev
+            ? aux.senha_prev : SHA256(aux.senha).toString()
+        : aux.senha_prev;
+        delete aux.senha_prev
+
+        if(aux.imagem?.base64?.length) {
+            if(!!aux.imagem?.type) {
+                aux.imagem = aux.imagem.base64;// nova imagem
             }
             else {
-                throw false;
+                aux.imagem = false;// não altera a imagem
+            }
+        }
+        else {
+            aux.imagem = 'null';// deleta a imagem
+        }
+
+        setLoading(true);        
+        await ServerConnection.editarPerfil(aux)
+        .then(res => {
+            console.log(res)
+            if(res?.modifiedCount) {
+                if(aux.imagem === 'null') delete aux.imagem;
+                aux._id = aux.id;
+                delete aux.id
+                setAuth(JSON.stringify(aux));
+                AsyncStorage.setItem('@AuthData',(JSON.stringify(aux)));
             }
         })
         .finally(() => {
             setLoading(false);
         })
-        .catch(() => {});
+        .catch((e) => {console.error(e)})
     }
 
     async function deleteAuth(id) {

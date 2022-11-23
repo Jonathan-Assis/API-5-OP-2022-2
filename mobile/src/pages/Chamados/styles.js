@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     header:{
-        position:'absolute',
+        flexDirection: 'row',
+        //position:'absolute',
         top: 0,
         marginVertical:10,
     },

@@ -245,28 +245,70 @@ const Chamados = () => {
 
         </MapView>
 
+          <ScrollView
+          scrollEnabled={true}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={{
+            flexDirection:'row',
+            position:'absolute',
 
+          }}
+          >
         <View style={styles.header}>
-          {categoria &&
-            <FlatList 
-              data={categoria}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{
-                alignItems: 'center'
-              }}
-              renderItem={({ item }) => (
-                <TouchableOpacity style={[
+        <TouchableOpacity style={[
                   styles.hCategory,
-                  filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
+                  //filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
                 ]}
-                key={item._id}
                 onPress={()=>{
-                  setFilterMarkers(item.tipo)
+                  //setFilterMarkers(item.tipo)
                   //filterData()
                   //setFilterMarkersSelected(true) 
                 }}
                 >
+                <View style={styles.hMarkerTitle}>
+                  <PinStrokeWhite style={{color: '#3429A8', width:20, height:22}} />
+                  <Text style={[
+                    styles.hSubCategoryTitle,
+                    //filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null
+                  ]}>
+                    Meus
+                    </Text>
+                  </View>
+            </TouchableOpacity>
+            <TouchableOpacity style={[
+                  styles.hCategory,
+                  //filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
+                ]}
+                onPress={()=>{
+                  //setFilterMarkers(item.tipo)
+                  //filterData()
+                  //setFilterMarkersSelected(true) 
+                }}
+                >
+                <View style={styles.hMarkerTitle}>
+                  <PinStrokeWhite style={{color: '#3429A8', width:20, height:22}} />
+                  <Text style={[
+                    styles.hSubCategoryTitle,
+                    //filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null
+                  ]}>
+                    Todos
+                    </Text>
+                  </View>
+            </TouchableOpacity>
+          {categoria &&
+            categoria.map((item) => { 
+              return(
+                <TouchableOpacity 
+                key={item._id}
+                style={[
+                  styles.hCategory,
+                  filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,]}
+                onPress={()=>{
+                  setFilterMarkers(item.tipo)
+                  //filterData()
+                  //setFilterMarkersSelected(true) 
+                }}>
                 <View style={styles.hMarkerTitle}>
                   {item.tipo === 'Meus' && filterMarkers === item.tipo ?
                   <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
@@ -281,11 +323,11 @@ const Chamados = () => {
                     </Text>
                   </View>
                 </TouchableOpacity>
-              )}
-            /> 
-          }
+              ) 
+          })
+        }
         </View>
-
+        </ScrollView>
         {/* <BottomSheetSlider ref={sliderRef}
         slider={
           <TouchableOpacity 

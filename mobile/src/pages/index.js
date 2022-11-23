@@ -7,6 +7,7 @@ import Sign_Up          from './Sign_Up'
 import Rep_Ocorrencia   from './Rep_Ocorrencia'
 import Settings         from './Settings'
 import User_Term        from './User_Term'
+import { Welcome } from './Walkthrough'
 
 export {
     Chamados,
@@ -18,4 +19,5 @@ export {
     Rep_Ocorrencia,
     Settings,
     User_Term,
+    Welcome,
 }

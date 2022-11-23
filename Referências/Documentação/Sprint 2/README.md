@@ -24,8 +24,8 @@ Os gifs abaixo representam um comparativo do protótipo das telas realizadas no 
 Está tela é dedicada ao acesso e criação da conta do usuário.
 
 <div align='center'>
-    <img src='./Imagens/FigmaCadastroLogin.gif' width=230>
-    <img src='./Imagens/AppCadastroLogin.gif' width=183>
+    <img src='./Imagens/FigmaCadastroLogin.gif' width=260>
+    <img src='./Imagens/AppCadastroLogin.gif' width=207>
     </div>
 </div>
 
@@ -35,8 +35,8 @@ Está tela é dedicada ao acesso e criação da conta do usuário.
 A tela de reportar ocorrência tem por objetivo relatar o problema encontrado em sua cidade, selecionando a categoria principal e o preenchimento do formulário da ocorrência, como principal motivo, título do problema relatado, local onde ocorreu utilizando o mapa e uma descrição sobre o problema.
 
 <div align='center'>
-    <img src='./Imagens/FigmaCriandoOcorrencia.gif' width=230>
-    <img src='./Imagens/AppCriandoOcorrencia.gif' width=183>
+    <img src='./Imagens/FigmaCriandoOcorrencia.gif' width=260>
+    <img src='./Imagens/AppCriandoOcorrencia.gif' width=207>
     </div>
 </div>
 
@@ -46,8 +46,8 @@ A tela de reportar ocorrência tem por objetivo relatar o problema encontrado em
 A tela de editar perfil tem por objetivo o usuário alterar as informações cadastrais e a exclusão de sua conta.
 
 <div align='center'>
-    <img src='./Imagens/FigmaEditarPerfilExcluirConta.gif' width=230>
-    <img src='./Imagens/AppEditarPerfilExcluirConta.gif' width=183>
+    <img src='./Imagens/FigmaEditarPerfilExcluirConta.gif' width=260>
+    <img src='./Imagens/AppEditarPerfilExcluirConta.gif' width=207>
     </div>
 </div>
 

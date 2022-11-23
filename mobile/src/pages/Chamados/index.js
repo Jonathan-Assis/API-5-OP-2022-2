@@ -6,25 +6,25 @@ import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import ServerConnection from "../../services"
 import styles from "./styles";
-import {categorias, op} from '../Registros/categorias'
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {BottomSheetSlider} from '../../components/BottomSheet'
 import Logo from '../../assets/Logotype/LogoOP.svg'
-import {categoria, oc} from '../Registros/axios'
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 
 const Chamados = () => {
   const navigation = useNavigation();
   const [loading,setLoading] = useState(false)
+  const [origin, setOrigin] = useState();
+  const [categoria,setCategoria] = useState()
+  const [ocorrencias,setOcorrencias] = useState()
+  const [filterMarkers, setFilterMarkers] = useState();
   const [pinData, setPinData] = useState({});
   const [pinSelected, setPinSelected] = useState(false);
-  const [origin, setOrigin] = useState();
-  const [filterMarkers, setFilterMarkers] = useState(op);
-  const [ocorrencias,setOcorrencias]= useState(op)
   const [mapPermissionView, setMapPermissionView] = useState(false);
   const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
   
@@ -49,24 +49,23 @@ const Chamados = () => {
     //setLoading(true);
     //filterData()
     permission();
-/*     getOcorrencias().then(() => {
+    getCategorias().then(()=>{
+
+    })
+    getOcorrencias().then(() => {
     }) 
     .finally(() => {
       //setLoading(false); 
-    }) */
+    })
   }, []);
 
 
-/*  const c = categoria
-const o = oc
-  const filterData = ({categoria}) => {
-    const tipo = o.filter((ocorrencia)=>{
-      return ocorrencia.categoria === categoria
+/*   const filterData = async () => {
+    const tipo = await ocorrencias.filter((ocorrencia)=>{
+      return ocorrencia.categoria === filterMarkers
     })
     return tipo
-  }
- */
-
+  } */
 
 
 
@@ -120,15 +119,25 @@ const o = oc
     }
   }
   
-/* async function getOcorrencias(){
+ async function getOcorrencias(){
     await ServerConnection.getAllOcorrencia()
     .then(({data}) => {
       setOcorrencias(data)
-      //console.log(data)
     })
-    .catch(() => {
+    .catch((err) => {
+      console.log(err)
     })
-  } */
+  }
+
+  async function getCategorias(){
+    await ServerConnection.categorias()
+    .then(({data}) => {
+      setCategoria(data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
 
   const [mapShown,setMapShown]=useState(origin)
 
@@ -144,8 +153,6 @@ const o = oc
   },[])
 
   const [scrollToIndex,setScrollToIndex]=useState(0)
-
-
   return (
     <>
        <PopUpAlert 
@@ -216,20 +223,22 @@ const o = oc
               );
             })
           } */}
-      {(filterMarkers).map((item) => {
+      { ocorrencias &&
+      (ocorrencias).map((item) => {
           return (
             <Marker
-              key={item.key}
+              key={item._id}
               title={item.categoria}
               description={item.subCategoria}
               coordinate={{
                 latitude: item.local.latitude,
                 longitude: item.local.longitude,
               }}
-               onPress={()=>{
-                }}
+              onPress={()=>{
+                setPinData(item)
+              }}
               >
-               <PinStrokeBlack style={{color: item.color, width:23, height:32}} /> 
+               <PinStrokeBlack style={{color: '#ff0f', width:23, height:32}} /> 
               </Marker>
               )
             })}
@@ -238,39 +247,43 @@ const o = oc
 
 
         <View style={styles.header}>
-          <FlatList 
-            data={categorias}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{
-              alignItems: 'center'
-            }}
-            renderItem={({ item }) => (
-              <TouchableOpacity style={[
-                styles.hCategory,
-                ocorrencias === item.key ? styles.hSelectedCategory : styles.hCategory,
-              ]}
-              key={item.key}
-              onPress={()=>{
-                setOcorrencias(item.key)  
+          {categoria &&
+            <FlatList 
+              data={categoria}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{
+                alignItems: 'center'
               }}
-              >
-              <View style={styles.hMarkerTitle}>
-                {item.key === 'Meus' && ocorrencias === item.key ?
-                <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
-                :
-                <PinStrokeBlack style={{color: item.color, width:20, height:22}} />
-                }
-                <Text style={[
-                  styles.hSubCategoryTitle,
-                  ocorrencias === item.key ? styles.hSelectedCategoryTitle : null
-                ]}>
-                  {item.key}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              renderItem={({ item }) => (
+                <TouchableOpacity style={[
+                  styles.hCategory,
+                  filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
+                ]}
+                key={item._id}
+                onPress={()=>{
+                  setFilterMarkers(item.tipo)
+                  //filterData()
+                  //setFilterMarkersSelected(true) 
+                }}
+                >
+                <View style={styles.hMarkerTitle}>
+                  {item.tipo === 'Meus' && filterMarkers === item.tipo ?
+                  <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
+                  :
+                  <PinStrokeBlack style={{color: item.color, width:20, height:22}} />
+                  }
+                  <Text style={[
+                    styles.hSubCategoryTitle,
+                    filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null
+                  ]}>
+                    {item.tipo}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               )}
             /> 
+          }
         </View>
 
         {/* <BottomSheetSlider ref={sliderRef}

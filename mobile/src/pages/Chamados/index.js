@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
+import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
 
 const Chamados = () => {
   const navigation = useNavigation();
@@ -287,7 +288,7 @@ const Chamados = () => {
                 }}
                 >
                 <View style={styles.hMarkerTitle}>
-                  <PinStrokeWhite style={{color: '#3429A8', width:20, height:22}} />
+                  <PinWithPlus style={{color: 'red', width:22, height:22}} />
                   <Text style={[
                     styles.hSubCategoryTitle,
                     //filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null

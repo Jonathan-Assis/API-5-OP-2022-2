@@ -27,19 +27,22 @@ const Report = () => {
       </View>
 
       <View style={styles.body}> 
-        <View style={styles.bForm}> 
-          <Text style={styles.bDescription}>teste</Text> 
-          <View style={styles.footer}>
-                    
-          <TouchableOpacity style={styles.bButtonPrevious}
-          >        
-            <Text style={styles.bLabelPrevious}>Voltar</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bButtonNext}
+        <View style={styles.bContainer}> 
+          <Text style={styles.bTitle}>Titulo sobre o walkthrough</Text> 
+          <Text style={styles.bDescription}>Descrição sobre o walkthrough</Text> 
+
+          <View style={styles.bButtons}>        
+            <TouchableOpacity style={styles.bButtonPrevious}
+              //onPress={() => navigation.navigate('') }
+            >        
+              <Text style={styles.bLabelPrevious}>Voltar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.bButtonNext}
             onPress={() => navigation.navigate('Called') }
             >    
-            <Text style={styles.bLabelNext}>Próximo</Text>
-          </TouchableOpacity>
+              <Text style={styles.bLabelNext}>Próximo</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -49,20 +52,66 @@ const Report = () => {
 const Called = () => {
   const navigation = useNavigation();
   return(
-    <View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <LogoOP  style={styles.hLogotype} />
+        <Text style={styles.hTitle}>teste</Text>
+      </View>
 
+      <View style={styles.body}> 
+        <View style={styles.bContainer}> 
+          <Text style={styles.bTitle}>Titulo sobre o walkthrough</Text> 
+          <Text style={styles.bDescription}>Descrição sobre o walkthrough</Text> 
+
+          <View style={styles.bButtons}>        
+            <TouchableOpacity style={styles.bButtonPrevious}
+              onPress={() => navigation.navigate('Report') }
+            >        
+              <Text style={styles.bLabelPrevious}>Voltar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.bButtonNext}
+              onPress={() => navigation.navigate('Options') }
+            >    
+              <Text style={styles.bLabelNext}>Próximo</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     </View>
-
   )
 }
 
 const Options = () => {
   const navigation = useNavigation();
   return(
-    <View>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <LogoOP  style={styles.hLogotype} />
+        <Text style={styles.hTitle}>teste</Text>
+      </View>
 
+      <View style={styles.body}> 
+        <View style={styles.bContainer}> 
+          <Text style={styles.bTitle}>Titulo sobre o walkthrough</Text> 
+          <Text style={styles.bDescription}>Descrição sobre o walkthrough</Text> 
+
+          <View style={styles.bButtons}>        
+            <TouchableOpacity style={styles.bButtonPrevious}
+              onPress={() => navigation.navigate('Called') }
+            >        
+              <Text style={styles.bLabelPrevious}>Voltar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.bButtonNext}
+              //onPress={() => navigation.navigate('Called') }
+            >    
+              <Text style={styles.bLabelNext}>Finalizar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     </View>
-
   )
 }
 

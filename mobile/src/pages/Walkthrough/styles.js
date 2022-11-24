@@ -21,15 +21,14 @@ const styles = StyleSheet.create({
     hTitle:{
         ...stylesVar.titlePrimary,
         fontWeight:'500',
-        color: '#E9E9E9',
+        color:'#3429A8'
     },
 
     body: {
-       //justifyContent: 'flex-end',
         flex:0.65,
     },
 
-    bForm:{
+    bContainer:{
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
@@ -38,39 +37,25 @@ const styles = StyleSheet.create({
         ...stylesVar.backgroundPrimary
     },
 
-    bInput:{
-        marginBottom:7
+    bTitle:{
+        ...stylesVar.titleSecondary,
+        marginBottom:3
     },
+    
     bDescription:{
         ...stylesVar.titleSecondary,
         fontSize:16,
         opacity:0.5,
         marginBottom:5    
     },
-
-    bTitle:{
-        ...stylesVar.titleSecondary,
-        marginBottom:3
-    },
-
-    bInputBox:{
-        ...stylesVar.strokeBoxPrimary,
-        padding: 8,
-        paddingHorizontal:15,
-    },
-    bInputPassword:{
-        flexDirection: 'row',
-        alignItems: 'center',
-        ...stylesVar.strokeBoxPrimary,
-    },
-    bInputPasswordBox:{
+    
+    bButtons:{
         flex:1,
-        padding: 8,
-        paddingHorizontal:15,
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-between"  
     },
-    bPasswordIcon:{
-        marginHorizontal:8
-    },
+
     bLabelPrevious:{
         textAlign:'center',
         ...stylesVar.buttonLabelPrimary
@@ -88,6 +73,7 @@ const styles = StyleSheet.create({
         flex:1,
         marginRight:8
     },
+
     bButtonNext:{
         ...stylesVar.boxSecondary,
         padding: 12,
@@ -95,12 +81,7 @@ const styles = StyleSheet.create({
         flex:1,
         marginLeft:8
     },
-    footer:{
-        flex:1,
-        flexDirection:"row",
-        alignItems:"center",
-        justifyContent:"space-between"  
-    }
+    
 })
 
 export default styles;

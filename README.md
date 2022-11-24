@@ -53,6 +53,9 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
     <img src='Referências\Documentação\Backlog\EquipeNoxTimeline.jpg' width=600px alt="Timeline das entregas das sprints">
 </div>
 
+- ## <a src="/mobile">Instalação do Projeto Mobile</a> <a name="instalacao"></a>
+<br>
+
 # 📅 Cronograma de Entregas <a name="cronograma"></a>
 
 > Datas definidas sobre as entregas das sprints.
@@ -83,7 +86,7 @@ Feira de Soluções & Apresentação Final - 05/12/2022
     Banco de Dados não relacional, utilizado para armazenar os dados da aplicação em JSON.
 
 
-### ✒️ Wireframe
+## ✒️ Wireframe
 
 - [![](https://img.shields.io/badge/%20-Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/)
 

@@ -31,3 +31,9 @@ Os gifs abaixo representam o aplicativo atual da entrega da sprint.
     <img src='./Imagens/AppPart1.gif' width=300px>
     <img src='./Imagens/AppPart2.gif' width=300px>
 </div>
+
+- ## 📱 Versão do Projeto
+
+[![](https://img.shields.io/badge/GitHub%20Sprint%201%20Version-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Jonathan-Assis/API-5-OP-2022-2/releases/tag/Sprint1)
+
+<hr>

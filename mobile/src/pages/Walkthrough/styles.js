@@ -1,3 +1,4 @@
+import { faWheatAwnCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { StyleSheet } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
 
@@ -39,14 +40,20 @@ const styles = StyleSheet.create({
 
     bTitle:{
         ...stylesVar.titleSecondary,
-        marginBottom:3
+        marginBottom:3,
+        color:'#FFF',
+        textAlign:'center',
+
     },
     
     bDescription:{
         ...stylesVar.titleSecondary,
         fontSize:16,
-        opacity:0.5,
-        marginBottom:5    
+        /*opacity:0.5,*/
+        marginBottom:5,
+        textAlign:'center',
+        color:'#FFF',
+        marginTop:'10px',
     },
     
     bButtons:{

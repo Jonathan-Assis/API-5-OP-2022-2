@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, TouchableOpacity, FlatList, Animated, Image,TextInput, ScrollView, Dimensions } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
+import { useAuth } from '../../contexts/Auth';
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
 import ServerConnection from "../../services"
@@ -23,11 +24,12 @@ const Chamados = () => {
   const [origin, setOrigin] = useState();
   const [categoria,setCategoria] = useState()
   const [ocorrencias,setOcorrencias] = useState()
-  const [filterMarkers, setFilterMarkers] = useState();
+  const [filterMarkers, setFilterMarkers] = useState([]);
+  const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
+  const authData = JSON.parse(useAuth().authData)
   const [pinData, setPinData] = useState({});
   const [pinSelected, setPinSelected] = useState(false);
   const [mapPermissionView, setMapPermissionView] = useState(false);
-  const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
   
   
   const [visible,setVisible]=useState(false)
@@ -48,35 +50,26 @@ const Chamados = () => {
   
   useEffect(() => {
     //setLoading(true);
-    //filterData()
     permission();
-    getCategorias().then(()=>{
-
-    })
-    getOcorrencias().then(() => {
-    }) 
+    getData()
     .finally(() => {
       //setLoading(false); 
     })
   }, []);
 
+ const filterData = (tipo) => {
+  
+  setFilterMarkers(()=> {
+    if (tipo === 'Meus'){
+      return ocorrencias.filter(item=>item.cidadao === authData._id)
+    } 
+    if (tipo === 'Todos'){
+      return ocorrencias
+    }
+    return ocorrencias.filter(item => item.categoria === tipo)
+  })
+  }
 
-/*   const filterData = async () => {
-    const tipo = await ocorrencias.filter((ocorrencia)=>{
-      return ocorrencia.categoria === filterMarkers
-    })
-    return tipo
-  } */
-
-
-
-
-
-
-
-
-
-   
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
     
@@ -119,21 +112,28 @@ const Chamados = () => {
       }
     }
   }
-  
- async function getOcorrencias(){
-    await ServerConnection.getAllOcorrencia()
-    .then(({data}) => {
-      setOcorrencias(data)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
 
-  async function getCategorias(){
+  async function getData(){
     await ServerConnection.categorias()
     .then(({data}) => {
-      setCategoria(data)
+      setCategoria(()=>{
+        return [
+          { tipo: 'Meus',
+            color: '#3429A8'
+          },
+          { tipo: 'Todos',
+            color: '#DD4B3E'
+          },
+          ...data
+        ]
+      })
+    })
+    .then( async () => {
+      await ServerConnection.getAllOcorrencia()
+      .then(({data}) => {
+        setOcorrencias(data)
+        setFilterMarkers(data)
+      })
     })
     .catch((err) => {
       console.log(err)
@@ -224,13 +224,18 @@ const Chamados = () => {
               );
             })
           } */}
-      { ocorrencias &&
-      (ocorrencias).map((item) => {
+      {
+      filterMarkers.map((item, index) => {
+          const x = categoria.find(a => {
+            return a.tipo === item.categoria
+          })?.color
+          const cor = item.cidadao === authData._id ? '#3429A8' : x;
+
           return (
             <Marker
-              key={item._id}
+              key={index}
               title={item.categoria}
-              description={item.subCategoria}
+              description={item.titulo}
               coordinate={{
                 latitude: item.local.latitude,
                 longitude: item.local.longitude,
@@ -239,7 +244,7 @@ const Chamados = () => {
                 setPinData(item)
               }}
               >
-               <PinStrokeBlack style={{color: '#ff0f', width:23, height:32}} /> 
+               <PinStrokeBlack style={{color: cor, width:23, height:32}} /> 
               </Marker>
               )
             })}
@@ -257,12 +262,12 @@ const Chamados = () => {
           }}
           >
         <View style={styles.header}>
-        <TouchableOpacity style={[
+{/*         <TouchableOpacity style={[
                   styles.hCategory,
                   //filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
                 ]}
                 onPress={()=>{
-                  //setFilterMarkers(item.tipo)
+                  setFilterMarkers(item.tipo)
                   //filterData()
                   //setFilterMarkersSelected(true) 
                 }}
@@ -282,8 +287,7 @@ const Chamados = () => {
                   //filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
                 ]}
                 onPress={()=>{
-                  //setFilterMarkers(item.tipo)
-                  //filterData()
+                  setFilterMarkers(ocorrencias)
                   //setFilterMarkersSelected(true) 
                 }}
                 >
@@ -296,19 +300,22 @@ const Chamados = () => {
                     Todos
                     </Text>
                   </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           {categoria &&
-            categoria.map((item) => { 
+            categoria.map((item,index) => { 
+              
+              
               return(
                 <TouchableOpacity 
-                key={item._id}
+                key={index}
                 style={[
                   styles.hCategory,
-                  filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,]}
+                  filterMarkersSelected === item.tipo
+                  ? styles.hSelectedCategory : styles.hCategory
+                ]}
                 onPress={()=>{
-                  setFilterMarkers(item.tipo)
-                  //filterData()
-                  //setFilterMarkersSelected(true) 
+                  setFilterMarkersSelected(item.tipo) 
+                  filterData(item.tipo)
                 }}>
                 <View style={styles.hMarkerTitle}>
                   {item.tipo === 'Meus' && filterMarkers === item.tipo ?
@@ -318,7 +325,8 @@ const Chamados = () => {
                   }
                   <Text style={[
                     styles.hSubCategoryTitle,
-                    filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null
+                    filterMarkersSelected === item.tipo
+                    ? styles.hSelectedCategoryTitle : null
                   ]}>
                     {item.tipo}
                     </Text>

@@ -11,8 +11,7 @@ export function Routes () {
     return (
         <NavigationContainer>
             <Loading loading={loading}>
-            { authData ? <Walkthrough /> : <AuthRoutes />}
-            {/* { authData ? <AppRoutes /> : <AuthRoutes />} */}
+            { authData ? <AppRoutes /> : <AuthRoutes />}
             </Loading>
         </NavigationContainer>
     )

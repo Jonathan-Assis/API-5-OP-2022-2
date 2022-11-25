@@ -6,6 +6,7 @@ import styles from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEye, faEyeSlash, faKey, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import ServerConnection from '../../services';
+import { TextInputMask } from 'react-native-masked-text';
 
 const Sign_Up = () => {
     const navigation = useNavigation();
@@ -17,6 +18,8 @@ const Sign_Up = () => {
     const [ showPassword, setShowPassword ] = useState(false);
     const [ showConfPassword, setShowConfPassword ] = useState(false);
 
+    let cpfField = null
+
     const [ state, setState ] = useState({
         nome: undefined,
         cpf: undefined,
@@ -24,7 +27,6 @@ const Sign_Up = () => {
         senha: undefined,
         confSenha: undefined
     });
-
 
     const cadastro = async () => {
         const { nome, cpf, email, senha, confSenha } = state;
@@ -61,6 +63,16 @@ const Sign_Up = () => {
                     icon: faKey,
                     title: 'Senhas Diferentes',
                     description: 'As senhas informadas são diferentes.',
+                    buttonPrimaryTitle: 'Fechar',
+                    onClose: setVisible
+                });
+                setVisible(true);
+            }
+            if (!cpfField.isValid()){
+                !alert && setAlert({
+                    icon: faTriangleExclamation,
+                    title: 'CPF Muito Pequeno',
+                    description: 'O CPF deve conter no mínimo 11 digitos.',
                     buttonPrimaryTitle: 'Fechar',
                     onClose: setVisible
                 });
@@ -120,12 +132,16 @@ const Sign_Up = () => {
 
                     <View style={styles.bInput}>
                         <Text style={styles.bLabelTitle}>CPF:</Text>
-                        <TextInput
-                            style={styles.bInputBox}
-                            placeholder='CPF'
-                            onChangeText={e => setState(prev => { return { ...prev, cpf: e } })}
+                        <TextInputMask
+                            style={styles.bInputBox} 
+                            type={'cpf'}
+                            placeholder='000.000.000-00'
+                            onChangeText={
+                            e => {setState(prev => { return { ...prev, cpf: e}})}
+                            }
                             value={state.cpf}
                             keyboardType='decimal-pad'
+                            ref={(ref) => cpfField = ref}
                         />
                     </View>
 

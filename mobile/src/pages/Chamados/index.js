@@ -22,11 +22,12 @@ const Chamados = () => {
   const navigation = useNavigation();
   const [loading,setLoading] = useState(false)
   const [origin, setOrigin] = useState();
-  const [categoria,setCategoria] = useState()
-  const [ocorrencias,setOcorrencias] = useState()
+  const [categoria,setCategoria] = useState([])
+  const [ocorrencias,setOcorrencias] = useState([])
   const [filterMarkers, setFilterMarkers] = useState([]);
   const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
   const authData = JSON.parse(useAuth().authData)
+  
   const [pinData, setPinData] = useState({});
   const [pinSelected, setPinSelected] = useState(false);
   const [mapPermissionView, setMapPermissionView] = useState(false);
@@ -61,12 +62,12 @@ const Chamados = () => {
   
   setFilterMarkers(()=> {
     if (tipo === 'Meus'){
-      return ocorrencias.filter(item=>item.cidadao === authData._id)
+      return ocorrencias.filter(item=>item?.cidadao === authData._id)
     } 
     if (tipo === 'Todos'){
       return ocorrencias
     }
-    return ocorrencias.filter(item => item.categoria === tipo)
+    return ocorrencias.filter(item => item?.categoria === tipo)
   })
   }
 
@@ -184,61 +185,20 @@ const Chamados = () => {
           loadingEnabled={true}
           mapType="hybrid"
         >
-
-{/*         {(filterMarkers).map((item,index) => {
-            return (
-              <Marker
-                key={item.key}
-                //title={item.categoria}
-                pinColor={item.color}
-                //description={item.descricao}
-                //<PinStrokeWhite style={{color: '#000', width:20, height:22}} />
-                coordinate={{
-                  latitude: item.local.latitude,
-                  longitude: item.local.longitude,
-                }}
-                
-                onPress={()=>{
-                  setPinSelected(true)
-                  setPinData(item)
-                  console.log(item.categoria)        
-                }} 
-                >
-                 <PinStrokeBlack style={{color: item.color, width:23, height:32}} /> 
-
-            <Callout tooltip>
-                  <View>
-                    <View style={styles.markerCallout}>
-                      <Text>{item.titulo}
-                      </Text>
-                      <Image 
-                          style={styles.image}
-                          source={require('../../assets/Logotype/LogoOP.png')} resizeMode='cover'
-                      />
-                    </View>
-                    <View style={styles.arrowBorder} />
-                    <View style={styles.arrow} />
-                  </View>
-                </Callout> 
-              </Marker>
-              );
-            })
-          } */}
       {
       filterMarkers.map((item, index) => {
           const x = categoria.find(a => {
             return a.tipo === item.categoria
           })?.color
           const cor = item.cidadao === authData._id ? '#3429A8' : x;
-
-          return (
-            <Marker
+            return (
+              <Marker
               key={index}
-              title={item.categoria}
-              description={item.titulo}
+              title={item?.categoria}
+              description={item?.titulo}
               coordinate={{
-                latitude: item.local.latitude,
-                longitude: item.local.longitude,
+                latitude: parseFloat(item?.local.latitude),
+                longitude: parseFloat(item?.local.longitude),
               }}
               onPress={()=>{
                 setPinData(item)
@@ -247,7 +207,9 @@ const Chamados = () => {
                <PinStrokeBlack style={{color: cor, width:23, height:32}} /> 
               </Marker>
               )
-            })}
+            }
+          )
+          }
 
         </MapView>
 
@@ -262,45 +224,6 @@ const Chamados = () => {
           }}
           >
         <View style={styles.header}>
-{/*         <TouchableOpacity style={[
-                  styles.hCategory,
-                  //filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
-                ]}
-                onPress={()=>{
-                  setFilterMarkers(item.tipo)
-                  //filterData()
-                  //setFilterMarkersSelected(true) 
-                }}
-                >
-                <View style={styles.hMarkerTitle}>
-                  <PinStrokeWhite style={{color: '#3429A8', width:20, height:22}} />
-                  <Text style={[
-                    styles.hSubCategoryTitle,
-                    //filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null
-                  ]}>
-                    Meus
-                    </Text>
-                  </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={[
-                  styles.hCategory,
-                  //filterMarkers === item.tipo ? styles.hSelectedCategory : styles.hCategory,
-                ]}
-                onPress={()=>{
-                  setFilterMarkers(ocorrencias)
-                  //setFilterMarkersSelected(true) 
-                }}
-                >
-                <View style={styles.hMarkerTitle}>
-                  <PinWithPlus style={{color: 'red', width:22, height:22}} />
-                  <Text style={[
-                    styles.hSubCategoryTitle,
-                    //filterMarkers === item.tipo ? styles.hSelectedCategoryTitle : null
-                  ]}>
-                    Todos
-                    </Text>
-                  </View>
-            </TouchableOpacity> */}
           {categoria &&
             categoria.map((item,index) => { 
               

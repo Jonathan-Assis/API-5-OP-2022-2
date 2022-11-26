@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, createRef } from "react";
 import { View, Text, TouchableOpacity, FlatList, Animated, Image,TextInput, ScrollView, Dimensions } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
@@ -10,13 +10,16 @@ import styles from "./styles";
 import {GestureHandlerRootView} from 'react-native-gesture-handler'
 import {BottomSheetSlider} from '../../components/BottomSheet'
 import Logo from '../../assets/Logotype/LogoOP.svg'
+import Ll from '../../assets/Logotype/logo.png'
+import moment from 'moment'
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faLocationDot, faMagnifyingGlassLocation, faMapLocationDot, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
+import { set } from "react-native-reanimated";
 
 const Chamados = () => {
   const navigation = useNavigation();
@@ -27,8 +30,8 @@ const Chamados = () => {
   const [filterMarkers, setFilterMarkers] = useState([]);
   const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
   const authData = JSON.parse(useAuth().authData)
-  
   const [pinData, setPinData] = useState({});
+
   const [pinSelected, setPinSelected] = useState(false);
   const [mapPermissionView, setMapPermissionView] = useState(false);
   
@@ -141,20 +144,55 @@ const Chamados = () => {
     })
   }
 
-  const [mapShown,setMapShown]=useState(origin)
+  const convertDateTime = (data) => {
+    return moment(data).utcOffset('-03:00').format('DD/MM/YYYY HH:mm');
+  }
 
+  const [mapShown,setMapShown]=useState(origin)
   const sliderRef = useRef(null)
 
   const gestureHandler = useCallback(()=>{
     const isActive = sliderRef?.current?.isActive();
     if(isActive){
-      sliderRef?.current?.scrollTo(-80)
-    } else {
-      sliderRef?.current?.scrollTo(-320)
+      sliderRef?.current?.scrollTo(0)
+      setTimeout(() => {
+        setPinSelected(false)
+      },400)
     }
   },[])
-
+  
   const [scrollToIndex,setScrollToIndex]=useState(0)
+  
+
+  
+  var mapAnimation = new Animated.Value(0);
+
+  const {width, height} = Dimensions.get('window')
+  const CARD_WIDTH = width * 0.8;
+
+  const interpolations = filterMarkers.map((marker, index) => {
+    const inputRange = [
+      (index - 1) * CARD_WIDTH,
+      index * CARD_WIDTH,
+      ((index + 1) * CARD_WIDTH),
+    ];
+
+    const scale = mapAnimation.interpolate({
+      inputRange,
+      outputRange: [1, 1.3, 1],
+      extrapolate: "clamp"
+    });
+
+    return { scale };
+  });
+
+  const onMarkerPress = (mapEventData) => {
+    const markerID = mapEventData._targetInst.return.index;
+
+    let position = (markerID * CARD_WIDTH) + (markerID * 20); 
+    _scrollView.current.scrollTo({x: position});
+  }
+
   return (
     <>
        <PopUpAlert 
@@ -173,13 +211,13 @@ const Chamados = () => {
       (
         <GestureHandlerRootView style={{flex:1}}>
          <MapView
-          showsCompass={false}
-          showsMyLocationButton={false}
-          toolbarEnabled={false}
-          provider={PROVIDER_GOOGLE}
-          style={{ flex: 1 }}
           initialRegion={origin}
           showsUserLocation={true}
+          provider={PROVIDER_GOOGLE}
+          showsMyLocationButton={false}
+          showsCompass={false}
+          toolbarEnabled={false}
+          style={{ flex: 1 }}
           region={origin}
           zoomEnabled={true}
           loadingEnabled={true}
@@ -191,20 +229,32 @@ const Chamados = () => {
             return a.tipo === item.categoria
           })?.color
           const cor = item.cidadao === authData._id ? '#3429A8' : x;
+          const scaleStyle = {
+            transform: [
+              {
+                scale: interpolations[index].scale,
+              },
+            ],
+          };
+
             return (
               <Marker
               key={index}
-              title={item?.categoria}
-              description={item?.titulo}
+              title={item?.subCategoria}
               coordinate={{
                 latitude: parseFloat(item?.local.latitude),
                 longitude: parseFloat(item?.local.longitude),
               }}
-              onPress={()=>{
+              onPress={(e)=>{
                 setPinData(item)
+                onMarkerPress(e)
               }}
               >
-               <PinStrokeBlack style={{color: cor, width:23, height:32}} /> 
+                <View style={{alignItems: 'center', justifyContent:'center',width:50, height:50}}>
+                <Animated.View style={[scaleStyle]}>
+                    <PinStrokeBlack style={[{color: cor, width:23, height:32}, ]} />
+                </Animated.View>
+                </View>
               </Marker>
               )
             }
@@ -213,7 +263,9 @@ const Chamados = () => {
 
         </MapView>
 
-          <ScrollView
+        {categoria &&
+        <FlatList
+          data={categoria}
           scrollEnabled={true}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -222,14 +274,9 @@ const Chamados = () => {
             position:'absolute',
 
           }}
-          >
-        <View style={styles.header}>
-          {categoria &&
-            categoria.map((item,index) => { 
-              
-              
-              return(
-                <TouchableOpacity 
+          renderItem={({ item, index }) => (
+            <View style={styles.header}>
+              <TouchableOpacity 
                 key={index}
                 style={[
                   styles.hCategory,
@@ -239,7 +286,7 @@ const Chamados = () => {
                 onPress={()=>{
                   setFilterMarkersSelected(item.tipo) 
                   filterData(item.tipo)
-                }}>
+              }}>
                 <View style={styles.hMarkerTitle}>
                   {item.tipo === 'Meus' && filterMarkers === item.tipo ?
                   <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
@@ -252,15 +299,92 @@ const Chamados = () => {
                     ? styles.hSelectedCategoryTitle : null
                   ]}>
                     {item.tipo}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              ) 
-          })
+                  </Text>
+                </View>
+              </TouchableOpacity>
+          </View>
+        )}
+          />
         }
-        </View>
-        </ScrollView>
-        {/* <BottomSheetSlider ref={sliderRef}
+
+        { filterMarkers &&
+          <Animated.FlatList
+            data={filterMarkers}
+            horizontal
+            pagingEnabled
+            scrollEventThrottle={1}
+            showsHorizontalScrollIndicator={false}
+            snapToInterval={CARD_WIDTH + 20}
+            snapToAlignment="center"
+            style={styles.scrollView}
+            onScroll={Animated.event(
+              [
+                {
+                  nativeEvent: {
+                    contentOffset: {
+                      x: mapAnimation,
+                    },
+                  },
+                },
+              ],
+              { useNativeDriver: true }
+            )}
+            renderItem={({ item, index })=>(
+              <View 
+                key={index} 
+                style={styles.card}
+              >
+                {/* <Image 
+                  style={styles.cardImage} 
+                  resizeMode='cover' 
+                  source={{uri: `${ocorrencias?.imagem}`}} 
+                /> */}
+                <Image source={require('../../assets/Logotype/logo.png')} style={{width: '100%', height:100}} resizeMode='cover'/>
+                <View style={styles.textContent}>
+                  <Text style={styles.cardtitle} numberOfLines={1}>{item.titulo}</Text>
+                  <Text style={styles.cardDescription} numberOfLines={1}>{item.descricao}</Text>
+                  <View style={styles.button}>
+                    <TouchableOpacity
+                      style={[
+                        styles.signIn,{
+                          borderColor: '#ff6347',
+                          borderWidth: 1
+                        }
+                      ]}
+                      onPress={() =>{
+                        //getPinZoom(item.local)
+                      }}
+                    >
+                      <Text style={[styles.textSign,{
+                        color: '#ff6347',
+                      }]}>Ver Local</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={[
+                        styles.signIn,{
+                          borderColor: '#ff6347',
+                          borderWidth: 1
+                        }
+                      ]}
+                      onPress={() =>{
+                        setPinData(item)
+                        setPinSelected(true)
+                      }}
+                    >
+                      <Text style={[styles.textSign,{
+                        color: '#ff6347',
+                      }]}>Ver Detalhes</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              )}
+             />
+            }
+
+    { pinSelected && (
+      <BottomSheetSlider
+        ref={sliderRef}
         slider={
           <TouchableOpacity 
             style={styles.lineHandler}
@@ -270,8 +394,60 @@ const Chamados = () => {
           </TouchableOpacity>
         }
         >
+          <View style={styles.modal}>
+            <View style={{backgroundColor:'#ff7', height:200, }}>
+              <Image source={require('../../assets/Logotype/logo.png')} style={{width: '100%', height:'100%'}} resizeMode='cover'/>
+              <View style={{flex:1,justifyContent:'flex-end'}}>
+                <View style={styles.bsBairro}>
+                  <FontAwesomeIcon icon={faMapLocationDot} size={25} color='#fff' />
+                  <View>
+                    <Text style={styles.bsBairroTitle}>
+                      {pinData?.bairro}
+                    </Text>
+                    <Text style={styles.bsData}>
+                      {convertDateTime(pinData?.data)}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+
+
+            <ScrollView 
+            showsVerticalScrollIndicator={false}
+            style={styles.bsInfo}>
+                <Text style={{fontSize:26, fontWeight:'bold'}}>
+                  {pinData?.titulo}
+                </Text>
+                <View style={styles.bsTipo}>
+                  <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
+                  <Text style={styles.bsTipoTitle}>{pinData?.subCategoria}</Text>
+                </View>
+
+              <View style={styles.bsDescricao}>
+                <Text style={styles.bsDescricaoText}>
+                  {pinData?.descricao}
+                </Text>
+              </View>
+
+              <View style={styles.bsApoio}>
+                <Logo style={{width:40, height:40}} resizeMode='contain'/>
+                <Text style={styles.bsApoioNumero}>
+                  +60 Pessoas apoiaram isto
+                </Text>
+              </View>
+
+
+              <TouchableOpacity style={styles.bsApoiar}>
+                <Logo style={{width:40, height:40}} resizeMode='contain'/>
+                <Text style={styles.bsApoiarLabel}>Apoiar causa</Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
         
-          </BottomSheetSlider> */}
+          </BottomSheetSlider>
+        )
+        }
         </GestureHandlerRootView>
       ) : (
         <View>

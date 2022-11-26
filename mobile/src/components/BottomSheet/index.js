@@ -119,7 +119,7 @@ const {height:SCREEN_HEIGHT}=Dimensions.get('window')
 const MAX_TRANSLATE_Y = -SCREEN_HEIGHT
 //const MAX_TO_CATEGORY_TRANSLATE_Y = -SCREEN_HEIGHT + 60
 
-const BottomSheetSlider = forwardRef(({children, slider}, sliderRef) => {
+const BottomSheetSlider = forwardRef(({children, slider, }, sliderRef) => {
     const translateY = useSharedValue(0)
     const active = useSharedValue(false)
 
@@ -154,7 +154,7 @@ const BottomSheetSlider = forwardRef(({children, slider}, sliderRef) => {
               } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
                 scrollTo(MAX_TRANSLATE_Y);
               } else if (translateY.value > -SCREEN_HEIGHT / 1.5 && translateY.value < -SCREEN_HEIGHT / 3){
-                scrollTo(-320)
+                scrollTo(0)
               }
         })
 
@@ -173,16 +173,12 @@ const BottomSheetSlider = forwardRef(({children, slider}, sliderRef) => {
     })
 
     useEffect(()=>{
-        if((-SCREEN_HEIGHT/2) > -320){
-            scrollTo(-320)
-        } else {
-            scrollTo(-SCREEN_HEIGHT/2)
-        }
+        scrollTo(MAX_TRANSLATE_Y)
     },[])
-
 return(
     <>
-        <Animated.View style={[styles.bottomSheetContainer, animationBottomSheet]}>
+        <Animated.View 
+            style={[styles.bottomSheetContainer, animationBottomSheet]}>
             <GestureDetector gesture={gesture}>
                     {slider}
             </GestureDetector>

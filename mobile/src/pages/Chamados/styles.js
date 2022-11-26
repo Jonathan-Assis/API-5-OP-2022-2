@@ -1,5 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import stylesVar from '../../styles/stylesVar';
+
+const {width, height} = Dimensions.get('window')
+const CARD_HEIGHT = 220;
+const CARD_WIDTH = width * 0.8;
+const SPACING_BETWEEN_CARD = width * 0.1 -10;
 
 const styles = StyleSheet.create({
     container:{
@@ -82,135 +87,172 @@ const styles = StyleSheet.create({
     image:{
         width:20, height:20
     },
-    searchBox: {
-        position:'absolute', 
-        marginTop: 20, 
-        flexDirection:"row",
-        backgroundColor: '#fff',
-        width: '90%',
-        alignSelf:'center',
-        borderRadius: 5,
-        padding: 10,
-        shadowColor: '#ccc',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 10,
-      },
-      chipsScrollView: {
-        position:'absolute', 
-        top: 80, 
-        paddingHorizontal:10
-      },
-      chipsIcon: {
-        marginRight: 5,
-      },
-      chipsItem: {
-        flexDirection:"row",
-        backgroundColor:'#fff', 
-        borderRadius:20,
-        padding:8,
-        paddingHorizontal:20, 
-        marginHorizontal:10,
-        height:35,
-        shadowColor: '#ccc',
-        shadowOffset: { width: 0, height: 3 },
-        shadowOpacity: 0.5,
-        shadowRadius: 5,
-        elevation: 10,
-      },
-      scrollView: {
-       flex:1
-      },
-      endPadding: {
-        paddingRight: '80%',
-      },
-      card: {
-        // padding: 10,
-        elevation: 2,
-        backgroundColor: "#ccc",
-        borderTopLeftRadius: 5,
-        borderTopRightRadius: 5,
-        marginHorizontal: 10,
-        shadowColor: "#000",
-        shadowRadius: 5,
-        shadowOpacity: 0.3,
-        shadowOffset: { x: 2, y: -2 },
-        height: 220,
-        width: '15%',
-      },
-      cardImage: {
-        flex: 3,
-        width: "100%",
-        height: "100%",
-        alignSelf: "center",
-      },
-      textContent: {
-        flex: 2,
-        padding: 10,
-      },
-      cardtitle: {
-        fontSize: 12,
-        fontWeight: "bold",
-        // marginTop: 5,
-      },
-      cardDescription: {
-        fontSize: 12,
-        color: "#444",
-      },
-      markerWrap: {
-        alignItems: "center",
-        justifyContent: "center",
-        width:50,
-        height:50,
-      },
-      marker: {
-        width: 30,
-        height: 30,
-      },
-      button: {
-        alignItems: 'center',
-        marginTop: 5
-      },
-      signIn: {
-          width: '100%',
-          padding:5,
-          justifyContent: 'center',
-          alignItems: 'center',
-          borderRadius: 3
-      },
-      textSign: {
-          fontSize: 14,
-          fontWeight: 'bold'
-      },
+
+
+
+    scrollView: {
+      position: "absolute",
+      bottom: 0,
+      left: 0,
+      right: 0,
+      paddingVertical: 10,
+    },
+    endPadding: {
+      paddingRight: width - CARD_WIDTH,
+    },
+    card: {
+      // padding: 10,
+      elevation: 2,
+      ...stylesVar.backgroundSecondary,
+      borderRadius: 10,
+      marginHorizontal: 10,
+      shadowColor: "#000",
+      shadowRadius: 5,
+      shadowOpacity: 0.3,
+      shadowOffset: { x: 2, y: -2 },
+      height: CARD_HEIGHT,
+      width: CARD_WIDTH,
+      overflow: "hidden",
+    },
+    cardImage: {
+      flex: 2,
+      width: "50%",
+      height: "50%",
+      alignSelf: "center",
+    },
+    textContent: {
+      flex: 2,
+      padding: 10,
+    },
+    cardtitle: {
+      fontSize: 12,
+      // marginTop: 5,
+      fontWeight: "bold",
+    },
+    cardDescription: {
+      fontSize: 12,
+      color: "#444",
+    },
+    markerWrap: {
+      alignItems: "center",
+      justifyContent: "center",
+      width:50,
+      height:50,
+    },
+    marker: {
+      width: 30,
+      height: 30,
+    },
+    button: {
+      alignItems: 'center',
+      marginTop: 5
+    },
+    signIn: {
+      width: '100%',
+      padding:5,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 3
+    },
+    textSign: {
+      fontSize: 14,
+      fontWeight: 'bold'
+    },
 
     lineHandler:{
       width:'100%',
       alignSelf: 'center',
     },
     line:{
-        width:75,
-        height:4.5,
-        borderRadius:5,
-        ...stylesVar.backgroundPrimary,
-        alignSelf: 'center',
-        marginVertical:14
+      width:75,
+      height:4.5,
+      borderRadius:5,
+      ...stylesVar.backgroundPrimary,
+      alignSelf: 'center',
+      marginVertical:14
+    },
+    modal:{
+      flex:1
+    },
+    
+    bsInfo:{
+      flex:1,
+      marginHorizontal:14,
+    },
+    bsBairro:{
+      flexDirection:'row',
+      alignItems: 'center',
+      position:'absolute',
+      right:14,
+      bottom:3
+    },
+    bsBairroTitle:{
+      textAlign: 'center',
+      ...stylesVar.titleTertiary,
+      fontSize:12,
+      marginLeft:5,
+      textShadowColor: '#000',
+      textShadowRadius: 3,
+      textShadowOffset:{
+        width: 0.5,
+        height: 0.5
+      }
+    },
+    bsData:{
+      textAlign: 'center',
+      ...stylesVar.titleTertiary,
+      fontSize:12,
+      marginLeft:5,
+      textShadowColor: '#000',
+      textShadowRadius: 3,
+      textShadowOffset:{
+        width: 0.5,
+        height: 0.5
+      }
+    },
+    
+    bsTipo:{
+      bottom:3,
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    
+    bsTipoTitle:{
+      marginLeft:5,
+    },
+    bsDescricao:{
+      marginVertical:10
+    },
+    bsDescricaoText:{
+      ...stylesVar.titleSecondary,
     },
 
-    bottomList:{
-      flex:1,
-      marginHorizontal:12,
-      paddingBottom:72,
+    bsApoio:{
+      flexDirection: 'row',
+      alignItems: 'center',
     },
-    bottomCardContainer:{
+
+    bsApoioNumero:{
+      ...stylesVar.buttonLabelSecondary
+    },
+    bsApoiar:{
+      ...stylesVar.boxPrimary,
+      padding: 10,
+      marginVertical:10,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    bsApoiarLabel:{
+      textAlign:'center',
+      ...stylesVar.titleTertiary,
+  },
+    bsContainer:{
       marginBottom:10,
       ...stylesVar.boxPrimary,
       elevation:5
-      
     },
-    bottomCard:{
-      flexDirection:'row',
-    },
+
     bCardRight:{
       flex:1,
       padding:10
@@ -248,56 +290,11 @@ const styles = StyleSheet.create({
     bCardFooter:{
       alignItems: 'center',
       paddingVertical:10
-
-     // ...stylesVar.strokeBoxSecondary
     },
     bCardTextFooter:{
       ...stylesVar.titleTertiary,
     }
 
-    
-    //...stylesVar.textPrimary
-
-
-
-
-
-
-
-
-
-
-/*     hButtons:{
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-    },
-    hButtonPrimary:{
-        padding:13,
-        marginHorizontal:8,
-        flexDirection: 'row',
-        alignItems: 'center',
-        ...stylesVar.boxPrimary,
-        borderWidth:1,
-        borderColor:'black',
-    },
-    hButtonSecondary:{
-        padding:13,
-        marginHorizontal:8,
-        flexDirection: 'row',
-        alignItems: 'center',
-        ...stylesVar.boxSecondary,
-        borderWidth:1,
-        borderColor:'black',
-    },
-    hButtonLabelPrimary:{
-        paddingHorizontal:5,
-        ...stylesVar.titleTertiary,
-    },
-    hButtonLabelSecondary:{
-        paddingHorizontal:5,
-        ...stylesVar.titleSecondary,
-    }, */
 })
-//<FontAwesomeIcon icon={faLocationDot} size={60} color='#3429A8' />
 
 export default styles;

@@ -71,8 +71,8 @@ const Sign_Up = () => {
             if (!cpfField.isValid()){
                 !alert && setAlert({
                     icon: faTriangleExclamation,
-                    title: 'CPF Muito Pequeno',
-                    description: 'O CPF deve conter no mínimo 11 digitos.',
+                    title: 'CPF Não Existente',
+                    description: 'CPF pequeno demais ou inexistente.',
                     buttonPrimaryTitle: 'Fechar',
                     onClose: setVisible
                 });

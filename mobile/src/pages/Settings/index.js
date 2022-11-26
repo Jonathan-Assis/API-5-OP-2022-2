@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import {useNavigation} from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faUserPen, faCircleUser, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faUserPen, faCircleUser, faArrowRightFromBracket,faCircleInfo} from '@fortawesome/free-solid-svg-icons'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
 
@@ -31,21 +31,19 @@ const Settings = () => {
       </View>
 
       <View style={styles.footer}>
-          <TouchableOpacity style={styles.tButton}
-            onPress={() => navigation.navigate('Walkthrough')}
-          >
-
-            <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
-            <Text style={styles.fLabel}>Tutorial do Aplicativo</Text>
-          </TouchableOpacity>
-
         <View style={styles.footer}>
           <TouchableOpacity style={styles.fButton}
             onPress={() => navigation.navigate('Edit_Profile')}
           >
-
             <FontAwesomeIcon icon={ faUserPen } size={24} color={'white'} />
             <Text style={styles.fLabel}>Editar Perfil</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.fButton}
+            onPress={() => navigation.navigate(Walkthrough)}
+          >
+            <FontAwesomeIcon icon={ faCircleInfo } size={24} color={'white'} />
+            <Text style={styles.fLabel}>Tutorial do Aplicativo</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.fButton}

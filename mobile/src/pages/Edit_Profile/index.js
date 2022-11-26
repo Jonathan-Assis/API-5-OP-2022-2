@@ -8,6 +8,8 @@ import {
 import { PopUpActions, PopUpAlert, BottomSheetImage } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
+import { TextInputMask } from 'react-native-masked-text';
+
 
 const Edit_Profile = () => {
   const authData = JSON.parse(useAuth().authData);
@@ -16,6 +18,9 @@ const Edit_Profile = () => {
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showConfPassword, setShowConfPassword ] = useState(false);
   
+  let cpfField = null
+
+
   const [ data, setData ] = useState({
     _id: authData._id || undefined,
     nome: authData.nome || undefined,
@@ -36,11 +41,12 @@ const Edit_Profile = () => {
   }) 
   
   const update = async () => {
-    const { _id, nome, email, cpf, senha, confSenha } = data;
+    const { _id: id, nome, email, cpf, senha, confSenha } = data;
     if(!!nome && !!email && !!cpf) {
       if((!senha && !confSenha) || senha === confSenha) {
         updateAuth({
-          _id, nome, email, cpf, senha, imagem: imagem?.base64/* aux?.base64 */
+          id, nome, email, cpf, imagem, senha,
+          senha_prev: authData.senha
         }).then(() => {
           setVisible(false)
         })
@@ -62,6 +68,15 @@ const Edit_Profile = () => {
         buttonPrimaryTitle: 'Fechar'
       });
     }
+    if (!cpfField.isValid()){
+      setPopUpData({
+          onClose: setVisible,
+          icon: faTriangleExclamation,
+          title: 'CPF Não Existente',
+          description: 'CPF pequeno demais ou inexistente.',
+          buttonPrimaryTitle: 'Fechar',
+      });
+  }
   }
 
   const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
@@ -70,6 +85,10 @@ const Edit_Profile = () => {
   const imageOptions = () => {
     setImageModal(true)
   }
+
+  /* useEffect(() => {
+    if(imagem) console.log(imagem)
+  }, [imagem]) */
 
   return (
     <>
@@ -117,7 +136,7 @@ const Edit_Profile = () => {
               >
                 {!!imagem?.base64
                   ? <View style={styles.bImageIcon}>
-                    <Image source={{uri: `data:image/png;base64,${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
+                    <Image source={{uri: `${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
                   </View>
                   : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
                 }
@@ -157,12 +176,15 @@ const Edit_Profile = () => {
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>CPF:</Text>
-            <TextInput
+            <TextInputMask
+              type={'cpf'}
               style={styles.bInputBox}
+              keyboardType='numeric'
               placeholder='Insira seu CPF'
               value={data.cpf}
               onChangeText={value => setData(prev => { return {...prev, cpf: value} })}
-              />  
+              ref={(ref) => cpfField = ref}
+             />  
           </View>
 
           <View style={styles.bInput}>

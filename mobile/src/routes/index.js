@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/Auth'
 import { AuthRoutes } from './AuthRoutes'
 import { AppRoutes } from './AppRoutes'
 import { Loading } from '../components'
+import { Walkthrough } from './Walkthrough'
 
 export function Routes () {
     const {authData, loading} = useAuth()

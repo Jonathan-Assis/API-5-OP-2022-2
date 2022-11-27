@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback, createRef } from "react";
-import { View, Text, TouchableOpacity, FlatList, Animated, Image,TextInput, ScrollView, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Animated, Image,TextInput, ScrollView, Dimensions, StatusBar } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
 import { useAuth } from '../../contexts/Auth';
@@ -15,11 +15,10 @@ import moment from 'moment'
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faXmark, faLocationDot, faMagnifyingGlassLocation, faMapLocationDot, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faLocationDot, faMapLocationDot, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
-import { set } from "react-native-reanimated";
 
 const Chamados = () => {
   const navigation = useNavigation();
@@ -161,10 +160,6 @@ const Chamados = () => {
     }
   },[])
   
-  const [scrollToIndex,setScrollToIndex]=useState(0)
-  
-
-  
   var mapAnimation = new Animated.Value(0);
 
   const {width, height} = Dimensions.get('window')
@@ -186,12 +181,6 @@ const Chamados = () => {
     return { scale };
   });
 
-  const onMarkerPress = (mapEventData) => {
-    const markerID = mapEventData._targetInst.return.index;
-
-    let position = (markerID * CARD_WIDTH) + (markerID * 20); 
-    _scrollView.current.scrollTo({x: position});
-  }
 
   return (
     <>
@@ -245,9 +234,8 @@ const Chamados = () => {
                 latitude: parseFloat(item?.local.latitude),
                 longitude: parseFloat(item?.local.longitude),
               }}
-              onPress={(e)=>{
+              onPress={()=>{
                 setPinData(item)
-                onMarkerPress(e)
               }}
               >
                 <View style={{alignItems: 'center', justifyContent:'center',width:50, height:50}}>

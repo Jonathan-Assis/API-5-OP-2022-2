@@ -6,6 +6,9 @@ import { AppRoutes } from './AppRoutes'
 import { Loading } from '../components'
 import { Walkthrough } from './Walkthrough'
 
+/* 
+{ authData ? <Walkthrough /> : <AuthRoutes />}
+*/
 export function Routes () {
     const {authData, loading} = useAuth()
     return (

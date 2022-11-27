@@ -8,13 +8,10 @@ const StackWalkthrough = createStackNavigator()
 
 const Walkthrough = () => {
     return(
-        <StackWalkthrough.Navigator initialRouteName='Report' screenOptions={{
+        <StackWalkthrough.Navigator initialRouteName='Welcome' screenOptions={{
             headerTitleAlign: 'center', headerTintColor: stylesVar.toolbarTitle.color, headerStyle:{...stylesVar.toolbar}
         }}>
             <StackWalkthrough.Screen name='Welcome' component={Pages.Welcome} options={{headerShown:false}} />
-            <StackWalkthrough.Screen name='Report' component={Pages.Report} options={{headerShown:false}} />
-            <StackWalkthrough.Screen name='Called' component={Pages.Called} options={{headerShown:false}} />        
-            <StackWalkthrough.Screen name='Options' component={Pages.Options} options={{headerShown:false}} />
         </StackWalkthrough.Navigator>
     )
 }

@@ -1,54 +1,54 @@
-const { ObjectId, MongoClient } = require('mongodb');
+const { ObjectId, MongoClient, GridFSBucket } = require('mongodb');
+const fs = require('fs');
 const url = process.env.DB;
 
 class OcorrenciaController {
-    /*
-    {
-        cidadao: ObjectID,
-        local: {
-            lat: number,
-            long: number
-        },
-        categoria: {
-            id: string,
-            tipo: string
-        }
-    }
-    */
     static async newOcorrencia(req, res) {
         const client = new MongoClient(url);
-        const data = req.body;
 
-        // talvez trocar o 'insertOne' por um
-        // 'updateOne' com o upsert
+        const {
+            cidadao, titulo, descricao, local,
+            bairro, categoria, subCategoria,
+            data, foto
+        } = req.body;
 
         try {
             const opdb = client.db('opdb');
-            const result = await opdb.collection('ocorrencias')
-                .insertOne(data);
-            
-            res.json(!!result);
+            await opdb.collection('ocorrencias')
+            .insertOne({
+                cidadao: ObjectId(cidadao),
+                local: JSON.parse(local),
+                titulo, descricao, categoria,
+                subCategoria, data, bairro
+            })
+            .then(async result => {
+                if(result && foto.length) {
+                    const temp_path = __dirname + '/temp.txt';
+                    const bucket = new GridFSBucket(opdb, { bucketName: 'imagemOcorrencia' });
+
+                    fs.writeFileSync(temp_path, Buffer.from(foto));
+                    fs.createReadStream(temp_path)
+                    .pipe(bucket.openUploadStream(result.insertedId.toString(), {
+                        chunkSizeBytes: 1048576
+                    }))
+                    .once('close', () => {
+                        fs.unlinkSync(temp_path);
+                        client.close();
+                        res.json(true);
+                    })
+                    .once('error', err => {
+                        if(err) throw err;
+                    })
+                }
+                else res.json(true);
+            });
         }
         catch(e) {
             console.error(e);
             res.status(400).json(e);
         }
-        finally {
-            client.close();
-        }
     }
 
-    /*
-    {
-        tipo: string,
-        categorias: [
-            {
-                id: string,
-                tipo: string
-            }
-        ]
-    }
-    */
     static async newCategoria(req, res) {
         const client = new MongoClient(url);
         const data = req.body;
@@ -76,22 +76,58 @@ class OcorrenciaController {
         try {
             const opdb = client.db('opdb');
 
-            let result = {};
+            const bucket = new GridFSBucket(opdb, { bucketName: 'imagemOcorrencia' });
+
             if(Object.keys(data).length !== 0) {
-                result = await opdb.collection('ocorrencias').findOne({
+                await opdb.collection('ocorrencias').findOne({
                     _id: new ObjectId(data.id)
+                })
+                .then(result => {
+                    bucket.openDownloadStreamByName(result._id.toString())
+                    .once('error', err => {
+                        err?.code === 'ENOENT' && console.error(err);
+                        client.close();
+                        res.json(result);
+                    })
+                    .once('data', data => {
+                        client.close();
+                        
+                        res.json({
+                            ...result,
+                            foto: data.toString()
+                        });
+                    });
+                })
+                .catch(e => {
+                    console.error(e);
+                    throw 'Ocorrência não encontrada';
                 });
             }
             else {
-                result = await opdb.collection('ocorrencias')
-                    .find({}).toArray();
-            }
+                await opdb.collection('ocorrencias')
+                .find({}).toArray()
+                .then(async ocorrencia => {
+                    const imgs = opdb.collection('imagemOcorrencia.files')
+                    .aggregate([
+                        {
+                          '$lookup': {
+                            'from': 'imagemOcorrencia.chunks', 
+                            'localField': '_id', 
+                            'foreignField': 'files_id', 
+                            'as': 'imagem'
+                          }
+                        }
+                    ]);
 
-            if(!!result) {
-                res.json(result);
-            }
-            else {
-                throw 'Ocorrência não encontrada'
+                    for await(const img of imgs) {
+                        const index = ocorrencia.findIndex(a => (
+                            a._id.toString() === img.filename
+                        ));
+                        ocorrencia[index].imagem = img?.imagem['0']?.data?.buffer.toString();
+                    }
+                    
+                    res.json(ocorrencia);
+                });
             }
         }
         catch(e) {
@@ -99,7 +135,7 @@ class OcorrenciaController {
             res.status(400).json({error: e});
         }
         finally {
-            client.close();
+            //client.close();
         }
     }
 

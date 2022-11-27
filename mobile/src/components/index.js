@@ -1,6 +1,7 @@
 import { BottomSheetImage, BottomSheetSlider } from './BottomSheet'
 import Loading from './Loading';
 import { PopUpActions, PopUpAlert } from './PopUp'
+import { Walkthrough } from './Walkthrough'
 
 export {
     BottomSheetImage,
@@ -8,4 +9,5 @@ export {
     Loading,
     PopUpActions,
     PopUpAlert,
+    Walkthrough
 }

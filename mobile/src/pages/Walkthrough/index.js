@@ -103,12 +103,11 @@ const SquareBackground = ({scrollX})=>{
 }
 
 
-const Walkthrough =({walkOn,setWalkOn,children}) => {
+const Walkthrough =(props) => {
 
   const scrollX = useRef(new Animated.Value(0)).current;
   return (
-    walkOn? (
-      <View walkOn={walkOn} style={styles.container}>
+      <View style={styles.container}>
         <StatusBar hidden />
         <Backdrop scrollX={scrollX} />
         <SquareBackground scrollX={scrollX} />
@@ -155,9 +154,7 @@ const Walkthrough =({walkOn,setWalkOn,children}) => {
           }}
         />
       </View>
-    ) : <>{ children }</>
   );
 }
-
 
 export {Walkthrough};

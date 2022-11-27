@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, Alert } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import { View, Text, TouchableOpacity } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Loading, PopUpAlert } from '../../components'
 import * as Location from "expo-location";
 import { useNavigation } from "@react-navigation/native";
@@ -10,17 +10,23 @@ import styles from "./styles";
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
+
 import GeoIcon from "../../assets/Icons/geo-alt";
 import GeoIconFill from "../../assets/Icons/geo-alt-fill";
+import { useAuth } from "../../contexts/Auth";
 
-const Maps = () => {
+const Maps = (props) => {
   const navigation = useNavigation();
   const [pin, setPin] = useState({});
   const [loading,setLoading] = useState(false)
+  const authData = JSON.parse(useAuth().authData)
   const [pinSelected, setPinSelected] = useState(false);
+  const [pinData,setPinData] = useState({})
   const [origin, setOrigin] = useState();
   const [coordinate, setCoordinate] = useState({});
-  const [filterMarkers, setFilterMarkers] = useState("");
+  const [localidade, setLocalidade] = useState({});
+  const [categoria,setCategoria] = useState([]);
   
   // const filterData = ocorrencias.filter((e) => e.category === filterMarkers);
   
@@ -42,9 +48,9 @@ const Maps = () => {
   
   useEffect(() => {
     setLoading(true);
-    getOcorrencias().then(() => {
-       permission();
-    }) 
+
+    getData()
+    permission()
     .finally(() => {
       setLoading(false); 
     })
@@ -79,9 +85,9 @@ const Maps = () => {
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
           });
-        } 
-        setLoading(false)
-      } catch(e) {
+          } 
+          setLoading(false)
+        } catch(e) {
         setPopUpPermission({
           onClose: close,
           icon: faLocationDot,
@@ -93,18 +99,57 @@ const Maps = () => {
       }
     }
   }
-   const [ocorrencias,setOcorrencias]= useState([])
   
-  async function getOcorrencias(){
-    await ServerConnection.getAllOcorrencia()
-    .then(({data}) => {
-      setOcorrencias(data)
+  async function reverseGeoCode(local){
+   const reverse = await Location.reverseGeocodeAsync({
+      latitude: local.latitude,
+      longitude: local.longitude,
+    }).then(async(data) => {
+      setLocalidade({
+        estado: data[0].region,
+        municipio: data[0].subregion,
+        bairro: data[0].district,
+        rua: data[0].street,
+      })
+      if(Object.keys(localidade)< 0){
+        reverse()
+      }
     })
-    .catch(() => {
-    })
-  } 
+  }
 
+  const [ocorrencias,setOcorrencias]= useState([])
   
+  async function getData(){
+    await ServerConnection.categorias()
+    .then(({data}) => {
+      setCategoria(()=>{
+        return [
+          { tipo: 'Meus',
+            color: '#3429A8'
+          },
+          ...data
+        ]
+      })
+    })
+    .then( async () => {
+      await ServerConnection.getAllOcorrencia()
+      .then(({data}) => {
+        const c = data
+        c.map((item) => {
+          if(item.categoria === categoriaSelected){
+            setOcorrencias(item)
+          }
+        })
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }
+
+
+let categoriaSelected = props.route?.params.categoria
+
   return (
     <>
         <PopUpAlert 
@@ -120,11 +165,12 @@ const Maps = () => {
         />
       <Loading loading={loading}>
         <MapView
+          initialRegion={origin}
+          showsUserLocation={true}
+          provider={PROVIDER_GOOGLE}
           showsCompass={false}
           toolbarEnabled={false}
           style={{ flex: 1 }}
-          initialRegion={origin}
-          showsUserLocation={true}
           region={origin}
           zoomEnabled={true}
           loadingEnabled={true}
@@ -134,42 +180,41 @@ const Maps = () => {
             setPinSelected(true);
           }}
         >
-          {/* { (ocorrencias).map((item)=>{
-            return(
-              <Marker
-                key={item._id}
-                coordinate={{
-                  latitude: item.local.latitude,
-                  longitude: item.local.longitude,
-                }}
-              />
-            )}
-          )} */}
-            {pinSelected && (
-              <Marker
-              pinColor='#3429A8'
-              coordinate={pin}
-              onPress={(e) => {
-                setPinSelected(false);
-              }}
-              />
-              )}
-
-        {(filterMarkers ? filterData : ocorrencias).map((item) => {
+{/*         { 
+        ocorrencias.map((item, index) => {
+          const x = categoria.find(a => {
+            return a?.tipo === item?.categoria
+          })?.color
+          const cor = item?.cidadao === authData._id ? '#3429A8' : x;
             return (
               <Marker
-                key={item._id}
-                coordinate={{
-                  latitude: item.local.latitude,
-                  longitude: item.local.longitude,
-                }}
-               onPress={()=>{
-                //navigation.navigate("Rep_Ocorrencia", item)
-                //console.log('item',item)
-              }} 
-              />
-              );
-            })}
+              key={index}
+              title={item?.subCategoria}
+              coordinate={{
+                latitude: parseFloat(item?.local.latitude),
+                longitude: parseFloat(item?.local.longitude),
+              }}
+              onPress={()=>{
+                setPinData(item)
+              }}
+              >
+                <PinStrokeBlack style={{color: cor, width:23, height:32}} />
+              </Marker>
+              )
+              }
+            )}
+           */}
+
+          {pinSelected && (
+              <Marker
+              coordinate={pin}
+              onPress={() => {
+                setPinSelected(false);
+              }}
+              >
+                <PinStrokeBlack style={{color: '#3429A8', width:23, height:32}} />
+              </Marker>
+              )}
         </MapView>
         <View style={styles.container}>
           <View style={styles.footer}>
@@ -180,6 +225,7 @@ const Maps = () => {
                   onPress={() => {
                     setPinSelected(false);
                     setPin(null);
+                    setLocalidade(null)
                   }}
                   >
                   <GeoIcon size={22} fill="black" />
@@ -188,12 +234,25 @@ const Maps = () => {
                 <TouchableOpacity
                   style={styles.fButtonPrimary}
                   onPress={() => {
+                    async function data() {
+                      permission()
+                      reverseGeoCode(pin)
+                    }
+                    data().then(() =>{ 
+                    if(Object.keys(localidade) < 0){
+                      reverseGeoCode(pin)
+                    } else {
                     navigation.navigate({
                       name: "Rep_Ocorrencia",
                       params: {
                         coordinate: pin,
+                        localidade: localidade
                       },
-                    });
+                    })
+                  }
+                  }
+                    
+                    )
                   }}
                   >
                   <GeoIconFill size={22} fill="white" />
@@ -213,6 +272,7 @@ const Maps = () => {
                       name: "Rep_Ocorrencia",
                       params: {
                         coordinate: null,
+                        localidade: null
                       },
                     }))
                   }}
@@ -225,41 +285,25 @@ const Maps = () => {
                   style={styles.fButtonPrimary}
                   event={true}
                   onPress={() => {
+                    async function coord() {
                       permission()
-                  }}
-                >
+                      reverseGeoCode(coordinate)
+                    }
+                    coord().then(() => navigation.navigate({
+                        name: "Rep_Ocorrencia",
+                        params: {
+                          coordinate: coordinate,
+                          localidade: localidade
+                        },
+                      }))
+                      } 
+                    }  
+                  >
                   <GeoIconFill size={22} fill="white" />
                   <Text style={styles.fButtonLabelPrimary}>Local Atual</Text>
                 </TouchableOpacity>
               </View>
             )}
-
-            {/*           <FlatList 
-              data={categorias}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              ItemSeparatorComponent={()=><View style={{width:10}}/>}
-              contentContainerStyle={{
-                alignItems: 'center'
-              }}
-              renderItem={({ item }) => (
-                <TouchableOpacity style={[
-                  styles.fCategory,
-                  filterMarkers === item.key ? styles.fSelectedCategory : null
-                ]}
-                key={item.key}
-                onPress={()=>{
-                  setFilterMarkers(filterMarkers === item.key ? "" : item.key);
-                }}
-                >
-                {item.icon}
-                <Text style={[
-                  styles.fSubCategoryTitle,
-                  filterMarkers === item.key ? styles.fSelectedCategoryTitle : null
-                ]}>{item.label}</Text>
-                </TouchableOpacity>
-                )}
-              /> */}
           </View>
         </View>
       </Loading>

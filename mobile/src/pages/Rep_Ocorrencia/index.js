@@ -5,9 +5,10 @@ import {useNavigation} from '@react-navigation/native'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus,faLightbulb } from '@fortawesome/free-solid-svg-icons'
-import {PopUpAlert,PopUpActions, BottomSheetImage} from '../../components'
+import {PopUpAlert,PopUpActions, BottomSheetImage, Loading} from '../../components'
 import styles from './styles';
-import {Loading} from '../../components'
+import * as Location from "expo-location";
+
 
 import { useRoute } from '@react-navigation/native';
 
@@ -21,6 +22,8 @@ const Rep_Ocorrencia = (props) => {
   const [selectedSubType, setSelectedSubType] = useState([]);
   const [titulo,setTitulo]=useState('')
   const [local,setLocal]=useState({})
+  const [localidade,setLocalidade]=useState({})
+  const [geoCode,setGeoCode]=useState({})
   const [descricao,setDescricao]=useState('')
 
   const [loading, setLoading ] = useState(false);
@@ -29,6 +32,7 @@ const Rep_Ocorrencia = (props) => {
   
   let TipoOcorrencia = props.route.params?.TipoOcorrencia
   let coordinate = props.route.params?.coordinate
+  let localizacao = props.route.params?.localidade
   
   //Define o tipo da ocorrência
   useEffect(()=>{
@@ -61,15 +65,20 @@ const Rep_Ocorrencia = (props) => {
   //Define coordenadas
   useEffect(() => {
     if(coordinate !== undefined){
-      setLocal(coordinate)
-    }
+      let convertLatLng = {
+        latitude:parseFloat(coordinate.latitude),
+        longitude:parseFloat(coordinate.longitude)
+      }
+      setLocal(convertLatLng)
+      }
+    
   },[coordinate])
-
+  
 const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-            cpf, foto: imagem, titulo: titulo, categoria:categoria, subcategoria: selectedSubType, local: local, descricao: descricao
+            cpf, foto: imagem, titulo: titulo, categoria:categoria, subcategoria: selectedSubType, local: local, localidade: localidade, descricao: descricao
         }).then(data => 
             console.log(data.response)//mudar depois
         ).finally(() => {
@@ -110,7 +119,6 @@ useEffect(() => {
     setImageSelected(true)
   }
 },[imagem])
-
 
   return (
     <>
@@ -223,14 +231,15 @@ useEffect(() => {
                 </View>
                 
                 <TouchableOpacity style={!!props.route.params?.coordinate ? styles.bButtonMapSelected : styles.bButtonMap}
-                  onPress={() =>  {
+                  onPress={() =>  
                     navigation.navigate({
                       name: 'Maps',
                       params: {
-                        idPage: route.name
+                        idPage: route.name,
+                        categoria: categoria
                       }
                   })
-                  }}>
+                  }>
                     {!!props.route.params?.coordinate ? (<>
                       <FontAwesomeIcon icon={faCircleCheck} size={30} color='black' />
                       <Text style={styles.bButtonMapLabelSelected}>Local Selecionado!</Text>  

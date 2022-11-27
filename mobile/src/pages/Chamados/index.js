@@ -1,27 +1,21 @@
-import React, { useState, useEffect, useRef, useCallback, createRef } from "react";
-import { View, Text, TouchableOpacity, FlatList, Animated, Image,TextInput, ScrollView, Dimensions, StatusBar } from "react-native";
+import React, { useState, useEffect } from "react";
+import { View, Text, TouchableOpacity, FlatList, Animated, Image, ScrollView, Dimensions } from "react-native";
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
-import { Loading, PopUpAlert } from '../../components'
+import { Loading, PopUpAlert, BottomSheet } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
 import ServerConnection from "../../services"
 import styles from "./styles";
-import {GestureHandlerRootView} from 'react-native-gesture-handler'
-import {BottomSheetSlider} from '../../components/BottomSheet'
-import Logo from '../../assets/Logotype/LogoOP.svg'
-import Ll from '../../assets/Logotype/logo.png'
-import moment from 'moment'
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faXmark, faLocationDot, faMapLocationDot, faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
+import moment from "moment";
 
-const Chamados = () => {
-  const navigation = useNavigation();
+const Chamados = (props) => {
   const [loading,setLoading] = useState(false)
   const [origin, setOrigin] = useState();
   const [categoria,setCategoria] = useState([])
@@ -32,7 +26,6 @@ const Chamados = () => {
   const [pinData, setPinData] = useState({});
 
   const [pinSelected, setPinSelected] = useState(false);
-  const [mapPermissionView, setMapPermissionView] = useState(false);
   
   
   const [visible,setVisible]=useState(false)
@@ -45,7 +38,6 @@ const Chamados = () => {
     onConfirm: ()=>{},
     onClose: ()=>{},
   })
-  
  
   const close = () =>{
     setVisible(false)
@@ -85,7 +77,6 @@ const Chamados = () => {
         buttonPrimaryTitle: 'Fechar'
       })
       //setVisible(true)
-      setMapPermissionView(false)
     } else {
       try {
         //setLoading(true)
@@ -99,7 +90,6 @@ const Chamados = () => {
             latitudeDelta: 0.004,
             longitudeDelta: 0.004,
           });
-          setMapPermissionView(true)
         } 
         //setLoading(false)
       } catch(e) {
@@ -110,7 +100,6 @@ const Chamados = () => {
           description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
           buttonPrimaryTitle: 'Fechar'
         })
-        setMapPermissionView(false)
         //setVisible(true)
       }
     }
@@ -143,25 +132,8 @@ const Chamados = () => {
     })
   }
 
-  const convertDateTime = (data) => {
-    return moment(data).utcOffset('-03:00').format('DD/MM/YYYY HH:mm');
-  }
-
-  const [mapShown,setMapShown]=useState(origin)
-  const sliderRef = useRef(null)
-
-  const gestureHandler = useCallback(()=>{
-    const isActive = sliderRef?.current?.isActive();
-    if(isActive){
-      sliderRef?.current?.scrollTo(0)
-      setTimeout(() => {
-        setPinSelected(false)
-      },400)
-    }
-  },[])
-  
   var mapAnimation = new Animated.Value(0);
-
+  
   const {width, height} = Dimensions.get('window')
   const CARD_WIDTH = width * 0.8;
 
@@ -181,7 +153,12 @@ const Chamados = () => {
     return { scale };
   });
 
-
+  const convertDateTime = (data) => {
+    const dat =data.split(/[-,T,:,.,Z]/)
+    return moment(data).utc('-03:00').format('DD/MM/YYYY hh:mm');
+  }
+ 
+  //console.log(props)
   return (
     <>
        <PopUpAlert 
@@ -196,9 +173,18 @@ const Chamados = () => {
           setVisible={setVisible}
         />
       <Loading loading={loading}>
-      {mapPermissionView? 
-      (
-        <GestureHandlerRootView style={{flex:1}}>
+       { pinSelected &&
+       <BottomSheet
+            pinSelected={pinSelected}
+            setPinSelected={setPinSelected}
+            data={pinData?.data}
+            descricao={pinData?.descricao}
+            imagem={pinData?.imagem}
+            categoria={pinData?.categoria}
+            subCategoria={pinData?.subCategoria}
+            titulo={pinData?.titulo}
+            bairro={pinData?.bairro}
+          />}
          <MapView
           initialRegion={origin}
           showsUserLocation={true}
@@ -225,7 +211,6 @@ const Chamados = () => {
               },
             ],
           };
-
             return (
               <Marker
               key={index}
@@ -304,7 +289,7 @@ const Chamados = () => {
             showsHorizontalScrollIndicator={false}
             snapToInterval={CARD_WIDTH + 20}
             snapToAlignment="center"
-            style={styles.scrollView}
+            style={styles.BottomScrollView}
             onScroll={Animated.event(
               [
                 {
@@ -320,48 +305,22 @@ const Chamados = () => {
             renderItem={({ item, index })=>(
               <View 
                 key={index} 
-                style={styles.card}
+                style={styles.bCard}
               >
-                {/* <Image 
-                  style={styles.cardImage} 
-                  resizeMode='cover' 
-                  source={{uri: `${ocorrencias?.imagem}`}} 
-                /> */}
-                <Image source={require('../../assets/Logotype/logo.png')} style={{width: '100%', height:100}} resizeMode='cover'/>
-                <View style={styles.textContent}>
-                  <Text style={styles.cardtitle} numberOfLines={1}>{item.titulo}</Text>
-                  <Text style={styles.cardDescription} numberOfLines={1}>{item.descricao}</Text>
-                  <View style={styles.button}>
+                <Image source={{uri: `${item.imagem}`}} style={styles.bCardImage} resizeMode='cover'/>
+                <View style={styles.bCardBody}>
+                  <Text style={styles.bCardBodyTitle} numberOfLines={1}>{item.titulo}</Text>
+                  <Text style={styles.bCardBodyDescription} numberOfLines={1}>{item.descricao}</Text>
+                  <Text style={styles.bCardBodyDescription}>{convertDateTime(item.data)}</Text>
+                  <View style={styles.bCardFooter}>
                     <TouchableOpacity
-                      style={[
-                        styles.signIn,{
-                          borderColor: '#ff6347',
-                          borderWidth: 1
-                        }
-                      ]}
-                      onPress={() =>{
-                        //getPinZoom(item.local)
-                      }}
-                    >
-                      <Text style={[styles.textSign,{
-                        color: '#ff6347',
-                      }]}>Ver Local</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={[
-                        styles.signIn,{
-                          borderColor: '#ff6347',
-                          borderWidth: 1
-                        }
-                      ]}
+                      style={styles.bCardFooterButton}
                       onPress={() =>{
                         setPinData(item)
                         setPinSelected(true)
                       }}
                     >
-                      <Text style={[styles.textSign,{
-                        color: '#ff6347',
-                      }]}>Ver Detalhes</Text>
+                      <Text style={styles.bCardFooterButtonLabel}>Ver Detalhes</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -369,81 +328,6 @@ const Chamados = () => {
               )}
              />
             }
-
-    { pinSelected && (
-      <BottomSheetSlider
-        ref={sliderRef}
-        slider={
-          <TouchableOpacity 
-            style={styles.lineHandler}
-            onPress={gestureHandler}
-          >
-            <View style={styles.line}/>
-          </TouchableOpacity>
-        }
-        >
-          <View style={styles.modal}>
-            <View style={{backgroundColor:'#ff7', height:200, }}>
-              <Image source={require('../../assets/Logotype/logo.png')} style={{width: '100%', height:'100%'}} resizeMode='cover'/>
-              <View style={{flex:1,justifyContent:'flex-end'}}>
-                <View style={styles.bsBairro}>
-                  <FontAwesomeIcon icon={faMapLocationDot} size={25} color='#fff' />
-                  <View>
-                    <Text style={styles.bsBairroTitle}>
-                      {pinData?.bairro}
-                    </Text>
-                    <Text style={styles.bsData}>
-                      {convertDateTime(pinData?.data)}
-                    </Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-
-
-            <ScrollView 
-            showsVerticalScrollIndicator={false}
-            style={styles.bsInfo}>
-                <Text style={{fontSize:26, fontWeight:'bold'}}>
-                  {pinData?.titulo}
-                </Text>
-                <View style={styles.bsTipo}>
-                  <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
-                  <Text style={styles.bsTipoTitle}>{pinData?.subCategoria}</Text>
-                </View>
-
-              <View style={styles.bsDescricao}>
-                <Text style={styles.bsDescricaoText}>
-                  {pinData?.descricao}
-                </Text>
-              </View>
-
-              <View style={styles.bsApoio}>
-                <Logo style={{width:40, height:40}} resizeMode='contain'/>
-                <Text style={styles.bsApoioNumero}>
-                  +60 Pessoas apoiaram isto
-                </Text>
-              </View>
-
-
-              <TouchableOpacity style={styles.bsApoiar}>
-                <Logo style={{width:40, height:40}} resizeMode='contain'/>
-                <Text style={styles.bsApoiarLabel}>Apoiar causa</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-        
-          </BottomSheetSlider>
-        )
-        }
-        </GestureHandlerRootView>
-      ) : (
-        <View>
-          <Text>Permissão negada</Text>
-        </View>
-      )
-      }
-      
       </Loading>
 
     </>

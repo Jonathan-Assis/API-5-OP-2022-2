@@ -1,11 +1,12 @@
-import React, {forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState} from 'react'
-import {View, Text, Modal, TouchableOpacity, Alert, Dimensions} from 'react-native'
+import React, {useEffect, useState} from 'react'
+import {View, Text, Modal, TouchableOpacity, Alert, Dimensions,Image, ScrollView} from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCamera, faImages, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCamera, faCircleInfo, faImages, faMapLocationDot, faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as ImagePicker from 'expo-image-picker';
-import { Gesture, GestureDetector, } from 'react-native-gesture-handler'
-import Animated, { Extrapolate, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated'
 import styles from './styles'
+import moment from 'moment';
+import Logo from '../../assets/Logotype/LogoOP.svg'
+
 
 const BottomSheetImage = ({
     visible,
@@ -119,77 +120,88 @@ return(
     )
 }
 
-const {height:SCREEN_HEIGHT}=Dimensions.get('window')
-const MAX_TRANSLATE_Y = -SCREEN_HEIGHT
-//const MAX_TO_CATEGORY_TRANSLATE_Y = -SCREEN_HEIGHT + 60
 
-const BottomSheetSlider = forwardRef(({children, slider, }, sliderRef) => {
-    const translateY = useSharedValue(0)
-    const active = useSharedValue(false)
+const convertDateTime = (data) => {
+    return moment(data).utcOffset('-03:00').format('DD/MM/YYYY HH:mm');
+  }
 
-    const scrollTo = useCallback((destination)=>{
-        'worklet';
-        active.value = destination !== -80;
+const BottomSheet = ({ 
+    pinSelected,
+    setPinSelected,
+    imagem,
+    bairro,
+    data,
+    titulo,
+    categoria,
+    subCategoria,
+    descricao
+    }) => {
 
-        translateY.value = withSpring(destination, { damping: 50 });
-    },[])
 
-    const isActive = useCallback(()=>{
-        return active.value
-    },[])
-
-    useImperativeHandle(sliderRef,()=>({scrollTo, isActive}), [
-        scrollTo, 
-        isActive
-    ])
-
-    const context = useSharedValue({y:0})
-    const gesture = Gesture.Pan()
-        .onStart(()=>{
-            context.value = { y: translateY.value }
-        })
-        .onUpdate((event)=>{
-            translateY.value = event.translationY + context.value.y;
-            translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
-        })
-        .onEnd(()=>{
-            if (translateY.value > -SCREEN_HEIGHT / 3) {
-                scrollTo(-80);
-              } else if (translateY.value < -SCREEN_HEIGHT / 1.5) {
-                scrollTo(MAX_TRANSLATE_Y);
-              } else if (translateY.value > -SCREEN_HEIGHT / 1.5 && translateY.value < -SCREEN_HEIGHT / 3){
-                scrollTo(0)
-              }
-        })
-
-    const animationBottomSheet=useAnimatedStyle(()=>{
-        const borderRadius = interpolate(
-            translateY.value, 
-            [MAX_TRANSLATE_Y + 50, MAX_TRANSLATE_Y],
-            [25,5],
-            Extrapolate.CLAMP
-            )
-
-        return {
-            borderRadius,
-            transform: [{ translateY: translateY.value }]
-        }
-    })
-
-    useEffect(()=>{
-        scrollTo(MAX_TRANSLATE_Y)
-    },[])
 return(
-    <>
-        <Animated.View 
-            style={[styles.bottomSheetContainer, animationBottomSheet]}>
-            <GestureDetector gesture={gesture}>
-                    {slider}
-            </GestureDetector>
-                    {children}
-        </Animated.View>
-    </>
-    )
-})
+    <Modal
+        animationType="slide"
+        pinSelected={pinSelected}
+        hardwareAccelerated={true}
+        onRequestClose={()=>setPinSelected(false)}
+        transparent
+    >
+        <View style={styles.modalContainer}>
+            <View style={styles.bsHeader}>
+               <Image source={{uri: `${imagem}`}} style={styles.bsImage} resizeMode='cover'/>
+            
+              <View style={styles.bsInfo}>
+                <View style={styles.bsBairro}>
+                  <FontAwesomeIcon icon={faMapLocationDot} size={25} color='#fff' />
+                  <View style={styles.bsImageLabel}>
+                    <Text style={styles.bsBairroTitle}>
+                      {bairro}
+                    </Text>
+                    <Text style={styles.bsData}>
+                      {convertDateTime(data)}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
 
-export { BottomSheetImage, BottomSheetSlider }
+
+            <ScrollView 
+            showsVerticalScrollIndicator={false}
+            style={styles.bsInfo}>
+                <View style={styles.bsInfoContainer}>
+                    <Text style={{fontSize:26, fontWeight:'bold'}}>
+                    {titulo}
+                    </Text>
+                    <View style={styles.bsTipo}>
+                    <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
+                    <Text style={styles.bsTipoTitle}>{categoria},</Text>
+                    <Text style={styles.bsTipoTitle}>{subCategoria}</Text>
+                    </View>
+
+                    <View style={styles.bsDescricao}>
+                        <Text style={styles.bsTipoTitle}>Relato:</Text>
+                        <Text style={styles.bsDescricaoText}>
+                        {descricao}
+                        </Text>
+                    </View>
+
+                    <View style={styles.bsApoio}>
+                        <Logo style={{width:40, height:40}} resizeMode='contain'/>
+                        <Text style={styles.bsApoioNumero}>
+                        +60 Pessoas apoiaram isto
+                        </Text>
+                    </View>
+
+
+                    <TouchableOpacity style={styles.bsApoiar}>
+                        <Logo style={{width:40, height:40}} resizeMode='contain'/>
+                        <Text style={styles.bsApoiarLabel}>Apoiar causa</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+          </View>
+    </Modal>
+)
+}
+export { BottomSheetImage, BottomSheet }

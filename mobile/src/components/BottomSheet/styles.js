@@ -49,5 +49,104 @@ footer:{
         top: SCREEN_HEIGHT,
         borderRadius: 25
     },
+    modalContainer:{
+        flex:1,
+        ...stylesVar.backgroundSecondary
+      },
+      bsImage:{
+        width: '100%',
+        height:'100%',
+      },
+      bsHeader:{
+        height:300,
+      },
+      bsInfo:{
+        flex:1,
+        paddingHorizontal:14,
+        borderTopLeftRadius:30,
+        borderTopRightRadius:30,
+        ...stylesVar.backgroundSecondary
+      },
+      bsImageLabel:{
+        paddingVertical:5
+      },
+      bsBairro:{
+        flexDirection:'row',
+        alignItems: 'center',
+        position:'absolute',
+        right:14,
+        bottom:3
+      },
+      bsBairroTitle:{
+        textAlign: 'center',
+        ...stylesVar.titleTertiary,
+        fontSize:12,
+        marginLeft:5,
+        textShadowColor: '#000',
+        textShadowRadius: 3,
+        textShadowOffset:{
+          width: 0.5,
+          height: 0.5
+        }
+      },
+      
+      bsData:{
+        textAlign: 'center',
+        ...stylesVar.titleTertiary,
+        fontSize:12,
+        marginLeft:5,
+        textShadowColor: '#000',
+        textShadowRadius: 3,
+        textShadowOffset:{
+          width: 0.5,
+          height: 0.5
+        }
+      },
+      
+      bsTipo:{
+        bottom:3,
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+
+      bsInfoContainer:{
+        paddingTop:10
+      },
+      
+      bsTipoTitle:{
+        marginLeft:5,
+      },
+      bsDescricao:{
+        marginVertical:10
+      },
+      bsDescricaoText:{
+        ...stylesVar.titleSecondary,
+      },
+  
+      bsApoio:{
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+  
+      bsApoioNumero:{
+        ...stylesVar.buttonLabelSecondary
+      },
+      bsApoiar:{
+        ...stylesVar.boxPrimary,
+        padding: 10,
+        marginVertical:10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      bsApoiarLabel:{
+        textAlign:'center',
+        ...stylesVar.titleTertiary,
+    },
+      bsContainer:{
+        marginBottom:10,
+        ...stylesVar.boxPrimary,
+        elevation:5
+      },
 })
 export default styles

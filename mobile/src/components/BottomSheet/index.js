@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react'
-import {View, Text, Modal, TouchableOpacity, Alert, Dimensions,Image, ScrollView} from 'react-native'
+import {View, Text, Modal, TouchableOpacity, Alert,Image, ScrollView} from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faCamera, faCircleInfo, faImages, faMapLocationDot, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarDays, faCamera, faCircleInfo, faCommentDots, faImages, faMapLocationDot, faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as ImagePicker from 'expo-image-picker';
 import styles from './styles'
 import moment from 'moment';
-import Logo from '../../assets/Logotype/LogoOP.svg'
 
 
 const BottomSheetImage = ({
@@ -145,59 +144,70 @@ return(
         hardwareAccelerated={true}
         onRequestClose={()=>setPinSelected(false)}
         transparent
-    >
+        >
         <View style={styles.modalContainer}>
+        <TouchableOpacity style={styles.exitButton}
+          onPress={()=>{
+              setPinSelected(false)
+            }}
+        >
+          <FontAwesomeIcon icon={ faXmark } size={40} color={'#fff'}  />
+        </TouchableOpacity>
             <View style={styles.bsHeader}>
                <Image source={{uri: `${imagem}`}} style={styles.bsImage} resizeMode='cover'/>
             
               <View style={styles.bsInfo}>
-                <View style={styles.bsBairro}>
-                  <FontAwesomeIcon icon={faMapLocationDot} size={25} color='#fff' />
+                <View style={styles.bsCamera}>
                   <View style={styles.bsImageLabel}>
-                    <Text style={styles.bsBairroTitle}>
-                      {bairro}
-                    </Text>
-                    <Text style={styles.bsData}>
-                      {convertDateTime(data)}
-                    </Text>
+                    <FontAwesomeIcon icon={faCamera} size={25} color='#fff' />
                   </View>
                 </View>
               </View>
             </View>
 
-
+            <View style={{paddingHorizontal:14, paddingVertical:10}}>
+                <Text style={{fontSize:30, fontWeight:'bold'}}>
+                {titulo}
+                </Text>
+                <View style={styles.bsTipo}>
+                    <FontAwesomeIcon icon={faCircleInfo} size={25} color='#323232' />
+                    <Text style={styles.bsTipoTitle}>{categoria},</Text>
+                    <Text style={styles.bsTipoTitle}>{subCategoria}</Text>
+                </View>
+            </View>
             <ScrollView 
             showsVerticalScrollIndicator={false}
             style={styles.bsInfo}>
                 <View style={styles.bsInfoContainer}>
-                    <Text style={{fontSize:26, fontWeight:'bold'}}>
-                    {titulo}
-                    </Text>
-                    <View style={styles.bsTipo}>
-                    <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
-                    <Text style={styles.bsTipoTitle}>{categoria},</Text>
-                    <Text style={styles.bsTipoTitle}>{subCategoria}</Text>
+                    <View style={styles.bsData}>
+                        <View style={styles.bsField}>
+                            <FontAwesomeIcon icon={faCalendarDays} size={25} color='#323232' />
+                            <Text style={styles.bsTitle}>Data e Hora do Registro:</Text>
+                        </View>
+                        <Text style={styles.bsSubTitle}>
+                            {convertDateTime(data)}
+                        </Text>
+                    </View>
+                    <View style={styles.bsBairro}>
+                        <View style={styles.bsField}>
+                            <FontAwesomeIcon icon={faMapLocationDot} size={25} color='#323232' />
+                            <Text style={styles.bsTitle}>Bairro do Ocorrido:</Text>
+                        </View>
+
+                        <Text style={styles.bsSubTitle}>
+                            {bairro}
+                        </Text>
                     </View>
 
                     <View style={styles.bsDescricao}>
-                        <Text style={styles.bsTipoTitle}>Relato:</Text>
-                        <Text style={styles.bsDescricaoText}>
+                        <View style={styles.bsField}>
+                            <FontAwesomeIcon icon={faCommentDots} size={25} color='#323232' />
+                            <Text style={styles.bsTitle}>Relato:</Text>
+                        </View>
+                        <Text style={styles.bsSubTitle}>
                         {descricao}
                         </Text>
                     </View>
-
-                    <View style={styles.bsApoio}>
-                        <Logo style={{width:40, height:40}} resizeMode='contain'/>
-                        <Text style={styles.bsApoioNumero}>
-                        +60 Pessoas apoiaram isto
-                        </Text>
-                    </View>
-
-
-                    <TouchableOpacity style={styles.bsApoiar}>
-                        <Logo style={{width:40, height:40}} resizeMode='contain'/>
-                        <Text style={styles.bsApoiarLabel}>Apoiar causa</Text>
-                    </TouchableOpacity>
                 </View>
             </ScrollView>
           </View>

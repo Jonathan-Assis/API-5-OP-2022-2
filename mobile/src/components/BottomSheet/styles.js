@@ -53,6 +53,16 @@ footer:{
         flex:1,
         ...stylesVar.backgroundSecondary
       },
+      exitButton:{
+        position: 'absolute',
+        zIndex:1,
+        elevation:1,
+        top: 14,
+        right: 14,
+        borderRadius:30,
+        padding:5,
+        opacity:0.9,
+    },
       bsImage:{
         width: '100%',
         height:'100%',
@@ -68,9 +78,11 @@ footer:{
         ...stylesVar.backgroundSecondary
       },
       bsImageLabel:{
-        paddingVertical:5
+        paddingVertical:5,
+        flexDirection:'row',
+        alignItems: 'center'
       },
-      bsBairro:{
+      bsCamera:{
         flexDirection:'row',
         alignItems: 'center',
         position:'absolute',
@@ -79,46 +91,44 @@ footer:{
       },
       bsBairroTitle:{
         textAlign: 'center',
-        ...stylesVar.titleTertiary,
-        fontSize:12,
-        marginLeft:5,
-        textShadowColor: '#000',
-        textShadowRadius: 3,
-        textShadowOffset:{
-          width: 0.5,
-          height: 0.5
-        }
+        ...stylesVar.titleSecondary,
       },
       
       bsData:{
-        textAlign: 'center',
-        ...stylesVar.titleTertiary,
-        fontSize:12,
-        marginLeft:5,
-        textShadowColor: '#000',
-        textShadowRadius: 3,
-        textShadowOffset:{
-          width: 0.5,
-          height: 0.5
-        }
+        marginBottom:15
       },
-      
+      bsBairro:{
+        marginBottom:15
+      },
+      bsDescricao:{
+        marginBottom:15
+      },
       bsTipo:{
-        bottom:3,
         flexDirection: 'row',
         alignItems: 'center',
       },
 
       bsInfoContainer:{
-        paddingTop:10
+        paddingVertical:10,
       },
-      
+      bsField:{
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
       bsTipoTitle:{
-        marginLeft:5,
+        marginLeft:5
       },
-      bsDescricao:{
-        marginVertical:10
+      bsTitle:{
+          ...stylesVar.titleSecondary,
+          marginLeft:5,
+        },
+        bsSubTitle:{
+          ...stylesVar.titleSecondary,
+          fontWeight:'400',
+          marginLeft:5,
+          borderBottomWidth:0.5
       },
+
       bsDescricaoText:{
         ...stylesVar.titleSecondary,
       },

@@ -115,10 +115,13 @@ const styles = StyleSheet.create({
       flex: 1,
       padding: 10,
     },
+    bCardBodyInformation:{
+      fontSize:12,
+    },
+
     bCardBodyTitle: {
-      fontSize: 12,
-      // marginTop: 5,
-      fontWeight: "bold",
+      ...stylesVar.titleSecondary,
+      top:-5
     },
     bCardBodyDescription: {
       fontSize: 12,

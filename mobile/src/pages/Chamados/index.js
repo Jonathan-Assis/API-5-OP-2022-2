@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, FlatList, Animated, Image, ScrollView, Dimensions } from "react-native";
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Loading, PopUpAlert, BottomSheet } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import * as Location from "expo-location";
@@ -9,7 +9,7 @@ import styles from "./styles";
 
 //Icons
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
@@ -221,6 +221,7 @@ const Chamados = (props) => {
               }}
               onPress={()=>{
                 setPinData(item)
+                setPinSelected(true)
               }}
               >
                 <View style={{alignItems: 'center', justifyContent:'center',width:50, height:50}}>
@@ -259,7 +260,8 @@ const Chamados = (props) => {
                 onPress={()=>{
                   setFilterMarkersSelected(item.tipo) 
                   filterData(item.tipo)
-              }}>
+              }}
+              >
                 <View style={styles.hMarkerTitle}>
                   {item.tipo === 'Meus' && filterMarkers === item.tipo ?
                   <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
@@ -309,9 +311,27 @@ const Chamados = (props) => {
               >
                 <Image source={{uri: `${item.imagem}`}} style={styles.bCardImage} resizeMode='cover'/>
                 <View style={styles.bCardBody}>
-                  <Text style={styles.bCardBodyTitle} numberOfLines={1}>{item.titulo}</Text>
-                  <Text style={styles.bCardBodyDescription} numberOfLines={1}>{item.descricao}</Text>
-                  <Text style={styles.bCardBodyDescription}>{convertDateTime(item.data)}</Text>
+                    <Text style={styles.bCardBodyTitle} numberOfLines={1}>{item.titulo}</Text>
+                    <View style={{flexDirection:'row', paddingHorizontal:1}}>
+                      <View style={{paddingRight:8}}>
+                        <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
+                      </View>
+                      <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.subCategoria}</Text>
+                    </View>
+                  <View style={{flexDirection:'row',justifyContent:'space-between', paddingVertical:5}}>
+                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                      <FontAwesomeIcon icon={faMapLocationDot} size={20} color='#323232' />
+                      <View style={{paddingHorizontal:5}}>
+                        <Text style={styles.bCardBodyDescription}>{item.bairro}</Text>
+                      </View>
+                    </View>
+                    <View style={{flexDirection:'row', alignItems: 'center'}}>
+                      <FontAwesomeIcon icon={faCalendarDays} size={20} color='#323232' />
+                      <View style={{paddingHorizontal:5}}>
+                        <Text style={styles.bCardBodyDescription}>{convertDateTime(item.data)}</Text>
+                      </View>
+                    </View>
+                  </View>
                   <View style={styles.bCardFooter}>
                     <TouchableOpacity
                       style={styles.bCardFooterButton}
@@ -320,7 +340,7 @@ const Chamados = (props) => {
                         setPinSelected(true)
                       }}
                     >
-                      <Text style={styles.bCardFooterButtonLabel}>Ver Detalhes</Text>
+                      <Text style={styles.bCardFooterButtonLabel}>Ver Ocorrência</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

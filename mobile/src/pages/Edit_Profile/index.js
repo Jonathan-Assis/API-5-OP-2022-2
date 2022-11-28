@@ -8,7 +8,6 @@ import {
 import { PopUpActions, PopUpAlert, BottomSheetImage } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
-import { TextInputMask } from 'react-native-masked-text';
 
 
 const Edit_Profile = () => {
@@ -18,8 +17,6 @@ const Edit_Profile = () => {
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showConfPassword, setShowConfPassword ] = useState(false);
   
-  let cpfField = null
-
 
   const [ data, setData ] = useState({
     _id: authData._id || undefined,
@@ -68,15 +65,6 @@ const Edit_Profile = () => {
         buttonPrimaryTitle: 'Fechar'
       });
     }
-    if (!cpfField.isValid()){
-      setPopUpData({
-          onClose: setVisible,
-          icon: faTriangleExclamation,
-          title: 'CPF Não Existente',
-          description: 'CPF pequeno demais ou inexistente.',
-          buttonPrimaryTitle: 'Fechar',
-      });
-  }
   }
 
   const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
@@ -176,14 +164,12 @@ const Edit_Profile = () => {
 
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>CPF:</Text>
-            <TextInputMask
-              type={'cpf'}
+            <TextInput
               style={styles.bInputBox}
               keyboardType='numeric'
               placeholder='Insira seu CPF'
               value={data.cpf}
-              onChangeText={value => setData(prev => { return {...prev, cpf: value} })}
-              ref={(ref) => cpfField = ref}
+              onChangeText={value => setData(prev => { return {...prev, cpf: value.split(/[.,-]/).join('')} })}
              />  
           </View>
 

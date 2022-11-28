@@ -6,7 +6,6 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
 import LogoOP from '../../assets/Logotype/LogoOP.svg'
-import { TextInputMask } from 'react-native-masked-text';
 
 const Sign_In = () => {
   const navigation = useNavigation();
@@ -28,12 +27,12 @@ const Sign_In = () => {
           <Text style={styles.bDescription}>O acesso a este aplicativo é feito através do uso do CPF</Text>  
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>CPF</Text>  
-            <TextInputMask style={styles.bInputBox}
-              type={'cpf'}
+            <TextInput style={styles.bInputBox}
               placeholder="000.000.000-00" 
               keyboardType='numeric'
+              maxLength={11}
               value={cpf}
-              onChangeText={setCpf}
+              onChangeText={value => setCpf(value.split(/[.,-]/).join(''))}
             />
           </View>
 

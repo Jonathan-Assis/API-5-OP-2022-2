@@ -11,10 +11,14 @@ import * as Location from "expo-location";
 
 
 import { useRoute } from '@react-navigation/native';
+import { useAuth } from '../../contexts/Auth';
 
 const Rep_Ocorrencia = (props) => {
   const navigation = useNavigation();
   const route = useRoute()
+  const authData = JSON.parse(useAuth().authData)
+  let cidadao = authData._id
+
 
   //form
   const [imagem,setImagem]=useState({})
@@ -70,15 +74,17 @@ const Rep_Ocorrencia = (props) => {
         longitude:parseFloat(coordinate.longitude)
       }
       setLocal(convertLatLng)
+      setLocalidade(localizacao)
       }
     
   },[coordinate])
   
+  var dataAtual = new Date()
 const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-            cpf, foto: imagem, titulo: titulo, categoria:categoria, subcategoria: selectedSubType, local: local, localidade: localidade, descricao: descricao
+          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual, localidade: localidade,bairro:localidade?.bairro,imagem: imagem,
         }).then(data => 
             console.log(data.response)//mudar depois
         ).finally(() => {
@@ -267,7 +273,7 @@ useEffect(() => {
                 <TouchableOpacity style={styles.bButton}
                   onPress={() => {
                     setPopUp({
-                      onConfirm:  close,
+                      onConfirm:  newOcorrencia,
                       onClose: setVisible,
                       //icon: faTriangleExclamation,
                       title:'Deseja Finalizar a Ocorrência?',

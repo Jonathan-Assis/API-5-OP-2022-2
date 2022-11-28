@@ -54,6 +54,8 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 </div>
 
 - ## <a src="/mobile">Instalação do Projeto Mobile</a> <a name="instalacao"></a>
+[![](https://img.shields.io/badge/📝%20Acessar%20Documentação-7917FF?style=flat-square)](https://github.com/Jonathan-Assis/API-5-OP-2022-2/tree/main)
+
 <br>
 
 # 📅 Cronograma de Entregas <a name="cronograma"></a>

@@ -85,9 +85,49 @@ const SquareBackground = ({scrollX})=>{
         height: height,
         borderRadius: 90,
         position: 'absolute',
-        top: -height * 0.75,
-        left: -height * 0.4,
-        backgroundColor: '#dddddddd',
+        top: -height * 0.72,
+        left: -height * 0.395,
+        backgroundColor: '#dddd',
+        transform: [
+          {
+            rotate
+          },
+          {
+            translateX
+          }
+        ]
+    },
+  ]}
+  />
+  )
+}
+const SquareBackgroundLine = ({scrollX})=>{
+  const YOLO = Animated.modulo(
+    Animated.divide(Animated.modulo(scrollX, width), new Animated.Value(width)),
+    1
+  )
+  const rotate = YOLO.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: ['35deg', '-35deg', '35deg']
+  })
+  const translateX = YOLO.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, -height, 0]
+  })
+  const backgroundColor = scrollX.interpolate({
+    inputRange: backgrounds.map((_, i) => i * width),
+    outputRange: backgrounds.map((bg) => bg),
+  })
+  return (
+    <Animated.View 
+      style={[{width: height,
+        height: height,
+        borderRadius: 90,
+        position: 'absolute',
+        top: -height * 0.72,
+        left: -height * 0.395,
+        opacity:0.75,
+        backgroundColor,
         transform: [
           {
             rotate
@@ -112,6 +152,7 @@ const Walkthrough =({walkOn,setWalkOn,children}) => {
         <StatusBar hidden />
         <Backdrop scrollX={scrollX} />
         <SquareBackground scrollX={scrollX} />
+        <SquareBackgroundLine scrollX={scrollX} />
         <Indicator scrollX={scrollX} />
         <TouchableOpacity style={styles.exitButton}
           onPress={()=>{

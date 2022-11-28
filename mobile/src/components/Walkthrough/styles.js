@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
     exitButton:{
         position: 'absolute',
         zIndex:1,
+        elevation:30,
         top: 14,
         right: 14,
         borderRadius:30,
@@ -62,14 +63,17 @@ const styles = StyleSheet.create({
         flex:0.5
     },
     wtBodyTitle:{
+        paddingTop:10,
         color:'#fff',
         fontWeight:'800',
         fontSize:28,
     },
     wtBodyDescription:{
+        paddingTop:10,
         color:'#fff',
         fontWeight:'400',
-        fontSize:15
+        fontSize:18,
+        textAlign:'left',
     }
    
 })

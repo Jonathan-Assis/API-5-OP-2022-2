@@ -66,7 +66,7 @@ Coleta de dados públicos: São importantes e fundamentais, para o trabalho da S
 
 - [x] [SPRINT 2 - 19/09/2022 a 09/10/2022; - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%202/)
 - [x] [SPRINT 3 - 13/10/2022 a 06/11/2022; - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%203/)
-- [X] [SPRINT 4 - 07/11/2022 a 27/11/2022. - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%2034/)
+- [X] [SPRINT 4 - 07/11/2022 a 27/11/2022. - ![](https://img.shields.io/badge/📝%20Acessar%20Documentação%20da%20Entrega-7917FF?style=flat-square)](Refer%C3%AAncias/Documenta%C3%A7%C3%A3o/Sprint%204/)
 
 Feira de Soluções & Apresentação Final - 05/12/2022
 # 💻 Tecnologias <a name="tecnologias"></a>

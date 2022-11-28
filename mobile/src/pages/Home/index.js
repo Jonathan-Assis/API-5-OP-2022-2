@@ -15,7 +15,7 @@ const Home = () => {
     <View style={styles.container}>
        <ScrollView>
       <View style={styles.header}>
-        <Text style={styles.hTitle}>Bem vindo(a) ao Ocorrências Públicas!</Text>  
+        <Text style={styles.hTitle}>Bem-vindo(a) ao Ocorrências Públicas!</Text>  
       </View>
       <View style={styles.body}>
        

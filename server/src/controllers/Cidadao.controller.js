@@ -37,6 +37,23 @@ class CidadaoController {
         }
     }
 
+    static async validar(req, res) {
+        const client = new MongoClient(url);
+        const data = req.body;
+
+        try {
+            const opdb = client.db('opdb');
+            await opdb.collection('cidadao').findOne({
+                cpf: data?.cpf
+            })
+            .then(result => res.json(!result));
+        }
+        catch(e) {
+            console.error(e);
+            res.status(400).json({ error: e });
+        }
+    }
+
     static async login(req, res) {
         const client = new MongoClient(url);
         const data = req.body;

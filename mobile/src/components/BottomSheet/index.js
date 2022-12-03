@@ -28,7 +28,7 @@ const BottomSheetImage = ({
                     mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
                     base64: true,
-                    quality: 0.5,
+                    quality: 0.1/* .5 */,
                 })
                 if(cameraEnabled){
                     const image_aux = cameraEnabled;

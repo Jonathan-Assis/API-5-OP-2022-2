@@ -26,13 +26,14 @@ const Sign_Up = () => {
     });
 
     const cadastro = async () => {
-        const { nome, cpf, email, senha, confSenha } = state;
-        if(!!nome && !!cpf && !!email && !!senha && !!confSenha) {
+        const { nome, cpf: cpf_aux, email, senha, confSenha } = state;
+        if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha) {
             if(senha === confSenha) {
+                const cpf = cpf_aux.split('.-').join('');
                 setLoading(true);
                 ServerConnection.validarCpf({ cpf: cpf })
                 .then(({ data }) => {
-                    if(data.result) {
+                    if(data) {
                         navigation.navigate({
                             name: 'User_Term', params: {
                                 nome: nome, 

@@ -2,9 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import ServerConnection from '../services'
 import { SHA256 } from 'crypto-js';
-import { Alert, Image, Text } from "react-native";
-import { PopUpAlert } from "../components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { Alert } from "react-native";
+import { Walkthrough } from "../components";
 
 export const AuthContext = createContext({});
 
@@ -12,8 +11,7 @@ export const AuthProvider = ({children}) =>{
     const [authData, setAuth] = useState(undefined);
     const [loading, setLoading] = useState(true);
 
-    const [ popUpData, setPopUpData ] = useState({});
-    const [ popUpVisible, setPopVisible ] = useState(false);
+    const [walkOn,setWalkOn] = useState(false)
 
     useEffect(()=>{
         loadFromStorage();
@@ -36,21 +34,7 @@ export const AuthProvider = ({children}) =>{
             AsyncStorage.setItem('@AuthData',(JSON.stringify(data)))
             .then(() => {
                 if(first) {
-                    setPopUpData({
-                        icon: (
-                            <Image
-                                source={require('../assets/Logotype/LogoOP.png')}
-                                resizeMode='contain'
-                                style={{
-                                    width: 90,
-                                    height: 90
-                                }}
-                            />
-                        ),
-                        title: 'Bem-Vindo(a) ao Ocorrências Públicas!',
-                        buttonPrimaryTitle: 'Começar a Usar'
-                    });
-                    setPopVisible(true);
+                   setWalkOn(true)
                 }
             });
             //console.log("Cidadão acessou a conta!")
@@ -144,14 +128,10 @@ export const AuthProvider = ({children}) =>{
 
     return (
         <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
-            <PopUpAlert
-                icon={popUpData.icon}
-                title={popUpData.title}
-                buttonPrimaryTitle={popUpData.buttonPrimaryTitle}
-                onClose={setPopVisible}
-                visible={popUpVisible}
-            />
-
+        <Walkthrough 
+            walkOn={walkOn} 
+            setWalkOn={setWalkOn}
+        />
             {children}
         </AuthContext.Provider>
     )

@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems: 'center',
-        //...stylesVar.backgroundPrimary
     },
     hTitle:{
         ...stylesVar.titleSecondary,
@@ -18,12 +17,43 @@ const styles = StyleSheet.create({
     },
     header:{
         flexDirection: 'row',
-        //position:'absolute',
         top: 0,
         marginVertical:10,
     },
-    my:{
-        ...stylesVar.backgroundPrimary
+    permissionDisable:{
+      flex:1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      ...stylesVar.backgroundPrimary
+    },
+    permissionDisableTitle:{
+      ...stylesVar.titlePrimary,
+      color:'#ffffff',
+      textAlign: 'center',  
+      paddingVertical:5
+    },
+    permissionDisableDescription:{
+      ...stylesVar.textSecondary,
+      textAlign: 'center',  
+      paddingBottom:10
+    },
+    permissiondDisableCardContainer:{
+      flexDirection: 'row'
+    },
+    permissionDisableCard:{
+      flex:1,
+      elevation: 2,
+      padding:14,
+      ...stylesVar.boxSecondary,
+      marginHorizontal: 16,
+    },
+    permissionDisableCardLabel:{
+      textAlign:'center',
+      ...stylesVar.buttonLabelSecondary,
+    },
+    permissionDisableMarker:{
+      width:150, height:150, color:'#DD4B3E'
+
     },
     hCategory:{
         padding:8,

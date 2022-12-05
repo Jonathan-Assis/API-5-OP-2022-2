@@ -15,7 +15,8 @@ const Settings = () => {
   const [walkOn,setWalkOn] = useState(false)
 
   return (
-    <Walkthrough walkOn={walkOn} setWalkOn={setWalkOn}>
+    <>
+    <Walkthrough walkOn={walkOn} setWalkOn={setWalkOn} />
       <View style={styles.container}>
         <View style={styles.body}>
           <View style={styles.header}>
@@ -59,7 +60,7 @@ const Settings = () => {
         </View>
       </View>
     </View>
-  </Walkthrough>
+    </>
   );
 }
 

@@ -84,7 +84,7 @@ const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual, localidade: localidade,bairro:localidade?.bairro,imagem: imagem,
+          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual,bairro:localidade?.bairro,imagem: imagem,
         }).then(data => 
             console.log(data.response)//mudar depois
         ).finally(() => {

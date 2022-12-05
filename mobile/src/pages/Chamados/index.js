@@ -14,8 +14,10 @@ import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
 import moment from "moment";
+import { useNavigation } from "@react-navigation/native";
 
 const Chamados = (props) => {
+  const navigation = useNavigation();
   const [loading,setLoading] = useState(false)
   const [origin, setOrigin] = useState();
   const [categoria,setCategoria] = useState([])
@@ -24,8 +26,8 @@ const Chamados = (props) => {
   const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
   const authData = JSON.parse(useAuth().authData)
   const [pinData, setPinData] = useState({});
-
   const [pinSelected, setPinSelected] = useState(false);
+  const [mapPermission, setMapPermission] = useState(false)
   
   
   const [visible,setVisible]=useState(false)
@@ -41,16 +43,23 @@ const Chamados = (props) => {
  
   const close = () =>{
     setVisible(false)
+    setMapPermission(false)
+    setLoading(false); 
+    navigation.goBack()
   }
   
   useEffect(() => {
-    //setLoading(true);
+    setLoading(true);
     permission();
     getData()
     .finally(() => {
-      //setLoading(false); 
+      setLoading(false); 
     })
   }, []);
+
+/*   useEffect(()=>{
+    permission();
+  },[tryMapPermission]) */
 
  const filterData = (tipo) => {
   
@@ -67,7 +76,7 @@ const Chamados = (props) => {
 
   const permission = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync();
-    
+
     if (status !== "granted") {
       setPopUpPermission({
         onClose: close,
@@ -76,10 +85,11 @@ const Chamados = (props) => {
         description: 'As permissões de localização foram negadas, é necessário aceitar as permissões para o uso mapa',
         buttonPrimaryTitle: 'Fechar'
       })
-      //setVisible(true)
+      setVisible(true)
     } else {
       try {
-        //setLoading(true)
+        setLoading(true)
+        setMapPermission(true)
         const { coords } = await Location.getCurrentPositionAsync({
           enableHighAccuracy: true,
         });
@@ -91,7 +101,7 @@ const Chamados = (props) => {
             longitudeDelta: 0.004,
           });
         } 
-        //setLoading(false)
+        setLoading(false)
       } catch(e) {
         setPopUpPermission({
           onClose: close,
@@ -100,7 +110,8 @@ const Chamados = (props) => {
           description: 'Os serviços de localização estão desativados, é necessário ativar para utilizar o mapa.',
           buttonPrimaryTitle: 'Fechar'
         })
-        //setVisible(true)
+        setVisible(true)
+
       }
     }
   }
@@ -154,11 +165,9 @@ const Chamados = (props) => {
   });
 
   const convertDateTime = (data) => {
-    const dat =data.split(/[-,T,:,.,Z]/)
     return moment(data).utc('-03:00').format('DD/MM/YYYY hh:mm');
   }
  
-  //console.log(props)
   return (
     <>
        <PopUpAlert 
@@ -173,6 +182,8 @@ const Chamados = (props) => {
           setVisible={setVisible}
         />
       <Loading loading={loading}>
+        {mapPermission?(
+        <>
        { pinSelected &&
        <BottomSheet
             pinSelected={pinSelected}
@@ -236,7 +247,6 @@ const Chamados = (props) => {
           }
 
         </MapView>
-
         {categoria &&
         <FlatList
           data={categoria}
@@ -348,6 +358,25 @@ const Chamados = (props) => {
               )}
              />
             }
+          </>
+            ):(
+              <View style={styles.permissionDisable}>
+                  <PinStrokeBlack style={styles.permissionDisableMarker} />
+                <Text style={styles.permissionDisableTitle}>Não foi possível obter a localização atual</Text>
+                <Text style={styles.permissionDisableDescription}>Os serviços de localização foram negados ou não estão ativados.</Text>
+                <View style={styles.permissiondDisableCardContainer}>
+                  <TouchableOpacity
+                    style={styles.permissionDisableCard}
+                    onPress={() =>{
+                      permission()
+                    }}
+                    >
+                    <Text style={styles.permissionDisableCardLabel}>Tentar Novamente</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )
+        }
       </Loading>
 
     </>

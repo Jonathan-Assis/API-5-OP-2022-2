@@ -69,7 +69,10 @@ const Sign_In = () => {
           </View>
           
           <TouchableOpacity style={styles.bButton}
-            onPress={() => signIn(cpf,senha)}
+            onPress={() => {
+              const cpf_aux = cpf.split('.-').join('');
+              signIn(cpf_aux,senha)
+            }}
             >    
             <Text style={styles.bLabel}>Entrar</Text>
           </TouchableOpacity>

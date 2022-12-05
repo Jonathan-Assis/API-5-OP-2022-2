@@ -38,9 +38,10 @@ const Edit_Profile = () => {
   }) 
   
   const update = async () => {
-    const { _id: id, nome, email, cpf, senha, confSenha } = data;
-    if(!!nome && !!email && !!cpf) {
+    const { _id: id, nome, email, cpf: cpf_aux, senha, confSenha } = data;
+    if(!!nome && !!email && !!cpf_aux) {
       if((!senha && !confSenha) || senha === confSenha) {
+        const cpf = cpf_aux.split('.-').join('');
         updateAuth({
           id, nome, email, cpf, imagem, senha,
           senha_prev: authData.senha
@@ -73,10 +74,6 @@ const Edit_Profile = () => {
   const imageOptions = () => {
     setImageModal(true)
   }
-
-  /* useEffect(() => {
-    if(imagem) console.log(imagem)
-  }, [imagem]) */
 
   return (
     <>

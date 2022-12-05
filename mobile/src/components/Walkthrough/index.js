@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import { View,Text,TouchableOpacity, StatusBar, FlatList, Animated, Dimensions, StyleSheet } from 'react-native';
+import { View,Text,TouchableOpacity, StatusBar, FlatList, Animated, Dimensions, StyleSheet, Modal } from 'react-native';
 import styles from './styles';
 import { backgrounds, data } from './Data'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
@@ -65,82 +65,6 @@ const Backdrop = ({scrollX})=>{
   )
 }
 
-const SquareBackground = ({scrollX})=>{
-  const YOLO = Animated.modulo(
-    Animated.divide(Animated.modulo(scrollX, width), new Animated.Value(width)),
-    1
-  )
-  const rotate = YOLO.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: ['35deg', '-35deg', '35deg']
-  })
-  const translateX = YOLO.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [0, -height, 0]
-  })
-
-  return (
-    <Animated.View 
-      style={[{width: height,
-        height: height,
-        borderRadius: 90,
-        position: 'absolute',
-        top: -height * 0.72,
-        left: -height * 0.395,
-        backgroundColor: '#dddd',
-        transform: [
-          {
-            rotate
-          },
-          {
-            translateX
-          }
-        ]
-    },
-  ]}
-  />
-  )
-}
-const SquareBackgroundLine = ({scrollX})=>{
-  const YOLO = Animated.modulo(
-    Animated.divide(Animated.modulo(scrollX, width), new Animated.Value(width)),
-    1
-  )
-  const rotate = YOLO.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: ['35deg', '-35deg', '35deg']
-  })
-  const translateX = YOLO.interpolate({
-    inputRange: [0, 0.5, 1],
-    outputRange: [0, -height, 0]
-  })
-  const backgroundColor = scrollX.interpolate({
-    inputRange: backgrounds.map((_, i) => i * width),
-    outputRange: backgrounds.map((bg) => bg),
-  })
-  return (
-    <Animated.View 
-      style={[{width: height,
-        height: height,
-        borderRadius: 90,
-        position: 'absolute',
-        top: -height * 0.72,
-        left: -height * 0.395,
-        opacity:0.75,
-        backgroundColor,
-        transform: [
-          {
-            rotate
-          },
-          {
-            translateX
-          }
-        ]
-    },
-  ]}
-  />
-  )
-}
 
 
 const Walkthrough =({walkOn,setWalkOn,children}) => {
@@ -148,54 +72,59 @@ const Walkthrough =({walkOn,setWalkOn,children}) => {
   const scrollX = useRef(new Animated.Value(0)).current;
   return (
     walkOn? (
-      <View walkOn={walkOn} style={styles.container}>
-        <StatusBar hidden />
-        <Backdrop scrollX={scrollX} />
-        <SquareBackground scrollX={scrollX} />
-        <SquareBackgroundLine scrollX={scrollX} />
-        <Indicator scrollX={scrollX} />
-        <TouchableOpacity style={styles.exitButton}
-          onPress={()=>{
-            setWalkOn(false);
-          }}
-        >
-          <FontAwesomeIcon icon={ faXmark } size={40} color={'white'}  />
-        </TouchableOpacity>
-        <Animated.FlatList
-          data={data}
-          keyExtractor={item => item.key}
-          horizontal
-          pagingEnabled
-          showsHorizontalScrollIndicator={false}
-          scrollEventThrottle={32}
-          onScroll={Animated.event(
-            [
-              {
-                nativeEvent: {
-                  contentOffset: {
-                    x: scrollX
+      <Modal
+        animationType="fade"
+        walkOn={walkOn}      
+        onRequestClose={()=>setWalkOn(false)}
+        hardwareAccelerated={true}
+        transparent
+      >
+        <View style={styles.container}>
+          <Backdrop scrollX={scrollX} />
+          <Indicator scrollX={scrollX} />
+          <TouchableOpacity style={styles.exitButton}
+            onPress={()=>{
+              setWalkOn(false);
+            }}
+          >
+            <FontAwesomeIcon icon={ faXmark } size={40} color={'white'}  />
+          </TouchableOpacity>
+          <Animated.FlatList
+            data={data}
+            keyExtractor={item => item.key}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            scrollEventThrottle={32}
+            onScroll={Animated.event(
+              [
+                {
+                  nativeEvent: {
+                    contentOffset: {
+                      x: scrollX
+                    }
                   }
                 }
-              }
-            ],
-            { useNativeDriver: false }
-            )}
-            renderItem={({ item }) => {
-              return (
-              <View style={styles.walkthroughContainer}>
-                <View style={styles.wtHeader}>
-                  {item.image}
-                  <Text style={styles.wtHeaderTitle}>{item.tela}</Text>
-                </View>
-                <View style={styles.wtBody}>
-                  <Text style={styles.wtBodyTitle}>{item.titulo}</Text>
-                  <Text style={styles.wtBodyDescription}>{item.descricao}</Text>
-                </View>
-            </View>
-            )
-          }}
-        />
-      </View>
+              ],
+              { useNativeDriver: false }
+              )}
+              renderItem={({ item }) => {
+                return (
+                <View style={styles.walkthroughContainer}>
+                  <View style={styles.wtHeader}>
+                    {item.image}
+                    <Text style={styles.wtHeaderTitle}>{item.tela}</Text>
+                  </View>
+                  <View style={styles.wtBody}>
+                    <Text style={styles.wtBodyTitle}>{item.titulo}</Text>
+                    <Text style={styles.wtBodyDescription}>{item.descricao}</Text>
+                  </View>
+              </View>
+              )
+            }}
+          />
+        </View>
+      </Modal>
     ) : <>{ children }</>
   );
 }

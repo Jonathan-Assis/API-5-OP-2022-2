@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
         ...stylesVar.backgroundSecondary,
         alignItems: 'center',
         justifyContent: 'center'
-        //justifyContent: 'space-between',
     },
     indicatorContainer:{
         position: 'absolute',paddingTop:50,

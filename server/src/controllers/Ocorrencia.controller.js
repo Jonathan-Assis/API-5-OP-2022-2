@@ -9,7 +9,7 @@ class OcorrenciaController {
         const {
             cidadao, titulo, descricao, local,
             bairro, categoria, subCategoria,
-            data, foto
+            data, imagem
         } = req.body;
 
         try {
@@ -17,16 +17,16 @@ class OcorrenciaController {
             await opdb.collection('ocorrencias')
             .insertOne({
                 cidadao: ObjectId(cidadao),
-                local: JSON.parse(local),
+                local: local,
                 titulo, descricao, categoria,
                 subCategoria, data, bairro
             })
             .then(async result => {
-                if(result && foto.length) {
+                if(result && imagem.length) {
                     const temp_path = __dirname + '/temp.txt';
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemOcorrencia' });
 
-                    fs.writeFileSync(temp_path, Buffer.from(foto));
+                    fs.writeFileSync(temp_path, Buffer.from(imagem));
                     fs.createReadStream(temp_path)
                     .pipe(bucket.openUploadStream(result.insertedId.toString(), {
                         chunkSizeBytes: 1048576
@@ -120,10 +120,15 @@ class OcorrenciaController {
                     ]);
 
                     for await(const img of imgs) {
-                        const index = ocorrencia.findIndex(a => (
-                            a._id.toString() === img.filename
-                        ));
-                        ocorrencia[index].imagem = img?.imagem['0']?.data?.buffer.toString();
+                        const index = ocorrencia.findIndex(a => {
+                            return (
+                                a._id.toString() === img.filename
+                            )
+                        });
+
+                        if(index >= 0) {
+                            ocorrencia[index].imagem = img?.imagem['0']?.data?.buffer.toString();
+                        }
                     }
                     
                     res.json(ocorrencia);

@@ -40,13 +40,14 @@ const Rep_Ocorrencia = (props) => {
   
   //Define o tipo da ocorrência
   useEffect(()=>{
-    setLoading (true)
-    ServerConnection.categorias({}).then (({data}) => 
-    {
-      setDatas(data/* JSON.parse(data) */)
-    }).finally (()=>{
-      setCategoria(TipoOcorrencia)
-      setLoading (false)
+    setLoading(true)
+    ServerConnection.categorias({})
+    .then(({data}) => {
+      setDatas(data)
+    })
+    .finally (() => {
+      !!TipoOcorrencia && setCategoria(TipoOcorrencia)
+      setLoading(false)
     })
   },[TipoOcorrencia])
 
@@ -56,7 +57,7 @@ const Rep_Ocorrencia = (props) => {
    {
    datas.map(categoria =>
   {
-    if (categoria.tipo===TipoOcorrencia)
+    if (!!TipoOcorrencia && categoria.tipo === TipoOcorrencia)
       {
         setSubType
           (
@@ -84,10 +85,14 @@ const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual,bairro:localidade?.bairro,imagem: imagem,
-        }).then(data => 
-            console.log(data.response)//mudar depois
-        ).finally(() => {
+          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual,bairro:localidade?.bairro,
+          imagem: imagem?.base64,
+        }).then(result => {
+          if(!!result) {
+            console.log(!!result)//mudar depois
+            setVisible(false);
+          }
+        }).finally(() => {
             setLoading(false);
         });
     } else {

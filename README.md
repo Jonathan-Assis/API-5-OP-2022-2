@@ -106,7 +106,7 @@ Escaneie o QR Code abaixo para efetuar o download do APK
 
 <div align=center>
     <img src='Referências/Imagens/AndroidWithNameLogo.png' width=200px alt="Logotipo do Android">
-    <img src='Referências/Imagens/AndroidLogo.png' width=200px alt="QR Code do APK para download">
+    <img src='Referências/Imagens/QRCodeAPK.png' width=200px alt="QR Code do APK para download">
 </div>
 
 

@@ -79,6 +79,7 @@ const Walkthrough =({walkOn,setWalkOn,children}) => {
         hardwareAccelerated={true}
         transparent
       >
+        <StatusBar hidden />
         <View style={styles.container}>
           <Backdrop scrollX={scrollX} />
           <Indicator scrollX={scrollX} />

@@ -4,7 +4,6 @@ import stylesVar from '../../styles/stylesVar';
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        //alignItems: 'center',
         ...stylesVar.backgroundSecondary
     },
 
@@ -63,7 +62,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width:'100%',
         padding:25,
-        paddingTop:10,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
         ...stylesVar.backgroundPrimary,

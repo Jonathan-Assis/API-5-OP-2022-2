@@ -119,6 +119,7 @@ const Chamados = (props) => {
   async function getData(){
     await ServerConnection.categorias()
     .then(({data}) => {
+      setLoading(true)
       setCategoria(()=>{
         return [
           { tipo: 'Meus',
@@ -136,6 +137,7 @@ const Chamados = (props) => {
       .then(({data}) => {
         setOcorrencias(data)
         setFilterMarkers(data)
+        setLoading(false)
       })
     })
     .catch((err) => {
@@ -225,7 +227,6 @@ const Chamados = (props) => {
             return (
               <Marker
               key={index}
-              title={item?.subCategoria}
               coordinate={{
                 latitude: parseFloat(item?.local.latitude),
                 longitude: parseFloat(item?.local.longitude),
@@ -326,7 +327,13 @@ const Chamados = (props) => {
                       <View style={{paddingRight:8}}>
                         <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
                       </View>
-                      <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.subCategoria}</Text>
+                      {
+                      item.categoria === 'Outros' ? (
+                        <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.categoria}</Text>
+                      ):(
+                        <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.subCategoria}</Text>
+                      )
+                    }
                     </View>
                   <View style={{flexDirection:'row',justifyContent:'space-between', paddingVertical:5}}>
                     <View style={{flexDirection:'row', alignItems: 'center'}}>

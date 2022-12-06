@@ -171,8 +171,16 @@ return(
                 </Text>
                 <View style={styles.bsTipo}>
                     <FontAwesomeIcon icon={faCircleInfo} size={25} color='#323232' />
-                    <Text style={styles.bsTipoTitle}>{categoria},</Text>
-                    <Text style={styles.bsTipoTitle}>{subCategoria}</Text>
+                    {
+                        categoria === 'Outros' ? (
+                            <Text style={styles.bsTipoTitle}>{categoria}</Text>
+                            ) : (
+                            <>
+                              <Text style={styles.bsTipoTitle}>{categoria},</Text>
+                              <Text style={styles.bsTipoTitle}>{subCategoria}</Text>
+                            </>
+                      )
+                    }
                 </View>
             </View>
             <ScrollView 

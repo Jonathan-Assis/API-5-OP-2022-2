@@ -64,9 +64,9 @@ const Rep_Ocorrencia = (props) => {
             categoria.subCategorias
           )
       }
+
     return categoria
   })}  },[datas])
-
   //Define coordenadas
   useEffect(() => {
     if(coordinate !== undefined){
@@ -77,15 +77,17 @@ const Rep_Ocorrencia = (props) => {
       setLocal(convertLatLng)
       setLocalidade(localizacao)
       }
-    
+      if(!selectedSubType.length && subType.length > 0){
+        setSelectedSubType(subType[0])
+      }
   },[coordinate])
-  
-  var dataAtual = new Date()
+
+var dataAtual = new Date()
 const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual,bairro:localidade?.bairro,
+          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual, bairro:localidade?.bairro,
           imagem: imagem?.base64,
         }).then(result => {
           if(!!result) {
@@ -93,13 +95,34 @@ const newOcorrencia = () => {
             setVisible(false);
           }
         }).finally(() => {
+            setPopUpAlertMsg({
+              icon: <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />,
+              title: 'Sua Ocorrência Foi Registrada Com Sucesso!',
+              description: 'Para visualizar a ocorrência criada, acesse a página de "Chamados".',
+              buttonPrimaryTitle: 'Fechar',
+            });
+            setAlertPopUp(true)
             setLoading(false);
-        });
-    } else {
-      
+            navigation.goBack()
+          });
+        } else {
+      setPopUpAlertMsg({
+        icon: <FontAwesomeIcon icon={faTriangleExclamation} size={60} color='#fff' />,
+        title: 'É Necessário Preencher Todos os Campos do Formulário!',
+        description: 'Para finalizar a ocorrência, todos os dados devem ser preenchidos.',
+        buttonPrimaryTitle: 'Fechar',
+      });
+      setAlertPopUp(true)
     }
 } 
 
+const [alertPopUp, setAlertPopUp] =useState(false)
+const [popUpAlertMsg, setPopUpAlertMsg] =useState({
+  icon: undefined,
+  title: undefined,
+  description: undefined,
+  buttonPrimaryTitle: undefined,
+})
 const [visible,setVisible]=useState(false)
 const [popUp, setPopUp] = useState({
   icon: undefined,
@@ -113,6 +136,7 @@ const [popUp, setPopUp] = useState({
 
 const close = () =>{
   setVisible(false)
+  setAlertPopUp(false)
 }
 
 const [imageModal,setImageModal] = useState(false)
@@ -133,17 +157,16 @@ useEffect(() => {
 
   return (
     <>
-{/*       <PopUpAlert
-        icon={
-          <FontAwesomeIcon icon={popUp.icon} size={60} color='white' />
-        }
-        title={popUp.title}
-        description={popUp.description}
-        buttonPrimaryTitle={popUp.buttonPrimaryTitle}
-        onClose={popUp.onClose}
-        visible={visible}
-        setVisible={setVisible}
-      /> */}
+     <PopUpAlert
+        icon={popUpAlertMsg.icon}
+        title={popUpAlertMsg.title}
+        description={popUpAlertMsg.description}
+        buttonPrimaryTitle={popUpAlertMsg.buttonPrimaryTitle}
+        onClose={close}
+        visible={alertPopUp}
+        setVisible={setAlertPopUp}
+      />
+    <Loading loading={loading}>
       <PopUpActions 
         icon={
           <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />
@@ -157,7 +180,6 @@ useEffect(() => {
         visible={visible}
         setVisible={setVisible}
       />
-      <Loading loading={loading}>
         <BottomSheetImage
           imagem={imagem}
           setImagem={setImagem}

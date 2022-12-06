@@ -102,7 +102,8 @@ Feira de Soluções & Apresentação Final - 05/12/2022
 <br>
 
 <img src='Referências/Imagens/AndroidLogo.png' width=40px alt="Mini logo do android"> Versão APK do Ocorrências Públicas
-Escaneie o QR Code abaixo para efetuar o download do APK
+
+<p>Escaneie o QR Code abaixo para efetuar o download do APK</p>
 
 <div align=center>
     <img src='Referências/Imagens/AndroidWithNameLogo.png' width=200px alt="Logotipo do Android">

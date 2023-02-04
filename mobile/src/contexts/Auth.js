@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) =>{
     
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
-        const token = await AsyncStorage.getItem('@Token')
+        //const token = await AsyncStorage.getItem('@Token')
         if(auth){
             setAuth((auth));
         }
@@ -133,7 +133,7 @@ export const AuthProvider = ({children}) =>{
     }
 
     return (
-        <AuthContext.Provider value={{authData, token, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
+        <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
         <Walkthrough 
             walkOn={walkOn} 
             setWalkOn={setWalkOn}

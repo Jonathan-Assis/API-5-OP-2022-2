@@ -12,7 +12,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
-import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
 import moment from "moment";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 

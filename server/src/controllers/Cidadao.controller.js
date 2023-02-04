@@ -1,6 +1,7 @@
 const { ObjectId, MongoClient, GridFSBucket } = require('mongodb');
 const fs = require('fs');
 const url = process.env.DB;
+var jwt = require('jsonwebtoken');
 
 class CidadaoController {
     static async newCidadao(req, res) {
@@ -79,7 +80,14 @@ class CidadaoController {
                     })
                     .once('end', () => {
                         client.close();
-                        res.json(result);
+                        let tokenData = {
+                            nome: result.nome,
+                            email: result.email
+                        }
+                        let generatedToken = jwt.sign(tokenData, process.env.JWT_SAUCE, {
+                            expiresIn: '1m',
+                        })
+                        res.json({token:generatedToken, result});
                     });
                 }
                 else {

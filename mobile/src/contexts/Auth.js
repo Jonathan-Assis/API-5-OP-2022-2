@@ -9,6 +9,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) =>{
     const [authData, setAuth] = useState(undefined);
+    const [token, setToken] = useState(undefined);
     const [loading, setLoading] = useState(true);
 
     const [walkOn,setWalkOn] = useState(false)
@@ -19,6 +20,7 @@ export const AuthProvider = ({children}) =>{
     
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
+        const token = await AsyncStorage.getItem('@Token')
         if(auth){
             setAuth((auth));
         }
@@ -30,14 +32,15 @@ export const AuthProvider = ({children}) =>{
         let aux = SHA256(senha).toString();
         await ServerConnection.login({ cpf, senha: aux })
         .then(({data}) => {
-            setAuth(JSON.stringify(data));
-            AsyncStorage.setItem('@AuthData',(JSON.stringify(data)))
+            setToken(data.token)
+            setAuth(JSON.stringify(data.result));
+            AsyncStorage.setItem('@Token',(data.token))
+            AsyncStorage.setItem('@AuthData',(JSON.stringify(data.result)))
             .then(() => {
                 if(first) {
                    setWalkOn(true)
                 }
             });
-            //console.log("Cidadão acessou a conta!")
         })
         .catch((e) => {
             Alert.alert('Falha no acesso', 'CPF ou Senha inválidos.')
@@ -114,7 +117,9 @@ export const AuthProvider = ({children}) =>{
         })
         .finally(() => {
             setAuth(undefined);
+            setToken(undefined);
             AsyncStorage.removeItem('@AuthData');
+            AsyncStorage.removeItem('@Token');
             setLoading(false);
         })
         .catch(e => Alert.alert('Erro', e));
@@ -122,12 +127,13 @@ export const AuthProvider = ({children}) =>{
 
     async function signOut() {
         setAuth(undefined)
+        setToken(undefined);
         AsyncStorage.removeItem('@AuthData')
-        console.log("Cidadão saiu da conta!")
+        AsyncStorage.removeItem('@Token');
     }
 
     return (
-        <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
+        <AuthContext.Provider value={{authData, token, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
         <Walkthrough 
             walkOn={walkOn} 
             setWalkOn={setWalkOn}

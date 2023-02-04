@@ -1,10 +1,14 @@
 //import React from 'react';
 import axios from 'axios';
-const url = 'https://api5-op-server.onrender.com';
+import { useAuth } from '../contexts/Auth';
+ 
+const url = 'http://192.168.18.4:3001';
 let conn = axios.create({
     baseURL: url,
     timeout: 30000
 });
+
+const { token } = useAuth();
 
 export default class ServerConnection {
     static async cadastro(data) {

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, FlatList, Animated, Image, ScrollView, Dimensions } from "react-native";
+import React, { useState, useCallback } from "react";
+import { View, Text, TouchableOpacity, FlatList, Animated, Image, Dimensions } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { Loading, PopUpAlert, BottomSheet } from '../../components'
 import { useAuth } from '../../contexts/Auth';
@@ -14,7 +14,7 @@ import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 import PinWithPlus from '../../assets/Icons/PinWithPlus.svg'
 import moment from "moment";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 const Chamados = (props) => {
   const navigation = useNavigation();
@@ -48,18 +48,14 @@ const Chamados = (props) => {
     navigation.goBack()
   }
   
-  useEffect(() => {
+  useFocusEffect( useCallback(() => {
     setLoading(true);
     permission();
     getData()
     .finally(() => {
       setLoading(false); 
     })
-  }, []);
-
-/*   useEffect(()=>{
-    permission();
-  },[tryMapPermission]) */
+  }, []));
 
  const filterData = (tipo) => {
   

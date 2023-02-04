@@ -12,6 +12,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/', routes);
 
-app.listen(port, () => {
-    console.log(`Listening on port: ${port}`);
-});
+let host = '0.0.0.0'
+
+app.listen({ 
+    port: port,
+    host: host
+}, console.log(`Listening on port: ${port}`)
+)

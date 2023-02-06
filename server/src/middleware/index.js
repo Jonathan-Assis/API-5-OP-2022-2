@@ -2,7 +2,6 @@ var jwt = require('jsonwebtoken');
 
 const handleToken = (req, res, next) => {
     let token = req.headers['authorization'].split(' ')[1];
-    console.log(req.headers)
     jwt.verify(token, process.env.JWT_SAUCE, (err, result) => {
         if(!err){
             next()

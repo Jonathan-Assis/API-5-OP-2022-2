@@ -85,9 +85,9 @@ class CidadaoController {
                             email: result.email
                         }
                         let generatedToken = jwt.sign(tokenData, process.env.JWT_SAUCE, {
-                            expiresIn: '1m',
+                            expiresIn: '3m',
                         })
-                        res.json({token:generatedToken, result});
+                        res.json({token: generatedToken, result});
                     });
                 }
                 else {

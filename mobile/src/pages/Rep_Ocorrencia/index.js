@@ -4,7 +4,7 @@ import { Picker } from "@react-native-picker/picker";
 import {useNavigation} from '@react-navigation/native'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus,faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import {PopUpAlert,PopUpActions, BottomSheetImage, Loading} from '../../components'
 import styles from './styles';
 import * as Location from "expo-location";
@@ -17,8 +17,9 @@ const Rep_Ocorrencia = (props) => {
   const navigation = useNavigation();
   const route = useRoute()
   const authData = JSON.parse(useAuth().authData)
-  let cidadao = authData._id
+  const { tokenData, signOut } = useAuth();
 
+  let cidadao = authData._id
 
   //form
   const [imagem,setImagem]=useState({})
@@ -41,9 +42,14 @@ const Rep_Ocorrencia = (props) => {
   //Define o tipo da ocorrência
   useEffect(()=>{
     setLoading(true)
-    ServerConnection.categorias({})
+    ServerConnection.categorias(tokenData)
     .then(({data}) => {
       setDatas(data)
+    })
+    .catch((e) => {
+      if(e.response.status === 401){
+        signOut();
+      }
     })
     .finally (() => {
       !!TipoOcorrencia && setCategoria(TipoOcorrencia)
@@ -89,12 +95,18 @@ const newOcorrencia = () => {
         ServerConnection.ocorrencia({
           cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual, bairro:localidade?.bairro,
           imagem: imagem?.base64,
-        }).then(result => {
+        }, tokenData).then(result => {
           if(!!result) {
             console.log(!!result)//mudar depois
             setVisible(false);
           }
-        }).finally(() => {
+        })
+        .catch((e) => {
+          if(e.response.status === 401){
+            signOut();
+          }
+        })
+        .finally(() => {
             setPopUpAlertMsg({
               icon: <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />,
               title: 'Sua Ocorrência Foi Registrada Com Sucesso!',

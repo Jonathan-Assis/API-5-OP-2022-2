@@ -9,10 +9,10 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({children}) =>{
     const [authData, setAuth] = useState(undefined);
-    const [token, setToken] = useState(undefined);
+    const [tokenData, setTokenData] = useState(undefined);
     const [loading, setLoading] = useState(true);
 
-    const [walkOn,setWalkOn] = useState(false)
+    const [walkOn, setWalkOn] = useState(false)
 
     useEffect(()=>{
         loadFromStorage();
@@ -20,9 +20,10 @@ export const AuthProvider = ({children}) =>{
     
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
-        //const token = await AsyncStorage.getItem('@Token')
-        if(auth){
+        const token = await AsyncStorage.getItem('@Token')
+        if(auth && token){
             setAuth((auth));
+            setTokenData(token)
         }
         setLoading(false)
     }
@@ -32,7 +33,7 @@ export const AuthProvider = ({children}) =>{
         let aux = SHA256(senha).toString();
         await ServerConnection.login({ cpf, senha: aux })
         .then(({data}) => {
-            setToken(data.token)
+            setTokenData(data.token)
             setAuth(JSON.stringify(data.result));
             AsyncStorage.setItem('@Token',(data.token))
             AsyncStorage.setItem('@AuthData',(JSON.stringify(data.result)))
@@ -89,9 +90,8 @@ export const AuthProvider = ({children}) =>{
         }
 
         setLoading(true);        
-        await ServerConnection.editarPerfil(aux)
+        await ServerConnection.editarPerfil(aux, tokenData)
         .then(res => {
-            console.log(res)
             if(res?.modifiedCount) {
                 if(aux.imagem === 'null') delete aux.imagem;
                 aux._id = aux.id;
@@ -100,44 +100,52 @@ export const AuthProvider = ({children}) =>{
                 AsyncStorage.setItem('@AuthData',(JSON.stringify(aux)));
             }
         })
+        .catch((e) => {
+            if(e.response.status === 401){
+                signOut();
+            }
+        })
         .finally(() => {
             setLoading(false);
         })
-        .catch((e) => {console.error(e)})
     }
 
     async function deleteAuth(id) {
         setLoading(true);
-        await ServerConnection.deletePerfil({ id: id })
+        await ServerConnection.deletePerfil({ id: id }, tokenData)
         .then(({data}) => {
             if(!!data.deletedCount) {
                 console.log('Conta deletada com sucesso');
             }
             else throw 'Falha ao deletar a conta';
         })
+        .catch((e) => {
+            if(e.response.status === 401){
+                signOut();
+            }
+        })
         .finally(() => {
             setAuth(undefined);
-            setToken(undefined);
+            setTokenData(undefined);
             AsyncStorage.removeItem('@AuthData');
             AsyncStorage.removeItem('@Token');
             setLoading(false);
         })
-        .catch(e => Alert.alert('Erro', e));
     }
 
     async function signOut() {
         setAuth(undefined)
-        setToken(undefined);
-        AsyncStorage.removeItem('@AuthData')
+        setTokenData(undefined);
+        AsyncStorage.removeItem('@AuthData');
         AsyncStorage.removeItem('@Token');
     }
 
     return (
-        <AuthContext.Provider value={{authData, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
-        <Walkthrough 
-            walkOn={walkOn} 
-            setWalkOn={setWalkOn}
-        />
+        <AuthContext.Provider value={{authData, tokenData, loading, signIn, signOut, signUp, updateAuth, deleteAuth}}>
+            <Walkthrough 
+                walkOn={walkOn} 
+                setWalkOn={setWalkOn}
+            />
             {children}
         </AuthContext.Provider>
     )

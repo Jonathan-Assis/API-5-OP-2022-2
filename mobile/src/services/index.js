@@ -1,16 +1,10 @@
-//import React from 'react';
 import axios from 'axios';
-//import { useAuth } from '../contexts/Auth';
  
 const url = 'http://192.168.18.4:3001';
 let conn = axios.create({
     baseURL: url,
     timeout: 30000,
 });
-
-//const { token } = useAuth();
-
-const token = 'Teste_de_token_inserido_manualmente';
 
 export default class ServerConnection {
     static async cadastro(data) {
@@ -25,43 +19,43 @@ export default class ServerConnection {
         return await conn.post('/cidadao/login', data);
     }
 
-    static async editarPerfil(data) {
+    static async editarPerfil(data, tokenData) {
         return await conn.put('/cidadao/update', data, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                Authorization: `Bearer ${tokenData}`
             },
         })
         .then(({ data }) => data);
     }
 
-    static async deletePerfil(data) {
+    static async deletePerfil(data, tokenData) {
         return await conn.delete('/cidadao/delete', { data }, {
             headers: {
-                'Authorization': `Bearer ${token}`
+                Authorization: `Bearer ${tokenData}`
             },
         });
     }
     
-    static async categorias(data) {
-        return await conn.post('/ocorrencia/getCategoria', data, {
+    static async categorias(tokenData) {
+        return await conn.post('/ocorrencia/getCategoria', {}, { 
             headers: {
-                'Authorization': `Bearer ${token}`
+                Authorization: `Bearer ${tokenData}`
             },
         });
     }
 
-    static async ocorrencia(data) {
+    static async getAllOcorrencia(tokenData) {
+        return await conn.post('/ocorrencia/get', {}, {
+            headers: {
+                Authorization: `Bearer ${tokenData}`
+            },
+        });
+    }
+
+    static async ocorrencia(data, tokenData) {
         return await conn.post('/ocorrencia/new', data, {
             headers: {
-                'Authorization': `Bearer ${token}`
-            },
-        });
-    }
-
-    static async getAllOcorrencia(_) {
-        return await conn.post('/ocorrencia/get', _, {
-            headers: {
-                'Authorization': `Bearer ${token}`
+                Authorization: `Bearer ${tokenData}`
             },
         });
     }

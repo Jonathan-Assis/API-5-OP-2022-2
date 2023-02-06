@@ -21,6 +21,7 @@ const Maps = (props) => {
   const [pin, setPin] = useState({});
   const [loading,setLoading] = useState(false)
   const authData = JSON.parse(useAuth().authData)
+  const { tokenData, signOut } = useAuth()
   const [pinSelected, setPinSelected] = useState(false);
   const [pinPosition,setPinPosition] = useState({})
   const [origin, setOrigin] = useState();
@@ -143,7 +144,7 @@ const Maps = (props) => {
   const [ocorrencias,setOcorrencias]= useState([])
   
   async function getData(){
-    await ServerConnection.categorias()
+    await ServerConnection.categorias(tokenData)
     .then(({data}) => {
       setCategoria(()=>{
         return [
@@ -155,13 +156,16 @@ const Maps = (props) => {
       })
     })
     .then( async () => {
-      await ServerConnection.getAllOcorrencia()
+      await ServerConnection.getAllOcorrencia(tokenData)
       .then(({data}) => {
         setOcorrencias(data)
       })
     })
-    .catch((err) => {
-      console.log(err)
+    .catch((e) => {
+      console.log(e)
+      if(e.response.status === 401){
+        signOut();
+      }
     })
   }
 

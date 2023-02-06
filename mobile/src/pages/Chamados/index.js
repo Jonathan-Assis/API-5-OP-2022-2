@@ -23,7 +23,8 @@ const Chamados = (props) => {
   const [ocorrencias,setOcorrencias] = useState([])
   const [filterMarkers, setFilterMarkers] = useState([]);
   const [filterMarkersSelected,setFilterMarkersSelected] = useState(false)
-  const authData = JSON.parse(useAuth().authData)
+  const { tokenData, signOut } = useAuth();
+  const authData = JSON.parse(useAuth().authData);
   const [pinData, setPinData] = useState({});
   const [pinSelected, setPinSelected] = useState(false);
   const [mapPermission, setMapPermission] = useState(false)
@@ -112,7 +113,7 @@ const Chamados = (props) => {
   }
 
   async function getData(){
-    await ServerConnection.categorias()
+    await ServerConnection.categorias(tokenData)
     .then(({data}) => {
       setLoading(true)
       setCategoria(()=>{
@@ -128,15 +129,18 @@ const Chamados = (props) => {
       })
     })
     .then( async () => {
-      await ServerConnection.getAllOcorrencia()
+      await ServerConnection.getAllOcorrencia(tokenData)
       .then(({data}) => {
         setOcorrencias(data)
         setFilterMarkers(data)
         setLoading(false)
       })
     })
-    .catch((err) => {
-      console.log(err)
+    .catch((e) => {
+      console.log(e)
+      if(e.response.status === 401){
+        signOut();
+      }
     })
   }
 

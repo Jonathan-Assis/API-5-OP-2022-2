@@ -1,11 +1,20 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import * as Notifications from 'expo-notifications'
 import ServerConnection from '../services'
 import { SHA256 } from 'crypto-js';
 import { Alert } from "react-native";
 import { Walkthrough } from "../components";
 
 export const AuthContext = createContext({});
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
 
 export const AuthProvider = ({children}) =>{
     const [authData, setAuth] = useState(undefined);
@@ -16,8 +25,33 @@ export const AuthProvider = ({children}) =>{
 
     useEffect(()=>{
         loadFromStorage();
+        scheduleNotification()
+        getScheduleNotification()
     },[])
+
+
+    async function scheduleNotification() {
+        /* const trigger = new Date(Date.now());
+        trigger.setMinutes(trigger.getMinutes() + 1); */
     
+        await Notifications.scheduleNotificationAsync({
+          content: {
+            title: 'OP says Hello World! 📣',
+            body: 'Welcome to the app'
+          },
+          trigger: {seconds: 2}
+        });
+      }
+    
+      /**
+       *  Log of List notifications
+       */
+      async function getScheduleNotification() {
+        const schedules = await Notifications.getAllScheduledNotificationsAsync();
+        console.log(schedules);
+      }
+
+
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
         const token = await AsyncStorage.getItem('@Token')

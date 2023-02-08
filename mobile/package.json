@@ -30,6 +30,7 @@
     "expo-image-picker": "^13.3.1",
     "expo-location": "^14.3.0",
     "expo-modules-core": "^1.0.3",
+    "expo-notifications": "^0.16.1",
     "expo-splash-screen": "~0.16.2",
     "expo-status-bar": "~1.4.0",
     "moment": "^2.29.4",

@@ -36,6 +36,9 @@ const Edit_Profile = () => {
     onConfirm: ()=>{},
     onClose: ()=>{},
   }) 
+
+  const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
+  const [ imageModal, setImageModal ] = useState(false)
   
   const update = async () => {
     const { _id: id, nome, email, cpf: cpf_aux, senha, confSenha } = data;
@@ -67,9 +70,6 @@ const Edit_Profile = () => {
       });
     }
   }
-
-  const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
-  const [ imageModal, setImageModal ] = useState(false)
 
   const imageOptions = () => {
     setImageModal(true)

@@ -5,9 +5,14 @@ var jwt = require('jsonwebtoken');
 
 class CidadaoController {
     static async newCidadao(req, res) {
+        var popup_notify = false;
+        var push_notify = false;
         const client = new MongoClient(url);
-        const { cpf, nome, email, senha } = req.body;
-
+        const { cpf, nome, email, senha, notificacao } = req.body;
+        if(notificacao){
+            popup_notify = true;
+            push_notify = true;
+        }
         try {
             const opdb = client.db('opdb');
 
@@ -16,7 +21,7 @@ class CidadaoController {
                 try {
                     if(!value.length) {
                         opdb.collection('cidadao')
-                        .insertOne({ cpf, nome, email, senha })
+                        .insertOne({ cpf, nome, email, senha, popup_notify, push_notify })
                         .then(async result => {
                             res.json(!!result)
                         });
@@ -85,7 +90,7 @@ class CidadaoController {
                             email: result.email
                         }
                         let generatedToken = jwt.sign(tokenData, process.env.JWT_SAUCE, {
-                            expiresIn: '3m',
+                            expiresIn: '5m',
                         })
                         res.json({token: generatedToken, result});
                     });
@@ -132,7 +137,7 @@ class CidadaoController {
     static async updateCidadao(req, res) {
         const client = new MongoClient(url);
         const data = req.body;
-
+        
         try {
             const opdb = client.db('opdb');
             const result = await opdb.collection('cidadao').updateOne(
@@ -141,7 +146,9 @@ class CidadaoController {
                     nome: data.nome,
                     cpf: data.cpf,
                     email: data.email,
-                    senha: data.senha
+                    senha: data.senha,
+                    popup_notify: data.popup_notify,
+                    push_notify: data.push_notify
                 } }
             );
 

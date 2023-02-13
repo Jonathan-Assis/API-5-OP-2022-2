@@ -35,7 +35,6 @@ const Settings = () => {
         </View>
 
         <View style={styles.footer}>
-          <View style={styles.footer}>
             <TouchableOpacity style={styles.fButton}
               onPress={() => navigation.navigate('Edit_Profile')}
             >
@@ -56,7 +55,6 @@ const Settings = () => {
               <FontAwesomeIcon icon={ faArrowRightFromBracket } size={24} color={'white'}/>
               <Text style={styles.fLabel}>Sair da Conta</Text>
             </TouchableOpacity>
-          </View>
         </View>
       </View>
     </View>

@@ -63,17 +63,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,
-        margin:10,
-        ...stylesVar.strokeBoxSecondary
-    },
-
-    tButton:{
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 10,
-        marginTop:220,
+        marginVertical: 5,
+        marginHorizontal:10,
         ...stylesVar.strokeBoxSecondary
     },
 
@@ -81,7 +72,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%',
         justifyContent: 'flex-end',
-        alignItems: 'center'        
+        alignItems: 'center',
     },
 })
 

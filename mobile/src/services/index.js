@@ -8,7 +8,11 @@ let conn = axios.create({
 
 export default class ServerConnection {
     static async cadastro(data) {
-        return await conn.post('/cidadao/cadastro', data);
+        return await conn.post('/cidadao/cadastro', data, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
     }
 
     static async validarCpf(data) {
@@ -22,7 +26,8 @@ export default class ServerConnection {
     static async editarPerfil(data, tokenData) {
         return await conn.put('/cidadao/update', data, {
             headers: {
-                Authorization: `Bearer ${tokenData}`
+                Authorization: `Bearer ${tokenData}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
         })
         .then(({ data }) => data);
@@ -55,7 +60,8 @@ export default class ServerConnection {
     static async ocorrencia(data, tokenData) {
         return await conn.post('/ocorrencia/new', data, {
             headers: {
-                Authorization: `Bearer ${tokenData}`
+                Authorization: `Bearer ${tokenData}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
         });
     }

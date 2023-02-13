@@ -96,15 +96,49 @@ const styles = StyleSheet.create({
 
     bLabel:{
         textAlign:'center',
-        ...stylesVar.titleTertiary
+        ...stylesVar.titleTertiary,
+        paddingHorizontal:10
     },
     
     bButton:{
         ...stylesVar.boxPrimary,
         padding: 12,
         marginVertical:10,
-        width: '100%'
+        flex:1,
+        width: '100%',
+        justifyContent: 'center',
+        flexDirection:'row',
     },
+
+    bNotification: {
+        marginBottom:5,
+        width: '100%',
+        paddingHorizontal: 5
+    },
+
+    bSwitch: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+
+    bSwitchbg:{
+        false: '#BBBBBB',
+        true: '#5459A8'
+    },
+
+    bNotificationLabel: {
+        ...stylesVar.titleSecondary,
+        flexWrap: 'nowrap',
+    },
+
+    lineStyle:{
+        width: '100%',
+        borderRadius:10,
+        borderWidth: 0.5,
+        borderColor:'#3429A8',
+        margin:10,
+   }
 })
 
 export default styles;

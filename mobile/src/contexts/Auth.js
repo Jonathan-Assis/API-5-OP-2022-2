@@ -4,7 +4,9 @@ import * as Notifications from 'expo-notifications'
 import ServerConnection from '../services'
 import { SHA256 } from 'crypto-js';
 import { Alert } from "react-native";
-import { Walkthrough } from "../components";
+import { Walkthrough, PopUpAlert } from "../components";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 export const AuthContext = createContext({});
 
@@ -25,10 +27,9 @@ export const AuthProvider = ({children}) =>{
 
     useEffect(()=>{
         loadFromStorage();
-        scheduleNotification()
-        getScheduleNotification()
+        //scheduleNotification()
+        //getScheduleNotification()
     },[])
-
 
     async function scheduleNotification() {
         /* const trigger = new Date(Date.now());
@@ -48,7 +49,7 @@ export const AuthProvider = ({children}) =>{
        */
       async function getScheduleNotification() {
         const schedules = await Notifications.getAllScheduledNotificationsAsync();
-        console.log(schedules);
+        //console.log(schedules);
       }
 
 
@@ -69,7 +70,7 @@ export const AuthProvider = ({children}) =>{
         .then(({data}) => {
             setTokenData(data.token)
             setAuth(JSON.stringify(data.result));
-            AsyncStorage.setItem('@Token',(data.token))
+            AsyncStorage.setItem('@Token',(JSON.stringify(data.token)))
             AsyncStorage.setItem('@AuthData',(JSON.stringify(data.result)))
             .then(() => {
                 if(first) {
@@ -167,11 +168,21 @@ export const AuthProvider = ({children}) =>{
         })
     }
 
-    async function signOut() {
+    async function signOut(code) {
         setAuth(undefined)
         setTokenData(undefined);
         AsyncStorage.removeItem('@AuthData');
         AsyncStorage.removeItem('@Token');
+        /* code === '401' ?
+            alert.Alert(
+                'Sessão expirada', 
+                'Necessário a autenticação para utilizar as funcionalidades do app.', [
+                {text: 'Ok'}
+              ],
+              {cancelable: false}
+            )
+        :
+            alert.Alert('Saindo da conta') */
     }
 
     return (

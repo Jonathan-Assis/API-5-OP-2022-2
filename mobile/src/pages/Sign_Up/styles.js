@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 16,
-        
     },
 
     bInput:{
@@ -55,6 +54,21 @@ const styles = StyleSheet.create({
         textAlign:'center',
         ...stylesVar.titleTertiary
     },
+    footer:{
+        width:'100%',
+        flexDirection:'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical:5
+    },
+    fDescription:{
+        color: '#000000'
+    },
+    fDescriptionLogin:{
+        textDecorationLine:'underline',
+        fontWeight:'bold',
+        color: '#3429A8'
+    }
 })
 
 export default styles;

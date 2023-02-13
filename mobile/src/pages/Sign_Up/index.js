@@ -1,47 +1,45 @@
 import React, { useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity, TextInput, Alert, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native'
-import { Loading, PopUpAlert } from '../../components';
+import { Loading, PopUpAlert, CheckBox, PopUpTermos } from '../../components';
 import styles from './styles';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faEye, faEyeSlash, faKey, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import ServerConnection from '../../services';
+import { useAuth } from '../../contexts/Auth'
 
 const Sign_Up = () => {
     const navigation = useNavigation();
     const [ loading, setLoading ] = useState(false);
+    const { signUp } = useAuth()
     
     const [ alert, setAlert ] = useState(undefined);
     const [ alertVisible, setVisible ] = useState(false);
     
     const [ showPassword, setShowPassword ] = useState(false);
     const [ showConfPassword, setShowConfPassword ] = useState(false);
+    const [ showTermos, setShowTermos ] = useState(false);
 
     const [ state, setState ] = useState({
         nome: undefined,
         cpf: undefined,
         email: undefined,
         senha: undefined,
-        confSenha: undefined
+        confSenha: undefined,
+        notificacao: false,
+        termos: false,
     });
 
     const cadastro = async () => {
-        const { nome, cpf: cpf_aux, email, senha, confSenha } = state;
-        if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha) {
+        const { nome, cpf: cpf_aux, email, senha, confSenha, notificacao, termos } = state;
+        if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha && !!termos) {
             if(senha === confSenha) {
                 const cpf = cpf_aux.split('.-').join('');
                 setLoading(true);
                 ServerConnection.validarCpf({ cpf: cpf })
                 .then(({ data }) => {
                     if(data) {
-                        navigation.navigate({
-                            name: 'User_Term', params: {
-                                nome: nome, 
-                                cpf: cpf, 
-                                email: email, 
-                                senha: senha 
-                            }
-                        });
+                        signUp(nome, cpf, email, senha, notificacao, termos)
                     }
                     else {
                         !alert && setAlert({
@@ -81,6 +79,11 @@ const Sign_Up = () => {
 
     return (
         <Loading loading={loading}>
+            <PopUpTermos
+                setIsAccepted={e => setState(prev => { return { ...prev, termos: e } })}
+                visible={showTermos} 
+                setVisible={setShowTermos}
+            />
             {alertVisible &&
                 <PopUpAlert
                     icon={
@@ -171,6 +174,16 @@ const Sign_Up = () => {
                             </TouchableOpacity>
                         </View>
                     </View>
+                    <CheckBox
+                        title='Desejo receber notícias e dicas'
+                        checked={state.notificacao}
+                        onPress={()=> setState(prev => ({...prev, notificacao: !prev.notificacao}))}
+                    />
+                    <CheckBox 
+                        title='Declaro que li e aceito os termos de uso'
+                        checked={state.termos}
+                        onPress={()=> setShowTermos(true)}
+                    />
 
                     <TouchableOpacity
                         style={styles.bButton}
@@ -180,6 +193,14 @@ const Sign_Up = () => {
                             Confirmar Cadastro
                         </Text>
                     </TouchableOpacity>
+                    <View style={styles.footer}>
+                        <Text style={styles.fDescription}>Já possui uma conta? </Text>
+                        <Pressable
+                            onPress={()=> navigation.goBack()}
+                        >
+                            <Text style={styles.fDescriptionLogin}>Faça o Login</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </ScrollView>
         </Loading>

@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, Pressable } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
 import LogoOP from '../../assets/Logotype/LogoOP.svg'
+import Animated, { ZoomInRotate } from 'react-native-reanimated';
 
 const Sign_In = () => {
   const navigation = useNavigation();
@@ -17,8 +18,13 @@ const Sign_In = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <LogoOP  style={styles.hLogotype} />
+      <View style={styles.header}
+      >
+        <Animated.View
+          entering={ZoomInRotate}
+        >
+          <LogoOP  style={styles.hLogotype} />
+        </Animated.View>
         <Text style={styles.hTitle}>Ocorrências Públicas</Text>
       </View>
 
@@ -77,11 +83,15 @@ const Sign_In = () => {
             <Text style={styles.bLabel}>Entrar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.bButton}
-            onPress={() => navigation.navigate('Sign_Up') }
-            >    
-            <Text style={styles.bLabel}>Não tenho Cadastro</Text>
-          </TouchableOpacity>
+          <View style={styles.footer}>
+              <Text style={styles.fDescription}>Não possui cadastro? </Text>
+              <Pressable
+                  animation
+                  onPress={()=> navigation.navigate('Sign_Up')}
+              >
+                  <Text style={styles.fDescriptionCadastro}>Criar conta</Text>
+              </Pressable>
+          </View>
         </View>
       </View>
     </View>

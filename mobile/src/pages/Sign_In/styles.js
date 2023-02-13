@@ -80,6 +80,22 @@ const styles = StyleSheet.create({
         padding: 12,
         marginVertical:10
     },
+
+    footer:{
+        width:'100%',
+        flexDirection:'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical:10
+    },
+    fDescription:{
+        color: '#000000'
+    },
+    fDescriptionCadastro:{
+        textDecorationLine:'underline',
+        fontWeight:'bold',
+        color: '#3429A8'
+    }
 })
 
 export default styles;

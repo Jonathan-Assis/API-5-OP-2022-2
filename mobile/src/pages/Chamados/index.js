@@ -5,6 +5,8 @@ import { Loading, PopUpAlert, BottomSheet } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import * as Location from "expo-location";
 import ServerConnection from "../../services"
+import dayjs from 'dayjs';
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import styles from "./styles";
 
 //Icons
@@ -12,8 +14,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
-import moment from "moment";
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 const Chamados = (props) => {
   const navigation = useNavigation();
@@ -47,7 +47,7 @@ const Chamados = (props) => {
     setLoading(false); 
     navigation.goBack()
   }
-  
+
   useFocusEffect( useCallback(() => {
     setLoading(true);
     permission();
@@ -71,6 +71,7 @@ const Chamados = (props) => {
   }
 
   const permission = async () => {
+    setLoading(true)
     let { status } = await Location.requestForegroundPermissionsAsync();
 
     if (status !== "granted") {
@@ -84,7 +85,6 @@ const Chamados = (props) => {
       setVisible(true)
     } else {
       try {
-        setLoading(true)
         setMapPermission(true)
         const { coords } = await Location.getCurrentPositionAsync({
           enableHighAccuracy: true,
@@ -97,7 +97,6 @@ const Chamados = (props) => {
             longitudeDelta: 0.004,
           });
         } 
-        setLoading(false)
       } catch(e) {
         setPopUpPermission({
           onClose: close,
@@ -107,15 +106,16 @@ const Chamados = (props) => {
           buttonPrimaryTitle: 'Fechar'
         })
         setVisible(true)
-
+      } finally {
+        setLoading(false)
       }
     }
   }
 
   async function getData(){
+    setLoading(true)
     await ServerConnection.categorias(tokenData)
     .then(({data}) => {
-      setLoading(true)
       setCategoria(()=>{
         return [
           { tipo: 'Meus',
@@ -133,15 +133,14 @@ const Chamados = (props) => {
       .then(({data}) => {
         setOcorrencias(data)
         setFilterMarkers(data)
-        setLoading(false)
       })
     })
     .catch((e) => {
-      console.log(e)
       if(e.response.status === 401){
         signOut();
       }
     })
+    .finally(()=>setLoading(false))
   }
 
   var mapAnimation = new Animated.Value(0);
@@ -166,7 +165,7 @@ const Chamados = (props) => {
   });
 
   const convertDateTime = (data) => {
-    return moment(data).utc('-03:00').format('DD/MM/YYYY hh:mm');
+    return dayjs(data).format('DD/MM hh:mm');
   }
  
   return (
@@ -183,208 +182,208 @@ const Chamados = (props) => {
           setVisible={setVisible}
         />
       <Loading loading={loading}>
-        {mapPermission?(
-        <>
-       { pinSelected &&
-       <BottomSheet
-            pinSelected={pinSelected}
-            setPinSelected={setPinSelected}
-            data={pinData?.data}
-            descricao={pinData?.descricao}
-            imagem={pinData?.imagem}
-            categoria={pinData?.categoria}
-            subCategoria={pinData?.subCategoria}
-            titulo={pinData?.titulo}
-            bairro={pinData?.bairro}
-          />}
-         <MapView
-          initialRegion={origin}
-          showsUserLocation={true}
-          provider={PROVIDER_GOOGLE}
-          showsMyLocationButton={false}
-          showsCompass={false}
-          toolbarEnabled={false}
-          style={{ flex: 1 }}
-          region={origin}
-          zoomEnabled={true}
-          loadingEnabled={true}
-          mapType="hybrid"
-        >
-      {
-      filterMarkers.map((item, index) => {
-          const x = categoria.find(a => {
-            return a.tipo === item.categoria
-          })?.color
-          const cor = item.cidadao === authData._id ? '#3429A8' : x;
-          const scaleStyle = {
-            transform: [
-              {
-                scale: interpolations[index].scale,
-              },
-            ],
-          };
-            return (
-              <Marker
-              key={index}
-              coordinate={{
-                latitude: parseFloat(item?.local.latitude),
-                longitude: parseFloat(item?.local.longitude),
-              }}
-              onPress={()=>{
-                setPinData(item)
-                setPinSelected(true)
-              }}
-              >
-                <View style={{alignItems: 'center', justifyContent:'center',width:50, height:50}}>
-                <Animated.View style={[scaleStyle]}>
-                    <PinStrokeBlack style={[{color: cor, width:23, height:32}, ]} />
-                </Animated.View>
-                </View>
-              </Marker>
-              )
+        { mapPermission? (
+          <>
+            { pinSelected &&
+              <BottomSheet
+                pinSelected={pinSelected}
+                setPinSelected={setPinSelected}
+                data={pinData?.data}
+                descricao={pinData?.descricao}
+                imagem={pinData?.imagem}
+                categoria={pinData?.categoria}
+                subCategoria={pinData?.subCategoria}
+                titulo={pinData?.titulo}
+                bairro={pinData?.bairro}
+              />
             }
-          )
-          }
-
-        </MapView>
-        {categoria &&
-        <FlatList
-          data={categoria}
-          scrollEnabled={true}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={{
-            flexDirection:'row',
-            position:'absolute',
-
-          }}
-          renderItem={({ item, index }) => (
-            <View style={styles.header}>
-              <TouchableOpacity 
-                key={index}
-                style={[
-                  styles.hCategory,
-                  filterMarkersSelected === item.tipo
-                  ? styles.hSelectedCategory : styles.hCategory
-                ]}
-                onPress={()=>{
-                  setFilterMarkersSelected(item.tipo) 
-                  filterData(item.tipo)
-              }}
-              >
-                <View style={styles.hMarkerTitle}>
-                  {item.tipo === 'Meus' && filterMarkers === item.tipo ?
-                  <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
-                  :
-                  <PinStrokeBlack style={{color: item.color, width:20, height:22}} />
-                  }
-                  <Text style={[
-                    styles.hSubCategoryTitle,
-                    filterMarkersSelected === item.tipo
-                    ? styles.hSelectedCategoryTitle : null
-                  ]}>
-                    {item.tipo}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-          </View>
-        )}
-          />
-        }
-
-        { filterMarkers &&
-          <Animated.FlatList
-            data={filterMarkers}
-            horizontal
-            pagingEnabled
-            scrollEventThrottle={1}
-            showsHorizontalScrollIndicator={false}
-            snapToInterval={CARD_WIDTH + 20}
-            snapToAlignment="center"
-            style={styles.BottomScrollView}
-            onScroll={Animated.event(
-              [
-                {
-                  nativeEvent: {
-                    contentOffset: {
-                      x: mapAnimation,
-                    },
-                  },
-                },
-              ],
-              { useNativeDriver: true }
-            )}
-            renderItem={({ item, index })=>(
-              <View 
-                key={index} 
-                style={styles.bCard}
-              >
-                <Image source={{uri: `${item.imagem}`}} style={styles.bCardImage} resizeMode='cover'/>
-                <View style={styles.bCardBody}>
-                    <Text style={styles.bCardBodyTitle} numberOfLines={1}>{item.titulo}</Text>
-                    <View style={{flexDirection:'row', paddingHorizontal:1}}>
-                      <View style={{paddingRight:8}}>
-                        <FontAwesomeIcon icon={faCircleInfo} size={17} color='#323232' />
-                      </View>
+            <MapView
+              initialRegion={origin}
+              showsUserLocation={true}
+              provider={PROVIDER_GOOGLE}
+              showsMyLocationButton={false}
+              showsCompass={false}
+              toolbarEnabled={false}
+              style={{ flex: 1 }}
+              region={origin}
+              zoomEnabled={true}
+              loadingEnabled={true}
+              mapType="hybrid"
+            >
+              {
+                filterMarkers.map((item, index) => {
+                  const x = categoria.find(a => {
+                    return a.tipo === item.categoria
+                  })?.color
+                  const cor = item.cidadao === authData._id ? '#3429A8' : x;
+                  const scaleStyle = {
+                    transform: [
                       {
-                      item.categoria === 'Outros' ? (
-                        <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.categoria}</Text>
-                      ):(
-                        <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.subCategoria}</Text>
-                      )
-                    }
-                    </View>
-                  <View style={{flexDirection:'row',justifyContent:'space-between', paddingVertical:5}}>
-                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                      <FontAwesomeIcon icon={faMapLocationDot} size={20} color='#323232' />
-                      <View style={{paddingHorizontal:5}}>
-                        <Text style={styles.bCardBodyDescription}>{item.bairro}</Text>
-                      </View>
-                    </View>
-                    <View style={{flexDirection:'row', alignItems: 'center'}}>
-                      <FontAwesomeIcon icon={faCalendarDays} size={20} color='#323232' />
-                      <View style={{paddingHorizontal:5}}>
-                        <Text style={styles.bCardBodyDescription}>{convertDateTime(item.data)}</Text>
-                      </View>
-                    </View>
-                  </View>
-                  <View style={styles.bCardFooter}>
-                    <TouchableOpacity
-                      style={styles.bCardFooterButton}
-                      onPress={() =>{
-                        setPinData(item)
-                        setPinSelected(true)
+                        scale: interpolations[index].scale,
+                      },
+                    ],
+                  };
+                    return (
+                      <Marker
+                        key={index}
+                        coordinate={{
+                          latitude: parseFloat(item?.local.latitude),
+                          longitude: parseFloat(item?.local.longitude),
+                        }}
+                        onPress={()=>{
+                          setPinData(item)
+                          setPinSelected(true)
+                        }}
+                      >
+                        <View style={{alignItems: 'center', justifyContent:'center',width:50, height:50}}>
+                          <Animated.View style={[scaleStyle]}>
+                              <PinStrokeBlack style={[{color: cor, width:23, height:32}, ]} />
+                          </Animated.View>
+                        </View>
+                      </Marker>
+                    )
+                  }
+                )
+              }
+
+            </MapView>
+            { categoria &&
+              <FlatList
+                data={categoria}
+                scrollEnabled={true}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                style={{
+                  flexDirection:'row',
+                  position:'absolute',
+
+                }}
+                renderItem={({ item, index }) => (
+                  <View style={styles.header}>
+                    <TouchableOpacity 
+                      key={index}
+                      style={[
+                        styles.hCategory,
+                        filterMarkersSelected === item.tipo
+                        ? styles.hSelectedCategory : styles.hCategory
+                      ]}
+                      onPress={()=>{
+                        setFilterMarkersSelected(item.tipo) 
+                        filterData(item.tipo)
                       }}
                     >
-                      <Text style={styles.bCardFooterButtonLabel}>Ver Ocorrência</Text>
+                      <View style={styles.hMarkerTitle}>
+                        {item.tipo === 'Meus' && filterMarkers === item.tipo ?
+                        <PinStrokeWhite style={{color: item.color, width:20, height:22}} />
+                        :
+                        <PinStrokeBlack style={{color: item.color, width:20, height:22}} />
+                        }
+                        <Text style={[
+                          styles.hSubCategoryTitle,
+                          filterMarkersSelected === item.tipo
+                          ? styles.hSelectedCategoryTitle : null
+                        ]}>
+                          {item.tipo}
+                        </Text>
+                      </View>
                     </TouchableOpacity>
                   </View>
-                </View>
-              </View>
-              )}
-             />
+                )}
+              />
+            }
+
+            { filterMarkers &&
+              <Animated.FlatList
+                data={filterMarkers}
+                horizontal
+                pagingEnabled
+                scrollEventThrottle={1}
+                showsHorizontalScrollIndicator={false}
+                snapToInterval={CARD_WIDTH + 20}
+                snapToAlignment="center"
+                style={styles.BottomScrollView}
+                onScroll={Animated.event(
+                  [
+                    {
+                      nativeEvent: {
+                        contentOffset: {
+                          x: mapAnimation,
+                        },
+                      },
+                    },
+                  ],
+                  { useNativeDriver: true }
+                )}
+                renderItem={({ item, index })=>(
+                  <View 
+                    key={index} 
+                    style={styles.bCard}
+                  >
+                    <Image source={{uri: `${item.imagem}`}} style={styles.bCardImage} resizeMode='cover'/>
+                    <View style={styles.bCardBody}>
+                        <Text style={styles.bCardBodyTitle} numberOfLines={1}>{item.titulo}</Text>
+                        <View style={{flexDirection:'row', paddingHorizontal:1, alignItems:'center'}}>
+                          <View style={{paddingRight:8}}>
+                            <FontAwesomeIcon icon={faCircleInfo} size={15} color='#323232' />
+                          </View>
+                          {
+                            item.categoria === 'Outros' ? (
+                              <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.categoria}</Text>
+                            ):(
+                              <Text style={styles.bCardBodyInformation} numberOfLines={1}>{item.subCategoria}</Text>
+                            )
+                          }
+                        </View>
+                      <View style={{flexDirection:'row',justifyContent:'space-between',flexWrap:'wrap'}}>
+                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                          <FontAwesomeIcon icon={faMapLocationDot} size={16} color='#323232' />
+                          <View style={{paddingLeft:5}}>
+                            <Text numberOfLines={1} textBreakStrategy="simple" style={styles.bCardBodyDescription}>{item.bairro}</Text>
+                          </View>
+                        </View>
+                        <View style={{flexDirection:'row', alignItems: 'center'}}>
+                          <FontAwesomeIcon icon={faCalendarDays} size={15} color='#323232' />
+                          <View style={{paddingLeft:5}}>
+                            <Text style={styles.bCardBodyDescription}>{convertDateTime(item.data)}</Text>
+                          </View>
+                        </View>
+                      </View>
+                      <View style={styles.bCardFooter}>
+                        <TouchableOpacity
+                          style={styles.bCardFooterButton}
+                          onPress={() =>{
+                            setPinData(item)
+                            setPinSelected(true)
+                          }}
+                        >
+                          <Text style={styles.bCardFooterButtonLabel}>Visualizar Ocorrência</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                )}
+              />
             }
           </>
-            ):(
-              <View style={styles.permissionDisable}>
-                  <PinStrokeBlack style={styles.permissionDisableMarker} />
-                <Text style={styles.permissionDisableTitle}>Não foi possível obter a localização atual</Text>
-                <Text style={styles.permissionDisableDescription}>Os serviços de localização foram negados ou não estão ativados.</Text>
-                <View style={styles.permissiondDisableCardContainer}>
-                  <TouchableOpacity
-                    style={styles.permissionDisableCard}
-                    onPress={() =>{
-                      permission()
-                    }}
-                    >
-                    <Text style={styles.permissionDisableCardLabel}>Tentar Novamente</Text>
-                  </TouchableOpacity>
-                </View>
+          ):(
+            <View style={styles.permissionDisable}>
+              <PinStrokeBlack style={styles.permissionDisableMarker} />
+              <Text style={styles.permissionDisableTitle}>Não foi possível obter a localização atual</Text>
+              <Text style={styles.permissionDisableDescription}>Os serviços de localização foram negados ou não estão ativados.</Text>
+              <View style={styles.permissiondDisableCardContainer}>
+                <TouchableOpacity
+                  style={styles.permissionDisableCard}
+                  onPress={() =>{
+                    permission()
+                  }}
+                  >
+                  <Text style={styles.permissionDisableCardLabel}>Tentar Novamente</Text>
+                </TouchableOpacity>
               </View>
-            )
+            </View>
+          )
         }
       </Loading>
-
     </>
   );
 };

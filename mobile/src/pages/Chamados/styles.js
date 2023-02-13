@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     },
     permissionDisable:{
       flex:1,
+      padding:16,
       alignItems: 'center',
       justifyContent: 'center',
       ...stylesVar.backgroundPrimary
@@ -93,7 +94,6 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         padding:15,
         width:150
-        //...stylesVar.backgroundSecondary
     },
     arrow:{
         backgroundColor:'transparent',
@@ -125,8 +125,9 @@ const styles = StyleSheet.create({
       right: 0,
       paddingVertical: 10,
     },
-
+    
     bCard: {
+      position: "relative",
       elevation: 2,
       ...stylesVar.backgroundSecondary,
       borderRadius: 10,
@@ -138,12 +139,12 @@ const styles = StyleSheet.create({
     bCardImage: {
       flex: 1,
       width: "100%",
-      height: "100%",
       alignSelf: "center",
     },
     bCardBody: {
-      flex: 1,
-      padding: 10,
+      flex:0.8,
+      paddingHorizontal: 10,
+      paddingTop: 10,
     },
     bCardBodyInformation:{
       fontSize:12,
@@ -158,11 +159,12 @@ const styles = StyleSheet.create({
       color: "#444",
     },
     bCardFooter: {
+      flex:1,
       alignItems: 'center',
+      justifyContent:'center',
       marginTop: 5
     },
     bCardFooterButton: {
-      ...stylesVar.strokeBoxPrimary,
       width: "100%",
       padding: 10,
       flexDirection: 'row',
@@ -172,8 +174,8 @@ const styles = StyleSheet.create({
     bCardFooterButtonLabel: {
       textAlign:'center',
       ...stylesVar.buttonLabelSecondary,
+      fontWeight:'bold'
     },
-
 })
 
 export default styles;

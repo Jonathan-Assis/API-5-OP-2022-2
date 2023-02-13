@@ -25,61 +25,61 @@ const stylesVar = {
     titlePrimary:{
         fontWeight:'bold',
         color: "#000000",
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: '700'
     },
 
     titleSecondary:{
         color: "#000000",
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '500'
     },
     
     titleTertiary:{
         color: "#FFFFFF",
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '500'
     },
     
     textPrimary:{
         color: "#FFFFFF",
-        fontSize: 18,
+        fontSize: 16,
     },
     
     textSecondary:{
         color: "#CCCCCC",
-        fontSize: 18
+        fontSize: 16
     },
 
     inputText:{
         color: "#000000",
-        fontSize: 16
+        fontSize: 14
     },
 
     buttonLabel:{
         color: "#000000",
         fontWeight: '500',
-        fontSize: 16
+        fontSize: 14
     },
     buttonLabelPrimary:{
         color: "#E9E9E9",
         fontWeight: '500',
-        fontSize: 16
+        fontSize: 14
     },
     buttonLabelSecondary:{
         color: "#3429A8",
         fontWeight: '500',
-        fontSize: 16
+        fontSize: 14
     },
     
     placeholderPrimary:{
         color: "#E9E9E9",
-        fontSize: 16
+        fontSize: 14
     },
     
     placeholderSecondary:{
         color: "#000000",
-        fontSize: 16
+        fontSize: 14
     },
 
 //Box

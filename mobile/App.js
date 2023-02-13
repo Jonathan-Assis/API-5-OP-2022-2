@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler'
+import './src/lib/dayjs';
 import React from "react";
 import { StatusBar, SafeAreaView } from 'react-native'
 import stylesVar from './src/styles/stylesVar'

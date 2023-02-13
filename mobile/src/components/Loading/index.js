@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Animated } from 'react-native';
+import { View, Text, Animated } from 'react-native';
 
 import styles from './styles'
 
-export default function Loading({ loading, children }) {
+export default function Loading({ loading, children, title }) {
     const animations = {
         one: new Animated.Value(0),
         two: new Animated.Value(0),
@@ -46,7 +46,11 @@ export default function Loading({ loading, children }) {
         loading
             ? (
                 <View style={styles.container}>
-                    <View style={styles.body}>
+                    {
+                        title && 
+                            <Text style={styles.title}>{title}</Text>
+                    }
+                        <View style={styles.body}>
                         <Animated.View style={[
                             styles.bBall, 
                             {transform:[{translateY: animations.one}]}]} />

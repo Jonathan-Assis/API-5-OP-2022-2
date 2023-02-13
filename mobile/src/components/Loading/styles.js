@@ -21,6 +21,10 @@ const styles = StyleSheet.create({
         margin:10,
         ...stylesVar.boxPrimary,
     },
+    title: {
+        ...stylesVar.titleSecondary,
+        paddingBottom:15,
+    }
 })
 
 export default styles;

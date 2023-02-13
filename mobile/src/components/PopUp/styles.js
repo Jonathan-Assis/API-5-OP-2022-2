@@ -25,9 +25,7 @@ const styles = StyleSheet.create({
     hTitle:{
         marginTop:10,
         textAlign: 'center',
-        ...stylesVar.titlePrimary,
-        fontSize:22,
-        
+        ...stylesVar.titlePrimary,        
     },
     body:{
         marginVertical:15,
@@ -37,7 +35,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         opacity:0.6,
         flexWrap:'wrap',
-        fontSize:17,
     },
     footer:{
         flexDirection: 'row',
@@ -50,7 +47,7 @@ const styles = StyleSheet.create({
         ...stylesVar.boxPrimary
     },
     fButtonPrimaryLabel:{
-        padding:12,
+        padding:10,
         ...stylesVar.buttonLabelPrimary
     },
     fButtonSecondary:{
@@ -61,8 +58,66 @@ const styles = StyleSheet.create({
         ...stylesVar.strokeBoxPrimary
     },
     fButtonSecondaryLabel:{
-        padding:12,
+        padding:10,
         ...stylesVar.buttonLabelSecondary
     },
+
+
+    modalTermos: {
+        width:'90%',
+        padding:15,
+        margin:50,
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        ...stylesVar.boxSecondary
+    },
+
+    headerTermos:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    hTermosTitle: {
+        ...stylesVar.titlePrimary,
+        paddingLeft:5,
+        marginRight:5 
+    },
+
+    bodyTermos: {
+        marginVertical:10,
+        borderColor:'#D4D4D4',
+        borderWidth:1.5,
+        borderRadius:10,
+        padding:10
+    },
+
+    bTermosDescription: {
+        fontSize:14,
+    },
+
+    fTermosButtonEnabled:{
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal:5,
+        ...stylesVar.boxPrimary,
+        padding: 10
+    },
+
+    fTermosButtonDisabled:{
+        flex:1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal:5,
+        backgroundColor: '#C4C4C4',
+        borderRadius: 16,
+        padding: 10
+    },
+
+    fTermosButtonLabel:{
+        ... stylesVar.titleTertiary,
+        textAlign: 'center',
+    }
 })
 export default styles

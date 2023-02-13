@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCalendarDays, faCamera, faCircleInfo, faCommentDots, faImages, faMapLocationDot, faXmark } from '@fortawesome/free-solid-svg-icons'
 import * as ImagePicker from 'expo-image-picker';
 import styles from './styles'
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 
 const BottomSheetImage = ({
@@ -121,7 +121,7 @@ return(
 
 
 const convertDateTime = (data) => {
-    return moment(data).utcOffset('-03:00').format('DD/MM/YYYY HH:mm');
+    return dayjs(data).format('D MMMM, YYYY h:mm A');
   }
 
 const BottomSheet = ({ 

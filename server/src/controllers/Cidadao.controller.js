@@ -5,23 +5,34 @@ var jwt = require('jsonwebtoken');
 
 class CidadaoController {
     static async newCidadao(req, res) {
-        var popup_notify = false;
-        var push_notify = false;
+        var notify = {
+            popup:false,
+            push: false
+        }
         const client = new MongoClient(url);
-        const { cpf, nome, email, senha, notificacao } = req.body;
-        if(notificacao){
-            popup_notify = true;
-            push_notify = true;
+        const data = req.body;
+
+        if(data.notificacao){
+            notify.popup = true;
+            notify.push = true;
         }
         try {
             const opdb = client.db('opdb');
 
-            opdb.collection('cidadao').find({ cpf }).toArray((err, value) => {
+            opdb.collection('cidadao').find({ cpf: data.cpf }).toArray((err, value) => {
                 if(err) throw err;
+                data.termos.id = new ObjectId(data.termos.id)
                 try {
                     if(!value.length) {
                         opdb.collection('cidadao')
-                        .insertOne({ cpf, nome, email, senha, popup_notify, push_notify })
+                        .insertOne({ 
+                            cpf: data.cpf, 
+                            nome: data.nome, 
+                            email: data.email, 
+                            senha: data.senha, 
+                            notificacao: notify, 
+                            termos: data.termos
+                        })
                         .then(async result => {
                             res.json(!!result)
                         });
@@ -73,7 +84,7 @@ class CidadaoController {
             .then(result => {
                 if(!!result) {
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
-                    
+
                     bucket.openDownloadStreamByName(result._id.toString())
                     .once('error', err => {
                         err?.code === 'ENOENT' && console.error(err)
@@ -137,18 +148,23 @@ class CidadaoController {
     static async updateCidadao(req, res) {
         const client = new MongoClient(url);
         const data = req.body;
-        
+        if(data.imagem === 'false'){
+            data.imagem = JSON.parse(data.imagem)
+        }
+        if(typeof data.notificacao === 'string'){
+            data.notificacao = JSON.parse(data.notificacao)
+        }
+
         try {
             const opdb = client.db('opdb');
             const result = await opdb.collection('cidadao').updateOne(
                 { _id: new ObjectId(data.id) },
                 { $set: {
                     nome: data.nome,
-                    cpf: data.cpf,
                     email: data.email,
+                    cpf: data.cpf,
                     senha: data.senha,
-                    popup_notify: data.popup_notify,
-                    push_notify: data.push_notify
+                    notificacao: data.notificacao
                 } }
             );
 

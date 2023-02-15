@@ -85,16 +85,7 @@ class CidadaoController {
                 if(!!result) {
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
 
-                    bucket.openDownloadStreamByName(result._id.toString())
-                    .once('error', err => {
-                        err?.code === 'ENOENT' && console.error(err)
-                        //client.close();
-                        //res.json(result);
-                    })
-                    .once('data', data => {
-                        result.imagem = data.toString();
-                    })
-                    .once('end', () => {
+                    const finish = () => {
                         client.close();
                         let tokenData = {
                             nome: result.nome,
@@ -104,6 +95,20 @@ class CidadaoController {
                             expiresIn: '5m',
                         })
                         res.json({token: generatedToken, result});
+                    }
+
+                    bucket.openDownloadStreamByName(result._id.toString())
+                    .once('error', err => {
+                        err?.code === 'ENOENT' && console.error(err)
+                        finish();
+                        //client.close();
+                        //res.json(result);
+                    })
+                    .once('data', data => {
+                        result.imagem = data.toString();
+                    })
+                    .once('end', () => {
+                        finish();
                     });
                 }
                 else {

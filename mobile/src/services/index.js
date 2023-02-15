@@ -8,11 +8,7 @@ let conn = axios.create({
 
 export default class ServerConnection {
     static async cadastro(data) {
-        return await conn.post('/cidadao/cadastro', data, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
+        return await conn.post('/cidadao/cadastro', data);
     }
 
     static async validarCpf(data) {
@@ -24,10 +20,17 @@ export default class ServerConnection {
     }
 
     static async editarPerfil(data, tokenData) {
-        return await conn.put('/cidadao/update', data, {
+        let formBody = [];
+        for(let property in data) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(data[property]);
+            formBody.push(encodedKey + '=' + encodedValue);
+        }
+        formBody = formBody.join("&");
+        return await conn.put('/cidadao/update', formBody, {
             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${tokenData}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
             },
         })
         .then(({ data }) => data);
@@ -58,12 +61,23 @@ export default class ServerConnection {
     }
 
     static async ocorrencia(data, tokenData) {
-        return await conn.post('/ocorrencia/new', data, {
+        let formBody = [];
+        for(let property in data) {
+            let encodedKey = encodeURIComponent(property);
+            let encodedValue = encodeURIComponent(data[property]);
+            formBody.push(encodedKey + '=' + encodedValue);
+        }
+        formBody = formBody.join("&");
+        return await conn.post('/ocorrencia/new', formBody, {
             headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${tokenData}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
             },
         });
+    }
+
+    static async getLastTermos(){
+        return await conn.get('/termos/last')
     }
 
 }

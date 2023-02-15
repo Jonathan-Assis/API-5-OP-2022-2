@@ -133,6 +133,7 @@ export const AuthProvider = ({children}) =>{
                 }
                 aux._id = aux.id;
                 delete aux.id
+                aux.notificacao = JSON.parse(aux.notificacao)
                 setAuth(JSON.stringify(aux));
                 AsyncStorage.setItem('@AuthData',(JSON.stringify(aux)));
             }

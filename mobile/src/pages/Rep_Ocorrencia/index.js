@@ -88,12 +88,12 @@ const Rep_Ocorrencia = (props) => {
       }
   },[coordinate])
 
-var dataAtual = new Date()
+
 const newOcorrencia = () => {
  if(imagem !== false && categoria !== '' && selectedSubType !== '' && titulo !== '' && local !== '' && descricao !== '' ) {
         setLoading(true);
         ServerConnection.ocorrencia({
-          cidadao:cidadao, local: local, titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data:dataAtual, bairro:localidade?.bairro,
+          cidadao:cidadao, local: JSON.stringify(local), titulo: titulo, descricao: descricao, categoria:categoria, subCategoria: selectedSubType,  data: new Date().toISOString(), bairro:localidade?.bairro,
           imagem: imagem?.base64,
         }, tokenData).then(result => {
           if(!!result) {

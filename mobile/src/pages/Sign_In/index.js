@@ -6,7 +6,7 @@ import styles from './styles';
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
 import LogoOP from '../../assets/Logotype/LogoOP.svg'
-import Animated, { ZoomInRotate } from 'react-native-reanimated';
+import Animated, { BounceIn } from 'react-native-reanimated';
 
 const Sign_In = () => {
   const navigation = useNavigation();
@@ -21,7 +21,7 @@ const Sign_In = () => {
       <View style={styles.header}
       >
         <Animated.View
-          entering={ZoomInRotate}
+          entering={BounceIn}
         >
           <LogoOP  style={styles.hLogotype} />
         </Animated.View>

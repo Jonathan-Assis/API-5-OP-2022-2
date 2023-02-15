@@ -6,27 +6,31 @@ class OcorrenciaController {
     static async newOcorrencia(req, res) {
         const client = new MongoClient(url);
 
-        const {
-            cidadao, titulo, descricao, local,
-            bairro, categoria, subCategoria,
-            data, imagem
-        } = req.body;
+        const data = req.body;
+
+        if(typeof data.local === 'string'){
+            data.local = JSON.parse(data.local)
+        }
 
         try {
             const opdb = client.db('opdb');
             await opdb.collection('ocorrencias')
             .insertOne({
-                cidadao: ObjectId(cidadao),
-                local: local,
-                titulo, descricao, categoria,
-                subCategoria, data, bairro
+                cidadao: ObjectId(data.cidadao),
+                local: data.local,
+                titulo: data.titulo,
+                descricao: data.descricao,
+                categoria: data.categoria,
+                subCategoria: data.subCategoria,
+                data: data.data,
+                bairro: data.bairro
             })
             .then(async result => {
-                if(result && imagem.length) {
+                if(result && data.imagem.length) {
                     const temp_path = __dirname + '/temp.txt';
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemOcorrencia' });
 
-                    fs.writeFileSync(temp_path, Buffer.from(imagem));
+                    fs.writeFileSync(temp_path, Buffer.from(data.imagem));
                     fs.createReadStream(temp_path)
                     .pipe(bucket.openUploadStream(result.insertedId.toString(), {
                         chunkSizeBytes: 1048576

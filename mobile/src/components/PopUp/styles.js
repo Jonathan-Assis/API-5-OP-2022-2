@@ -62,13 +62,12 @@ const styles = StyleSheet.create({
         ...stylesVar.buttonLabelSecondary
     },
 
-
     modalTermos: {
-        width:'90%',
+        flex:1,
         padding:15,
-        margin:50,
+        marginHorizontal:20,
+        marginVertical:25,
         alignItems: 'center',
-        flexWrap: 'wrap',
         ...stylesVar.boxSecondary
     },
 
@@ -83,6 +82,10 @@ const styles = StyleSheet.create({
         paddingLeft:5,
         marginRight:5 
     },
+    hTermosCreatedAt: {
+        fontSize:12,
+        fontWeight: 'bold',
+    },
 
     bodyTermos: {
         marginVertical:10,
@@ -94,6 +97,11 @@ const styles = StyleSheet.create({
 
     bTermosDescription: {
         fontSize:14,
+    },
+
+    bTermosCheckBox: {
+        flexDirection: 'row',
+        alignItems: 'center',
     },
 
     fTermosButtonEnabled:{
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
     },
 
     fTermosButtonLabel:{
-        ... stylesVar.titleTertiary,
+        ...stylesVar.titleTertiary,
         textAlign: 'center',
     }
 })

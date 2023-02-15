@@ -19,7 +19,9 @@ const Sign_Up = () => {
     const [ showPassword, setShowPassword ] = useState(false);
     const [ showConfPassword, setShowConfPassword ] = useState(false);
     const [ showTermos, setShowTermos ] = useState(false);
-
+    const [termsAccepted, setTermsAccepted] = useState([])
+    const [aboutTerms,setAboutTerms] = useState({})
+    console.log()
     const [ state, setState ] = useState({
         nome: undefined,
         cpf: undefined,
@@ -27,14 +29,17 @@ const Sign_Up = () => {
         senha: undefined,
         confSenha: undefined,
         notificacao: false,
-        termos: false,
+        terms: false,
     });
 
+    console.log()
+
     const cadastro = async () => {
-        const { nome, cpf: cpf_aux, email, senha, confSenha, notificacao, termos } = state;
-        if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha && !!termos) {
+        const { nome, cpf: cpf_aux, email, senha, confSenha, notificacao } = state;
+        if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha && !!termsAccepted) {
             if(senha === confSenha) {
                 const cpf = cpf_aux.split('.-').join('');
+                const termos = Object.assign(termsAccepted, aboutTerms)
                 setLoading(true);
                 ServerConnection.validarCpf({ cpf: cpf })
                 .then(({ data }) => {
@@ -80,7 +85,12 @@ const Sign_Up = () => {
     return (
         <Loading loading={loading}>
             <PopUpTermos
-                setIsAccepted={e => setState(prev => { return { ...prev, termos: e } })}
+                setIsAccepted={e => setState(prev => { return { ...prev, terms: e } })}
+                termsAccepted={termsAccepted}
+                accepted={Object.values(termsAccepted).some(e => true === e)}
+                setTermsAccepted={setTermsAccepted}
+                aboutTerms={aboutTerms}
+                setAboutTerms={setAboutTerms}
                 visible={showTermos} 
                 setVisible={setShowTermos}
             />
@@ -181,7 +191,7 @@ const Sign_Up = () => {
                     />
                     <CheckBox 
                         title='Declaro que li e aceito os termos de uso'
-                        checked={state.termos}
+                        checked={state.terms}
                         onPress={()=> setShowTermos(true)}
                     />
 

@@ -87,12 +87,12 @@ export const AuthProvider = ({children}) =>{
         });
     }
 
-    async function signUp(nome, cpf, email, senha, imagem) {
+    async function signUp(nome, cpf, email, senha, notificacao, termos) {
         setLoading(true);
         let aux = SHA256(senha).toString();
         
         await ServerConnection.cadastro({
-            nome, cpf, email, senha: aux, imagem
+            nome, cpf, email, senha: aux, notificacao, termos
         })
         .catch((e) => {
             console.error(e);
@@ -105,7 +105,7 @@ export const AuthProvider = ({children}) =>{
 
     async function updateAuth(data) {
         let aux = data;
-        
+
         aux.senha = aux.senha
         ? aux.senha === aux.senha_prev
             ? aux.senha_prev : SHA256(aux.senha).toString()
@@ -124,11 +124,13 @@ export const AuthProvider = ({children}) =>{
             aux.imagem = 'null';// deleta a imagem
         }
 
-        setLoading(true);        
+        setLoading(true);
         await ServerConnection.editarPerfil(aux, tokenData)
         .then(res => {
             if(res?.modifiedCount) {
-                if(aux.imagem === 'null') delete aux.imagem;
+                if(aux.imagem === 'null') {
+                    delete aux.imagem;
+                }
                 aux._id = aux.id;
                 delete aux.id
                 setAuth(JSON.stringify(aux));

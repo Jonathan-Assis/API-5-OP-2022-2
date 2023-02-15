@@ -7,8 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import {PopUpAlert,PopUpActions, BottomSheetImage, Loading} from '../../components'
 import styles from './styles';
-import * as Location from "expo-location";
-
 
 import { useRoute } from '@react-navigation/native';
 import { useAuth } from '../../contexts/Auth';
@@ -28,7 +26,6 @@ const Rep_Ocorrencia = (props) => {
   const [titulo,setTitulo]=useState('')
   const [local,setLocal]=useState({})
   const [localidade,setLocalidade]=useState({})
-  const [geoCode,setGeoCode]=useState({})
   const [descricao,setDescricao]=useState('')
 
   const [loading, setLoading ] = useState(false);
@@ -233,7 +230,7 @@ useEffect(() => {
                   (<>
                     <Text style={styles.bTitle2}>{categoria}</Text> 
                     <Text style={styles.bTitle}>Selecione o Principal Motivo:</Text> 
-                    <TouchableOpacity style={styles.bPickerBox}> 
+                    <View style={styles.bPickerBox}> 
                       <Picker
                         style={styles.bPickerTitle}
                         dropdownIconColor={styles.bPickerBox.borderColor.valueOf()}
@@ -255,7 +252,7 @@ useEffect(() => {
                           })
                         }
                       </Picker>
-                    </TouchableOpacity>
+                    </View>
                   </>)
                   :
                   (<>

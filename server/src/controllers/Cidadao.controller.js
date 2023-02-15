@@ -88,8 +88,8 @@ class CidadaoController {
                     bucket.openDownloadStreamByName(result._id.toString())
                     .once('error', err => {
                         err?.code === 'ENOENT' && console.error(err)
-                        client.close();
-                        res.json(result);
+                        //client.close();
+                        //res.json(result);
                     })
                     .once('data', data => {
                         result.imagem = data.toString();

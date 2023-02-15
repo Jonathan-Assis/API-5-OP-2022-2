@@ -25,8 +25,10 @@ const Edit_Profile = () => {
     email: authData.email || undefined,
     senha: undefined,
     confSenha: undefined,
-    popup_notify: authData.popup_notify || undefined ,
-    push_notify: authData.push_notify || undefined
+    notificacao: authData.notificacao ||  {
+      push: undefined,
+      popup: undefined
+    }
   });
 
   const [visible,setVisible]=useState(false)
@@ -43,13 +45,13 @@ const Edit_Profile = () => {
   const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
   const [ imageModal, setImageModal ] = useState(false)
   const update = async () => {
-    const { _id: id, nome, email, cpf: cpf_aux, senha, confSenha, popup_notify, push_notify } = data;
+    const { _id: id, nome, email, cpf: cpf_aux, senha, confSenha, notificacao } = data;
     if(!!nome && !!email && !!cpf_aux) {
       if((!senha && !confSenha) || senha === confSenha) {
         const cpf = cpf_aux.split('.-').join('');
         updateAuth({
           id, nome, email, cpf, imagem: imagem, senha,
-          senha_prev: authData.senha, popup_notify, push_notify
+          senha_prev: authData.senha, notificacao: JSON.stringify(notificacao)
         }).then(() => {
           setVisible(false)
         })
@@ -216,13 +218,19 @@ const Edit_Profile = () => {
             <View style={styles.bNotification}>
               <CheckBox
                 title='Receber dicas de uso'
-                checked={data.push_notify}
-                onPress={()=> setData(prev => ({...prev, push_notify: !prev.push_notify}))}
+                checked={data.notificacao.push}
+                onPress={()=> setData(prev => ({...prev, notificacao:{ 
+                  push:!prev.notificacao.push,
+                  popup:prev.notificacao.popup,
+                }}))}
                 />
               <CheckBox
                 title='Receber ocorrência mais recente'
-                checked={data.popup_notify}
-                onPress={()=> setData(prev => ({...prev, popup_notify: !prev.popup_notify}))}
+                checked={data.notificacao.popup}
+                onPress={()=> setData(prev => ({...prev, notificacao:{ 
+                  push:prev.notificacao.push,
+                  popup:!prev.notificacao.popup,
+                }}))}
               />
             </View>
 

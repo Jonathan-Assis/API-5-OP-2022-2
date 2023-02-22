@@ -1,22 +1,32 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { View, Text,TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {
   faCircleUser, faUserPen, faTriangleExclamation, faEye, faEyeSlash, faKey,
   faPenToSquare, faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
-import { PopUpActions, PopUpAlert, BottomSheetImage, CheckBox } from '../../components'
+import { PopUpActions, PopUpAlert, BottomSheetImage, CheckBox, Loading, PopUpChangeTermos } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
+import { useFocusEffect } from "@react-navigation/native";
+import ServerConnection from '../../services';
 
 
 const Edit_Profile = () => {
-  const authData = JSON.parse(useAuth().authData);
+  const authData = JSON.parse(useAuth().authData)
+  //const [authData,setAuthData] = useState(JSON.parse(useAuth().authData))
+  const [loading, setLoading]=useState(false)
   const { updateAuth, deleteAuth } = useAuth();
 
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showConfPassword, setShowConfPassword ] = useState(false);
   
+ /*  useFocusEffect( useCallback(() => {
+    setLoading(true);
+    setAuthData(JSON.parse(useAuth().authData))
+    setLoading(false);
+  },[])) */
+
 
   const [ data, setData ] = useState({
     _id: authData._id || undefined,
@@ -79,7 +89,12 @@ const Edit_Profile = () => {
     setImageModal(true)
   }
 
+
   return (
+    <>
+   { loading ? (
+     <Loading loading={loading} />
+   ) : (
     <>
       { 
         !!popUpData.buttonSecondaryTitle
@@ -108,6 +123,10 @@ const Edit_Profile = () => {
               setVisible={setVisible}
             />
       }
+
+      <PopUpChangeTermos 
+        visible={true}
+      />
 
       <BottomSheetImage
         imagem={imagem}
@@ -234,6 +253,10 @@ const Edit_Profile = () => {
               />
             </View>
 
+            <Text style={styles.bTitle}>Termos de Uso</Text>
+            
+
+
             <TouchableOpacity style={styles.bButton}
               onPress={()=>{
                 setPopUpData({
@@ -272,6 +295,8 @@ const Edit_Profile = () => {
           </View>
         </View>
       </ScrollView>
+    </>
+    )}
     </>
   );
 }

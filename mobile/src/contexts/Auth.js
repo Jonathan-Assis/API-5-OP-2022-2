@@ -52,7 +52,6 @@ export const AuthProvider = ({children}) =>{
         //console.log(schedules);
       }
 
-
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
         const token = await AsyncStorage.getItem('@Token')
@@ -70,7 +69,7 @@ export const AuthProvider = ({children}) =>{
         .then(({data}) => {
             setTokenData(data.token)
             setAuth(JSON.stringify(data.result));
-            AsyncStorage.setItem('@Token',(JSON.stringify(data.token)))
+            AsyncStorage.setItem('@Token',(data.token))
             AsyncStorage.setItem('@AuthData',(JSON.stringify(data.result)))
             .then(() => {
                 if(first) {

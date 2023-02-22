@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faBook } from '@fortawesome/free-solid-svg-icons'
 import ServerConnection from '../../services'
 import dayjs from 'dayjs'
+import { useAuth } from '../../contexts/Auth'
 
 const PopUpActions = ({
     icon, 
@@ -111,6 +112,7 @@ return(
     </Modal>
     )
 }
+
 const PopUpTermos = ({
     setIsAccepted,
     accepted,
@@ -134,6 +136,7 @@ const PopUpTermos = ({
         })
         .catch((e)=> console.error(e))
     }
+    
     const [termos, setTermos] = useState({})
     const [isLoading, setIsLoading] = useState(true)
     const headers = async (sessions) =>{
@@ -240,4 +243,95 @@ const PopUpTermos = ({
     )
 }
 
-export { PopUpActions, PopUpAlert, PopUpTermos }
+const PopUpChangeTermos = ({
+    setIsAccepted,
+    accepted,
+    visible,
+    setVisible,
+    aboutTerms,
+    setAboutTerms,
+    termsAccepted,
+    setTermsAccepted
+}) => {
+    const authData = JSON.parse(useAuth().authData)
+
+    const [getHeaders,setGetHeaders] = useState({})
+  
+    const getTermos = async () => {
+        await ServerConnection.getLastTermos()
+        .then(({data})=> {
+            setTermos(data)
+            setAboutTerms({id:data._id, acceptedAt: new Date().toISOString()})
+            if(Object.keys(data).length > 1){
+                headers(data?.sessions)
+            }
+        })
+        .catch((e)=> console.error(e))
+    }
+    
+    const [termos, setTermos] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
+    const headers = async (sessions) =>{
+        let aux = {}
+        const title = await sessions.map(e => e.title)
+        setTermsAccepted(()=> { 
+            title.map(e => {
+                aux[e] = false
+            })
+            return aux
+        })
+        setGetHeaders(()=> { 
+            title.map(e => {
+                aux[e] = false
+            })
+            return aux
+        })
+    }
+    
+    const getCompairTermos = async (id) => {
+        await ServerConnection.compairTermos({"id":id})
+        .then(data => {
+            setTermos(data)
+
+            console.log('DADOS', data.data)
+        })
+        .catch(e => console.log(e))
+    }
+    
+    useEffect(() => {
+        getCompairTermos(authData._id)
+    },[])
+    
+    
+    return (
+        <Modal
+            animationType="fade"
+            visible={visible}
+            hardwareAccelerated={true}
+            transparent
+        >
+            <View style={styles.container}>
+                <View style={styles.modal}>
+                    <View style={styles.header}>
+                        <View style={styles.hIcon}>
+                        </View>
+                        <Text style={styles.hTitle}>titulo</Text>
+                    </View>
+                    <View style={styles.body}>
+                        <Text style={styles.bDescription}>descrição</Text>
+                    </View>
+                    
+                    <View style={styles.footer}>
+                        <TouchableOpacity
+                            style={styles.fButtonSecondary}
+                            >
+                            <Text style={styles.fButtonSecondaryLabel}>Fechar</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+        </Modal>
+    )
+}
+
+export { PopUpActions, PopUpAlert, PopUpTermos, PopUpChangeTermos }

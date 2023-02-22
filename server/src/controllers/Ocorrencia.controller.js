@@ -147,6 +147,44 @@ class OcorrenciaController {
             //client.close();
         }
     }
+    static async getLastOcorrencia(req,res) {
+        const client = new MongoClient(url);
+        const data = req.body;
+
+        try {
+            const opdb = client.db('opdb');
+
+            const bucket = new GridFSBucket(opdb, { bucketName: 'imagemOcorrencia' });
+            await opdb.collection('ocorrencias').findOne({}, {sort:{$natural:-1}})
+                .then(result => {
+                bucket.openDownloadStreamByName(result._id.toString())
+                .once('error', err => {
+                    err?.code === 'ENOENT' && console.error(err);
+                    client.close();
+                    res.json(result);
+                })
+                .once('data', data => {
+                    client.close();
+                    
+                    res.json({
+                        ...result,
+                        foto: data.toString()
+                    });
+                });
+            })
+            .catch(e => {
+                console.error(e);
+                throw 'Ocorrência não encontrada';
+            });
+        }
+        catch(e) {
+            console.error(e);
+            res.status(400).json({error: e});
+        }
+        finally {
+            //client.close();
+        }
+    }
 
     static async getCategoria(req, res) {
         const client = new MongoClient(url);

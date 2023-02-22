@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text,TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {
@@ -8,24 +8,15 @@ import {
 import { PopUpActions, PopUpAlert, BottomSheetImage, CheckBox, Loading, PopUpChangeTermos } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
-import { useFocusEffect } from "@react-navigation/native";
-import ServerConnection from '../../services';
 
 
 const Edit_Profile = () => {
   const authData = JSON.parse(useAuth().authData)
-  //const [authData,setAuthData] = useState(JSON.parse(useAuth().authData))
   const [loading, setLoading]=useState(false)
   const { updateAuth, deleteAuth } = useAuth();
 
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showConfPassword, setShowConfPassword ] = useState(false);
-  
- /*  useFocusEffect( useCallback(() => {
-    setLoading(true);
-    setAuthData(JSON.parse(useAuth().authData))
-    setLoading(false);
-  },[])) */
 
 
   const [ data, setData ] = useState({
@@ -88,7 +79,6 @@ const Edit_Profile = () => {
   const imageOptions = () => {
     setImageModal(true)
   }
-
 
   return (
     <>

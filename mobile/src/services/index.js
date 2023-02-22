@@ -80,4 +80,13 @@ export default class ServerConnection {
         return await conn.get('/termos/last')
     }
 
+    static async compairTermos(data){
+        console.log(data)
+        return await conn.post('/termos/compair', data, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+    }
+
 }

@@ -87,7 +87,7 @@ class TermosController {
 
         try {
             const opdb = client.db('opdb');
-            const result = await opdb.collection('termos').findOne();
+            const result = await opdb.collection('termos').findOne({}, {sort:{$natural:-1}})
 
             if(!!result) {
                 res.json(result);
@@ -103,6 +103,44 @@ class TermosController {
         finally {
             client.close();
         }
+    }
+
+    static async compairTermo(req, res) {
+        const client = new MongoClient(url);
+        const data = req.body;
+        console.log(data)
+        try {
+            const opdb = client.db('opdb');
+            const lastTermo = await opdb.collection('termos').findOne({}, {sort:{$natural:-1}})
+            const cidadao = await opdb.collection('cidadao').findOne({
+                _id: new ObjectId(data.id)
+            })
+
+            if(!!cidadao && !!lastTermo){
+                let termoAtual = cidadao.termos.filter((value) => value.id.toString() == lastTermo._id.toString())
+                
+                if(termoAtual.length > 0){
+                    res.json({
+                        lastTermo: lastTermo._id.toString(),
+                        termos: cidadao.termos
+                    })
+                }
+                else {
+                    res.json({termoAtual: false})
+                }
+            }
+            else {
+                throw 'Termos de Uso não encontrado'
+            }         
+        } 
+        catch (e) {
+            console.error(e)
+            res.status(400).json({error: e});
+        }
+        finally {
+            client.close();
+        }
+
     }
 }
 module.exports = TermosController;

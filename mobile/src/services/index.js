@@ -1,6 +1,6 @@
 import axios from 'axios';
  
-const url = 'http://192.168.18.4:3001';
+const url = 'http://192.168.0.10:3001';
 let conn = axios.create({
     baseURL: url,
     timeout: 30000,
@@ -73,6 +73,14 @@ export default class ServerConnection {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 Authorization: `Bearer ${tokenData}`,
             },
+        });
+    }
+
+    static async getTermos(data, tokenData) {
+        return await conn.post('/termos/get', data, {
+            headers: {
+                Authorization: `Bearer ${tokenData}`
+            }
         });
     }
 

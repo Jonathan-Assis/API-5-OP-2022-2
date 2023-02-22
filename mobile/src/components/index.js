@@ -1,7 +1,7 @@
 import { BottomSheetImage, BottomSheet } from './BottomSheet'
 import { CheckBox } from './CheckBox';
 import Loading from './Loading';
-import { PopUpActions, PopUpAlert, PopUpTermos, PopUpChangeTermos } from './PopUp'
+import { PopUpActions, PopUpAlert, PopUpTermos, PopUpChangeTermos, PopUpShowTermo } from './PopUp'
 import { Walkthrough } from './Walkthrough'
 
 export {
@@ -12,6 +12,7 @@ export {
     PopUpActions,
     PopUpAlert,
     PopUpChangeTermos,
+    PopUpShowTermo,
     PopUpTermos,
     Walkthrough
 }

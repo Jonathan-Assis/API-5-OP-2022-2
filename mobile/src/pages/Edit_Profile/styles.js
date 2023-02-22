@@ -113,7 +113,17 @@ const styles = StyleSheet.create({
     bNotification: {
         marginBottom:5,
         width: '100%',
-        paddingHorizontal: 5
+        paddingHorizontal: 5,
+        marginBottom: 15
+    },
+
+    bTermsAttached: {
+        flexDirection: 'row',
+        alignContent: 'center',
+    },
+
+    bAttachedLabel: {
+        marginStart: 5
     },
 
     bSwitch: {

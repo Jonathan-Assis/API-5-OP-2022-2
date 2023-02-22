@@ -108,7 +108,7 @@ class TermosController {
     static async compairTermo(req, res) {
         const client = new MongoClient(url);
         const data = req.body;
-        console.log(data)
+        
         try {
             const opdb = client.db('opdb');
             const lastTermo = await opdb.collection('termos').findOne({}, {sort:{$natural:-1}})
@@ -117,17 +117,11 @@ class TermosController {
             })
 
             if(!!cidadao && !!lastTermo){
-                let termoAtual = cidadao.termos.filter((value) => value.id.toString() == lastTermo._id.toString())
-                
-                if(termoAtual.length > 0){
-                    res.json({
-                        lastTermo: lastTermo._id.toString(),
-                        termos: cidadao.termos
-                    })
-                }
-                else {
-                    res.json({termoAtual: false})
-                }
+                res.json({
+                    lastTermo: lastTermo._id.toString(),
+                    version: lastTermo.versao,
+                    termos: cidadao.termos
+                })
             }
             else {
                 throw 'Termos de Uso não encontrado'

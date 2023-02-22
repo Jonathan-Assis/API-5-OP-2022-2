@@ -160,6 +160,8 @@ class CidadaoController {
             data.notificacao = JSON.parse(data.notificacao)
         }
 
+        data.termos = JSON.parse(data.termos)
+
         try {
             const opdb = client.db('opdb');
             const result = await opdb.collection('cidadao').updateOne(
@@ -169,7 +171,8 @@ class CidadaoController {
                     email: data.email,
                     cpf: data.cpf,
                     senha: data.senha,
-                    notificacao: data.notificacao
+                    notificacao: data.notificacao,
+                    termos: data.termos
                 } }
             );
 

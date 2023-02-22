@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text,TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, Text,TextInput, TouchableOpacity, ScrollView, Image, Button } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {
   faCircleUser, faUserPen, faTriangleExclamation, faEye, faEyeSlash, faKey,
   faPenToSquare, faTrashCan
 } from '@fortawesome/free-solid-svg-icons'
-import { PopUpActions, PopUpAlert, BottomSheetImage, CheckBox, Loading, PopUpChangeTermos } from '../../components'
+import { PopUpActions, PopUpAlert, BottomSheetImage, CheckBox, Loading, PopUpChangeTermos, PopUpShowTermo } from '../../components'
 import { useAuth } from '../../contexts/Auth';
 import styles from './styles';
 
@@ -29,7 +29,8 @@ const Edit_Profile = () => {
     notificacao: authData.notificacao ||  {
       push: undefined,
       popup: undefined
-    }
+    },
+    termos: authData.termos ?? []
   });
 
   const [visible,setVisible]=useState(false)
@@ -46,13 +47,24 @@ const Edit_Profile = () => {
   const [ imagem, setImagem ] = useState({ base64: authData?.imagem })
   const [ imageModal, setImageModal ] = useState(false)
   const update = async () => {
-    const { _id: id, nome, email, cpf: cpf_aux, senha, confSenha, notificacao } = data;
+    const {
+      _id: id,
+      nome,
+      email,
+      cpf: cpf_aux,
+      senha,
+      confSenha,
+      notificacao,
+      termos
+    } = data;
+
     if(!!nome && !!email && !!cpf_aux) {
       if((!senha && !confSenha) || senha === confSenha) {
         const cpf = cpf_aux.split('.-').join('');
         updateAuth({
           id, nome, email, cpf, imagem: imagem, senha,
-          senha_prev: authData.senha, notificacao: JSON.stringify(notificacao)
+          senha_prev: authData.senha, notificacao: JSON.stringify(notificacao),
+          termos: JSON.stringify(termos)
         }).then(() => {
           setVisible(false)
         })
@@ -79,6 +91,13 @@ const Edit_Profile = () => {
   const imageOptions = () => {
     setImageModal(true)
   }
+
+  const [ termsPopUp, setTermsPopUp ] = useState(false)
+  const [ termsData, setTermsData ] = useState()
+  const [termsAccepted, setTermsAccepted] = useState([])
+
+  const [ showTermos, setShowTermos ] = useState(false)
+  const [ showOldTerms, setShowOldTerms ] = useState(false);
 
   return (
     <>
@@ -115,8 +134,48 @@ const Edit_Profile = () => {
       }
 
       <PopUpChangeTermos 
-        visible={true}
+        visible={termsPopUp}
+        setVisible={setTermsPopUp}
+        setTermsData={setTermsData}
       />
+
+      {showTermos && <PopUpShowTermo
+        termo_id={termsData.lastTermo}
+        visible={showTermos}
+        setVisible={setShowTermos}
+        prevAccepted={data.termos.find(a => a.id === termsData.lastTermo) ?? []}
+        setTermChange={e => {
+          const index = data.termos.findIndex(a => a.id === termsData.lastTermo)
+
+          if(index >= 0) {
+            data.termos.splice(index, 1, {
+              ...e,
+              id: data.termos[index].id,
+              acceptedAt: new Date().toISOString()
+            })
+          }
+          else {
+            data.termos.unshift({
+              ...e,
+              id: termsData.lastTermo,
+              acceptedAt: new Date().toISOString()
+            })
+          }
+        }}
+        accepted={Object.values(termsAccepted).some(e => e === true)}
+        termsAccepted={termsAccepted}
+        setTermsAccepted={setTermsAccepted}
+      />}
+
+      {showOldTerms && <PopUpShowTermo
+        termo_id={data.termos[0].id}
+        old={true}
+        visible={showOldTerms}
+        setVisible={setShowOldTerms}
+        prevAccepted={data.termos[0]}
+        termsAccepted={termsAccepted}
+        setTermsAccepted={setTermsAccepted}
+      />}
 
       <BottomSheetImage
         imagem={imagem}
@@ -241,11 +300,17 @@ const Edit_Profile = () => {
                   popup:!prev.notificacao.popup,
                 }}))}
               />
+              <CheckBox
+                title='Declaro que li e aceito os termos de uso'
+                checked={Object.values(data.termos[0]).some(e => e === true)}
+                onPress={()=> setShowTermos(true)}
+              />
+
+              {!!termsData && termsData.lastTermo !== data.termos[0].id &&//mudar depois
+                <TouchableOpacity style={styles.bTermsAttached} onPress={() => setShowOldTerms(true)}>
+                <Text style={styles.bAttachedLabel}>Última vesão dos Termos de Uso</Text>
+              </TouchableOpacity>}
             </View>
-
-            <Text style={styles.bTitle}>Termos de Uso</Text>
-            
-
 
             <TouchableOpacity style={styles.bButton}
               onPress={()=>{

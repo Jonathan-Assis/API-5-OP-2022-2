@@ -39,7 +39,7 @@ const Sign_Up = () => {
         if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha && !!termsAccepted) {
             if(senha === confSenha) {
                 const cpf = cpf_aux.split('.-').join('');
-                const termos = Object.assign(termsAccepted, aboutTerms)
+                const termos = [Object.assign(termsAccepted, aboutTerms)]
                 setLoading(true);
                 ServerConnection.validarCpf({ cpf: cpf })
                 .then(({ data }) => {

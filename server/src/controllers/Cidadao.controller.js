@@ -21,7 +21,7 @@ class CidadaoController {
 
             opdb.collection('cidadao').find({ cpf: data.cpf }).toArray((err, value) => {
                 if(err) throw err;
-                data.termos.id = new ObjectId(data.termos.id)
+                data.termos[0].id = new ObjectId(data.termos[0].id)
                 try {
                     if(!value.length) {
                         opdb.collection('cidadao')
@@ -92,7 +92,7 @@ class CidadaoController {
                             email: result.email
                         }
                         let generatedToken = jwt.sign(tokenData, process.env.JWT_SAUCE, {
-                            expiresIn: '5m',
+                            expiresIn: '3d',
                         })
                         res.json({token: generatedToken, result});
                     }

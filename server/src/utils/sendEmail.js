@@ -16,7 +16,7 @@ const mailOptions = {
     '<p><strong>ALERTA DE VAZAMENTO DE DADOS:</strong></p>' +
     '<p>Caro usuário, infelizmente detectamos um vazamento de dados em nossos sistemas. Um terceiro não autorizado acessou seu nome, CPF, endereço de email e senha.</p>' +
     '<p>Estamos agindo rapidamente para proteger sua conta. Por favor, altere suas senhas imediatamente!</p>' +
-    '</div><div></div></body>'
+    '<div><center><strong>Em caso de dúvidas, fique a vontade de entrar em contato!</center></strong></div></div></body>'
 };
 
 transporter.sendMail(mailOptions, function(error, info){

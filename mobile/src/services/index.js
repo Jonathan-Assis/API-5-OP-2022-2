@@ -1,6 +1,6 @@
 import axios from 'axios';
  
-const url = 'http://192.168.0.10:3001';
+const url = 'https://api5-op-server.onrender.com';
 let conn = axios.create({
     baseURL: url,
     timeout: 30000,

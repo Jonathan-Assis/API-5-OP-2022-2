@@ -1,7 +1,15 @@
 const express = require('express');
 const cors = require('cors');
+const cron = require('node-cron');
+const backupUtils = require('./utils/backupDB')
+
 require("dotenv").config();
 require('./models');
+
+
+// need to install mongodump: https://www.mongodb.com/docs/database-tools/installation/installation/
+// https://crontab.guru/#0_0_*/14_*_*
+cron.schedule('0 0 */14 * *', () => backupUtils.backup()).start();
 
 const routes = require('./routes');
 const app = express();

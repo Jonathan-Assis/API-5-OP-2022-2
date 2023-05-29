@@ -171,33 +171,52 @@ class CidadaoController {
             data.notificacao = JSON.parse(data.notificacao)
         }
 
-        data.termos = JSON.parse(data.termos)
+        data.termos = JSON.parse(JSON.stringify(data.termos))
+
+        const _id = data.id
+        const image_aux = data.imagem
+        delete data.id
+        delete data.imagem
 
         try {
+
+            var cryptData = ''
+
+            const oldKey = await keyServerConn.post('findKey', { id: data.id_chave })
+            .then(result => result.data);
+
+            const key = await keyServerConn.put('updateKey',  {
+                oldId: oldKey.id,
+                newId: SHA256(data.email + data.senha).toString()
+            })
+            .then(result => {
+                const key = result.data
+                delete data.id_chave
+                
+                cryptData = AES.encrypt(JSON.stringify(data), key.chave).toString()
+                return key
+            });
+
             const opdb = client.db('opdb');
             const result = await opdb.collection('cidadao').updateOne(
-                { _id: new ObjectId(data.id) },
+                { _id: new ObjectId(_id) },
                 { $set: {
-                    nome: data.nome,
-                    email: data.email,
-                    cpf: data.cpf,
-                    senha: data.senha,
-                    notificacao: data.notificacao,
-                    termos: data.termos
+                    data: cryptData,
+                    id_chave: key.id
                 } }
             );
 
-            if(data.imagem) {
+            if(image_aux) {
                 const temp_path = __dirname + '/temp.txt';
                 const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
 
-                const clear = bucket.find({ filename: data.id })
+                const clear = bucket.find({ filename: _id })
                 clear.forEach(doc => bucket.delete(doc._id))
 
-                if(data.imagem !== 'null') {
-                    fs.writeFileSync(temp_path, Buffer.from(data.imagem))
+                if(image_aux !== 'null') {
+                    fs.writeFileSync(temp_path, Buffer.from(image_aux))
                     fs.createReadStream(temp_path)
-                    .pipe(bucket.openUploadStream(data.id, {
+                    .pipe(bucket.openUploadStream(_id, {
                         chunkSizeBytes: 1048576
                     }))
                     .once('close', () => {

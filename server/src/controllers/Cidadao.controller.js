@@ -2,6 +2,8 @@ const { ObjectId, MongoClient, GridFSBucket } = require('mongodb');
 const fs = require('fs');
 const url = process.env.DB;
 var jwt = require('jsonwebtoken');
+const keyServerConn = require('../models/keyServerConn');
+const { SHA256, AES } = require('crypto-js');
 
 class CidadaoController {
     static async newCidadao(req, res) {
@@ -16,28 +18,37 @@ class CidadaoController {
             notify.popup = true;
             notify.push = true;
         }
+
+        data.notificacao = notify
+
         try {
+            var key = {};
+            var cryptData = ''
+            var keyId = SHA256(data.email + data.senha).toString();
+
+            await keyServerConn.post('saveKey', { id: keyId })
+            .then(result => {
+                key = result.data
+                cryptData = AES.encrypt(JSON.stringify(data), key.chave).toString()
+            });
+
             const opdb = client.db('opdb');
 
-            opdb.collection('cidadao').find({ cpf: data.cpf }).toArray((err, value) => {
+            opdb.collection('cidadao').find({ id_chave: key?.id }).toArray((err, value) => {
                 if(err) throw err;
                 data.termos[0].id = new ObjectId(data.termos[0].id)
                 try {
                     if(!value.length) {
                         opdb.collection('cidadao')
                         .insertOne({ 
-                            cpf: data.cpf, 
-                            nome: data.nome, 
-                            email: data.email, 
-                            senha: data.senha, 
-                            notificacao: notify, 
-                            termos: data.termos
+                            data: cryptData,
+                            id_chave: key?.id
                         })
                         .then(async result => {
                             res.json(!!result)
                         });
                     }
-                    else throw 'CPF já cadastrado'
+                    else throw 'Usuário já cadastrado'
                 }
                 catch(e) {
                     console.error(e);

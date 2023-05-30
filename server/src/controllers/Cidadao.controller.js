@@ -282,11 +282,19 @@ class CidadaoController {
 
         try {
             const opdb = client.db('opdb');
-            const result = await opdb.collection('cidadao').deleteOne({
+            const result = await opdb.collection('cidadao').findOne({
                 _id: new ObjectId(id)
             });
 
-            res.json({ deletedCount: result.deletedCount });
+            await opdb.collection('cidadao').updateOne(
+                { _id: result._id },
+                { $set: {
+                    id_chave: null
+                }}
+            )
+
+            await keyServerConn.delete(`deleteKey/${result.id_chave}`)
+            .then(delete_result => res.json({ deletedCount: delete_result.data }));
         }
         catch(e) {
             console.error(e);

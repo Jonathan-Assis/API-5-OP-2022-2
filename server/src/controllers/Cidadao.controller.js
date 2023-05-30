@@ -42,7 +42,7 @@ class CidadaoController {
                         opdb.collection('cidadao')
                         .insertOne({ 
                             data: cryptData,
-                            id_chave: key?.id
+                            id_chave: key?.chave_id
                         })
                         .then(async result => {
                             res.json(!!result)
@@ -101,13 +101,18 @@ class CidadaoController {
                     var key = {}
                     var decryptData = {}
 
-                    await keyServerConn.post('findKey', { id: keyId })
+                    await keyServerConn.get(`findKey/${keyId}`)
                     .then(key_result => {
                         key = key_result.data
+                        if(!key) throw 'Usuário desconhecido'
+
                         decryptData = JSON.parse(AES.decrypt(result.data, key.chave).toString(enc.Utf8))
                     })
 
                     if(decryptData.senha !== data.senha) throw 'Senha inválida'
+
+                    decryptData._id = result._id
+                    decryptData.id_chave = result.id_chave
 
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
 
@@ -197,7 +202,7 @@ class CidadaoController {
 
             var cryptData = ''
 
-            const oldKey = await keyServerConn.post('findKey', { id: data.id_chave })
+            const oldKey = await keyServerConn.get(`findKey/${data.id_chave}`)
             .then(result => result.data);
 
             const key = await keyServerConn.put('updateKey',  {
@@ -217,7 +222,7 @@ class CidadaoController {
                 { _id: new ObjectId(_id) },
                 { $set: {
                     data: cryptData,
-                    id_chave: key.id
+                    id_chave: key.chave_id
                 } }
             );
 

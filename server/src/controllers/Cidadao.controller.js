@@ -166,7 +166,19 @@ class CidadaoController {
             });
 
             if(!!result) {
-                res.json(result);
+                var key = {}
+                decryptData = {}
+
+                await keyServerConn.get(`findKey/${result.id_chave}`)
+                .then(key_result => {
+                    key = key_result.data
+                    decryptData = JSON.parse(AES.decrypt(result.data, key.chave).toString(enc.Utf8))
+                });
+
+                decryptData._id = result._id
+                decryptData.id_chave = result.id_chave
+
+                res.json(decryptData);
             }
             else {
                 throw 'Cidadão não encontrado'

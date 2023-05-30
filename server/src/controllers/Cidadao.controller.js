@@ -24,7 +24,7 @@ class CidadaoController {
         try {
             var key = {};
             var cryptData = ''
-            var keyId = SHA256(data.email + data.senha).toString();
+            var keyId = SHA256(data.cpf + process.env.HASH_SALT).toString();
 
             await keyServerConn.post('saveKey', { id: keyId })
             .then(result => {
@@ -187,7 +187,7 @@ class CidadaoController {
 
             const key = await keyServerConn.put('updateKey',  {
                 oldId: oldKey.id,
-                newId: SHA256(data.email + data.senha).toString()
+                newId: SHA256(data.cpf + process.env.HASH_SALT).toString()
             })
             .then(result => {
                 const key = result.data

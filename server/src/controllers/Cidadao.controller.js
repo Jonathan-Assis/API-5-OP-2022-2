@@ -3,7 +3,7 @@ const fs = require('fs');
 const url = process.env.DB;
 var jwt = require('jsonwebtoken');
 const keyServerConn = require('../models/keyServerConn');
-const { SHA256, AES } = require('crypto-js');
+const { SHA256, AES, enc } = require('crypto-js');
 
 class CidadaoController {
     static async newCidadao(req, res) {
@@ -70,9 +70,11 @@ class CidadaoController {
         const data = req.body;
 
         try {
+            const keyId = SHA256(data.cpf + process.env.HASH_SALT).toString();
+
             const opdb = client.db('opdb');
             await opdb.collection('cidadao').findOne({
-                cpf: data?.cpf
+                id_chave: keyId
             })
             .then(result => res.json(!result));
         }
@@ -87,25 +89,38 @@ class CidadaoController {
         const data = req.body;
 
         try {
+            const keyId = SHA256(data.cpf + process.env.HASH_SALT).toString();
+
             const opdb = client.db('opdb');
             await opdb.collection('cidadao').findOne({
-                cpf: data.cpf,
-                senha: data.senha 
+                id_chave: keyId
             })
-            .then(result => {
+            .then(async result => {
                 if(!!result) {
+
+                    var key = {}
+                    var decryptData = {}
+
+                    await keyServerConn.post('findKey', { id: keyId })
+                    .then(key_result => {
+                        key = key_result.data
+                        decryptData = JSON.parse(AES.decrypt(result.data, key.chave).toString(enc.Utf8))
+                    })
+
+                    if(decryptData.senha !== data.senha) throw 'Senha inválida'
+
                     const bucket = new GridFSBucket(opdb, { bucketName: 'imagemPerfil' });
 
                     const finish = () => {
                         client.close();
                         let tokenData = {
-                            nome: result.nome,
-                            email: result.email
+                            nome: decryptData.nome,
+                            email: decryptData.email
                         }
                         let generatedToken = jwt.sign(tokenData, process.env.JWT_SAUCE, {
                             expiresIn: '3d',
                         })
-                        res.json({token: generatedToken, result});
+                        res.json({token: generatedToken, decryptData});
                     }
 
                     bucket.openDownloadStreamByName(result._id.toString())
@@ -116,7 +131,7 @@ class CidadaoController {
                         //res.json(result);
                     })
                     .once('data', data => {
-                        result.imagem = data.toString();
+                        decryptData.imagem = data.toString();
                     })
                     .once('end', () => {
                         finish();
@@ -124,7 +139,7 @@ class CidadaoController {
                 }
                 else {
                     console.error(result);
-                    throw 'CPF ou Senha inválidos'
+                    throw 'CPF inválido'
                 }
             });
             

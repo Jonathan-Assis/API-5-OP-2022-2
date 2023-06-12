@@ -2,9 +2,11 @@ import styles from './styles'
 import React from 'react'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { CardHome } from './CardState'
+import {useNavigation} from '@react-navigation/native'
 
+const Home = () => { 
+  const navigation = useNavigation()
 
-const Home = () => {  
   return (
     <View style={styles.container}>
       <View style={styles.header}>

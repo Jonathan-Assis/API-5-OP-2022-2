@@ -1,86 +1,51 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import {useNavigation} from '@react-navigation/native'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
-import styles from './styles';
+import styles from './styles'
+import React from 'react'
+import { View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { CardHome } from './CardState'
 
-//Icons
-import { faTree, faPersonDigging, faLightbulb, faPersonChalkboard } from '@fortawesome/free-solid-svg-icons'
-import PipeIcon from '../../assets/Icons/Saneamento.svg'
 
 const Home = () => {  
-  const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
-       <ScrollView>
       <View style={styles.header}>
         <Text style={styles.hTitle}>Bem-vindo(a) ao Ocorrências Públicas!</Text>  
-      </View>
-      <View style={styles.body}>
-       
-          <Text style={styles.bTitle}>Selecione a categoria da ocorrência a ser reportado.</Text>  
-          <View style={styles.bRow}>
-            
-            <View style={styles.bColumn}>
-              <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-                name: 'Rep_Ocorrencia',
-                params:{
-                  TipoOcorrencia:'Eletricidade'
-                }
-              })}>
-              <FontAwesomeIcon icon={ faLightbulb } size={50} color={'white'}/>
-                <Text style={styles.bButtonTitle}>Elétricidade</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-                name: 'Rep_Ocorrencia',
-                params:{
-                  TipoOcorrencia:'Natureza'
-                }
-              })}>
-              <FontAwesomeIcon icon={ faTree } size={50} color={'white'} />
-                <Text style={styles.bButtonTitle}>Natureza</Text>
-              </TouchableOpacity>
-            </View>
+          <Text style={styles.bTitle}>Selecione a categoria da ocorrência a ser reportada.</Text>  
+      </View> 
 
-            <View style={styles.bColumn}>
-              <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-                name: 'Rep_Ocorrencia',
-                params:{
-                  TipoOcorrencia:'Pavimentação'
-                }
-              })}>
-                <FontAwesomeIcon icon={ faPersonDigging } size={50} color={'white'} />
-                <Text style={styles.bButtonTitle}>Pavimentação</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-                name: 'Rep_Ocorrencia',
-                params:{
-                  TipoOcorrencia:'Saneamento'
-                }
-              })}>
-                <PipeIcon width="58" height="58" />
-                <Text style={styles.bButtonTitle}>Saneamento</Text>
-              </TouchableOpacity>
+      <FlatList
+        data={CardHome}
+        scrollEnabled
+        showsVerticalScrollIndicator={false}
+        renderItem={({item, index}) => (
+          <TouchableOpacity key={`${item.title + index}`} style={styles.bButton} onPress={() => navigation.navigate({
+            name: 'Rep_Ocorrencia',
+            params: {
+              TipoOcorrencia: item.routeParams
+            }
+            })}>
+            <View style={{flex:1, flexDirection: 'row', justifyContent:'space-around', alignItems:'center'}}>
+              <View style={{flex: 1, justifyContent:'space-between'}}>
+                <View>
+                  <Text style={[styles.bButtonTitle, {fontSize:26, paddingBottom:50}]}>{item.title}</Text>
+                </View>
+                <View style={{flex:1, justifyContent:'flex-start', alignItems:'flex-start'}}>
+                  {item.relations ? 
+                  <>
+                    <Text style={styles.bButtonTitle}>Problemas relacionados:</Text>
+                    <Text style={styles.bButtonTitle}>{item.relations}</Text>
+                  </>
+                  :
+                  <Text style={styles.bButtonTitle}>Problemas que não estão relacionados com as outras categorias.</Text>
+                  }
+                  </View>
+              </View>
+              {item.icon}
             </View>
-            
-            <View style={styles.bColumn}>
-              <TouchableOpacity style={styles.bButton} onPress={() => navigation.navigate({
-                name: 'Rep_Ocorrencia',
-                params:{
-                  TipoOcorrencia:'Outros'
-                }
-              })}>
-                <FontAwesomeIcon icon={ faPersonChalkboard } size={50} color={'white'} />
-                <Text style={styles.bButtonTitle}>Outros</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        
-      </View>
-      </ScrollView>
+          </TouchableOpacity>
+        )}
+      />
     </View>
-  );
+  )
 }
 
 export default Home

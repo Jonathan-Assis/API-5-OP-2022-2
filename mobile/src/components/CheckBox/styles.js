@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const styles = StyleSheet.create({
     container: {
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     notChecked: {
-        ...stylesVar.backgroundSecondary,
+        ...StyledColors.background.Secondary,
         height: 25,
         width: 25,
         borderRadius: 5,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     },
     label:{
         marginLeft: 10,
-        ...stylesVar.titleSecondary
+        ...StyledVariables.text.Medium.Primary
     }
 })
 

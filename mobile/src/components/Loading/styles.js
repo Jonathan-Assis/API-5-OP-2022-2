@@ -1,29 +1,21 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
-
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
     },
-    body:{
-        flex:0.2,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    bBall:{
-        width:15,
-        height:15,
-        margin:10,
-        ...stylesVar.boxPrimary,
+    logo:{
+        width:175, 
+        height:175,
+        color:'#ffffff'
     },
     title: {
-        ...stylesVar.titleSecondary,
-        paddingBottom:15,
+        ...StyledVariables.text.Medium.Tertiary,
+        fontSize: 22
     }
 })
 

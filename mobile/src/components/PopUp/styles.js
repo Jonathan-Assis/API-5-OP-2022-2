@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledColors, StyledVariables } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         width:'73%',
         padding:15,
         alignItems: 'center',
-        ...stylesVar.boxSecondary
+        ...StyledVariables.box.Colored.Secondary
     },
     header:{
         alignItems: 'center',
@@ -20,18 +20,18 @@ const styles = StyleSheet.create({
     hIcon:{
         padding:25,
         borderRadius:100,
-        ...stylesVar.backgroundPrimary,
+        ...StyledColors.background.Primary,
     },
     hTitle:{
         marginTop:10,
         textAlign: 'center',
-        ...stylesVar.titlePrimary,        
+        ...StyledVariables.text.Large.Primary,        
     },
     body:{
         marginVertical:15,
     },
     bDescription:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         textAlign: 'center',
         opacity:0.6,
         flexWrap:'wrap',
@@ -44,22 +44,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal:5,
-        ...stylesVar.boxPrimary
+        ...StyledVariables.box.Colored.Primary
     },
     fButtonPrimaryLabel:{
         padding:10,
-        ...stylesVar.buttonLabelPrimary
+        ...StyledVariables.text.Regular.Secondary
     },
     fButtonSecondary:{
         flex:1,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal:5,
-        ...stylesVar.strokeBoxPrimary
+        ...StyledVariables.box.Stroke.Primary
     },
     fButtonSecondaryLabel:{
         padding:10,
-        ...stylesVar.buttonLabelSecondary
+        ...StyledVariables.text.Medium.Purple
     },
 
     modalTermos: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         marginHorizontal:20,
         marginVertical:25,
         alignItems: 'center',
-        ...stylesVar.boxSecondary
+        ...StyledVariables.box.Colored.Secondary
     },
 
     headerTermos:{
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     },
 
     hTermosTitle: {
-        ...stylesVar.titlePrimary,
+        ...StyledVariables.text.Large.Primary,
         paddingLeft:5,
         marginRight:5 
     },
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal:5,
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         padding: 10
     },
 
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
 
     fTermosButtonLabel:{
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         textAlign: 'center',
     }
 })

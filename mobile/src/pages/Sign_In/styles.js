@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors, Colors } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        ...stylesVar.backgroundPrimary,
+        ...StyledColors.background.Primary,
         justifyContent: 'space-between',
     },
     header:{
@@ -17,11 +17,11 @@ const styles = StyleSheet.create({
     hLogotype:{
         width:175, 
         height:175,
-        color:'#ffffff'
+        color:Colors.white
     },
 
     hTitle:{
-        ...stylesVar.titlePrimary,
+        ...StyledVariables.text.Large.Primary,
         fontWeight:'500',
         color: '#E9E9E9',
     },
@@ -34,33 +34,33 @@ const styles = StyleSheet.create({
         padding:16,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
     },
 
     bInput:{
         marginBottom:7
     },
     bDescription:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         fontSize:16,
         opacity:0.5,
         marginBottom:5    
     },
 
     bTitle:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         marginBottom:3
     },
 
     bInputBox:{
-        ...stylesVar.strokeBoxPrimary,
+        ...StyledVariables.box.Stroke.Primary,
         padding: 8,
         paddingHorizontal:15,
     },
     bInputPassword:{
         flexDirection: 'row',
         alignItems: 'center',
-        ...stylesVar.strokeBoxPrimary,
+        ...StyledVariables.box.Stroke.Primary,
     },
     bInputPasswordBox:{
         flex:1,
@@ -72,11 +72,11 @@ const styles = StyleSheet.create({
     },
     bLabel:{
         textAlign:'center',
-        ...stylesVar.titleTertiary
+        ...StyledVariables.text.Medium.Tertiary
     },
     
     bButton:{
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         padding: 12,
         marginVertical:10
     },
@@ -89,12 +89,12 @@ const styles = StyleSheet.create({
         marginVertical:10
     },
     fDescription:{
-        color: '#000000'
+        color: Colors.black
     },
     fDescriptionCadastro:{
         textDecorationLine:'underline',
         fontWeight:'bold',
-        color: '#3429A8'
+        color: Colors.purplePrimary
     }
 })
 

@@ -1,12 +1,12 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
     },
 
     body: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         borderRadius: 100, 
         overflow: "hidden", 
         borderWidth: 2,
-        borderColor:'#3429A8'
+        borderColor:'#4444EE'
     },
     
     bBottomImageButton:{
@@ -35,9 +35,9 @@ const styles = StyleSheet.create({
         right: -10,
         padding: 5,
         borderWidth: 2,
-        borderColor:'#3429A8',
+        borderColor:'#4444EE',
         borderRadius:100,
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
     },
 
     bImageStyle: {
@@ -46,18 +46,18 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         overflow: "hidden",
         borderWidth: 2,
-        borderColor:'#3429A8'
+        borderColor:'#4444EE'
     },
 
     bImageLabel:{
         textAlign: 'center',
         fontSize:20,
         fontWeight:'bold',
-        color: '#3429A8',
+        color: '#4444EE',
     },
     
     bTitle:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         marginBottom:3
     },
     
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     },
 
     bInputBox:{
-        ...stylesVar.strokeBoxPrimary,
+        ...StyledVariables.box.Stroke.Primary,
         padding: 8,
         paddingHorizontal:15,
     },
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     bInputPassword: {
         flexDirection: 'row',
         alignItems: 'center',
-        ...stylesVar.strokeBoxPrimary
+        ...StyledVariables.box.Stroke.Primary
     },
 
     bInputPasswordBox: {
@@ -96,12 +96,12 @@ const styles = StyleSheet.create({
 
     bLabel:{
         textAlign:'center',
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         paddingHorizontal:10
     },
     
     bButton:{
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         padding: 12,
         marginVertical:10,
         flex:1,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     },
 
     bNotificationLabel: {
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         flexWrap: 'nowrap',
     },
 
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         width: '100%',
         borderRadius:10,
         borderWidth: 0.5,
-        borderColor:'#3429A8',
+        borderColor:'#4444EE',
         margin:10,
    }
 })

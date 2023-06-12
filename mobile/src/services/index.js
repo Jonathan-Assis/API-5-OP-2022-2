@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from 'axios'
  
-const url = 'https://api5-op-server.onrender.com';
+const url = 'https://api5-op-server.onrender.com'
 let conn = axios.create({
     baseURL: url,
     timeout: 30000,
@@ -89,7 +89,6 @@ export default class ServerConnection {
     }
 
     static async compairTermos(data){
-        console.log(data)
         return await conn.post('/termos/compair', data, {
             headers: {
                 'Content-Type': 'application/json',

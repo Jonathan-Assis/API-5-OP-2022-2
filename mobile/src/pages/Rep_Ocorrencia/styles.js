@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
     },
 
     PopUpLogotype:{
@@ -42,14 +42,14 @@ const styles = StyleSheet.create({
         position:'absolute',
         bottom:20,
         borderRadius:100,
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
     },
 
     hTitle:{
         textAlign: 'center',
         fontSize:20,
         fontWeight:'bold',
-        color: '#3429A8',
+        color: '#4444EE',
         bottom:0
     },
  
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
         padding:25,
         borderTopEndRadius: 30,
         borderTopStartRadius: 30,
-        ...stylesVar.backgroundPrimary,
+        ...StyledColors.background.Primary,
     },
 
     bInput:{
@@ -73,40 +73,40 @@ const styles = StyleSheet.create({
 
     bTitle:{
         textAlign: 'center',
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         marginBottom:3
     },
 
     bTitle2:{
         textAlign: 'center',
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         marginBottom: 20
     },
 
     bInputStrokeBox:{
         textAlign: 'center',
-        ...stylesVar.strokeBoxSecondary,
-        ...stylesVar.placeholderPrimary,
+        ...StyledVariables.box.Stroke.Secondary,
+        ...StyledVariables.text.Regular.Secondary,
         padding: 10,
         paddingHorizontal:15,
     },
 
     bInputBox:{
         textAlign: 'center',
-        ...stylesVar.boxSecondary,
-        ...stylesVar.placeholderSecondary,
+        ...StyledVariables.box.Colored.Secondary,
+        ...StyledVariables.text.Regular.Primary,
         padding: 10,
         minHeight: 100,
     },
 
     bPickerBox:{
-        ...stylesVar.strokeBoxSecondary,
+        ...StyledVariables.box.Stroke.Secondary,
         marginBottom:10,
     },
 
     bPickerTitle:{
         flexWrap: 'nowrap',        
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
     },
 
     bArquivo:{
@@ -118,11 +118,11 @@ const styles = StyleSheet.create({
 
     bLabel:{
         textAlign:'center',
-        ...stylesVar.titleSecondary
+        ...StyledVariables.text.Medium.Primary
     },
     
     bButton:{
-        ...stylesVar.boxSecondary,
+        ...StyledVariables.box.Colored.Secondary,
         padding: 14,
         marginVertical:10
     },
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        ...stylesVar.strokeBoxSecondary,
+        ...StyledVariables.box.Stroke.Secondary,
         padding: 10,
         paddingHorizontal:25,
         marginBottom:15,
@@ -140,14 +140,14 @@ const styles = StyleSheet.create({
     bButtonMapLabel:{
         textAlign: 'center',
         marginHorizontal:20,
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
     },
 
     bButtonMapSelected:{
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        ...stylesVar.boxSecondary,
+        ...StyledVariables.box.Colored.Secondary,
         padding: 11,
         paddingHorizontal:25,
         marginBottom:15,
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     bButtonMapLabelSelected:{
         textAlign: 'center',
         marginHorizontal:20,
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
     }
 
 })

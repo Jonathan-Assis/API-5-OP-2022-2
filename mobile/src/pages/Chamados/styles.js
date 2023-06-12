@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet, Dimensions } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const {width, height} = Dimensions.get('window')
 const CARD_HEIGHT = 250;
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     hTitle:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         textAlign: 'center',
     },
     header:{
@@ -25,16 +25,16 @@ const styles = StyleSheet.create({
       padding:16,
       alignItems: 'center',
       justifyContent: 'center',
-      ...stylesVar.backgroundPrimary
+      ...StyledColors.background.Primary
     },
     permissionDisableTitle:{
-      ...stylesVar.titlePrimary,
+      ...StyledVariables.text.Large.Primary,
       color:'#ffffff',
       textAlign: 'center',  
       paddingVertical:5
     },
     permissionDisableDescription:{
-      ...stylesVar.textSecondary,
+      ...StyledVariables.text.Medium.Secondary,
       textAlign: 'center',  
       paddingBottom:10
     },
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
       flex:1,
       elevation: 2,
       padding:14,
-      ...stylesVar.boxSecondary,
+      ...StyledVariables.box.Colored.Secondary,
       marginHorizontal: 16,
     },
     permissionDisableCardLabel:{
       textAlign:'center',
-      ...stylesVar.buttonLabelSecondary,
+      ...StyledVariables.text.Medium.Purple,
     },
     permissionDisableMarker:{
       width:150, height:150, color:'#DD4B3E'
@@ -59,23 +59,23 @@ const styles = StyleSheet.create({
     hCategory:{
         padding:8,
         marginHorizontal:6,
-        ...stylesVar.boxSecondary,
+        ...StyledVariables.box.Colored.Secondary,
         justifyContent: 'center',
         alignItems: 'center',
-        ...stylesVar.strokeBoxPrimary,
+        ...StyledVariables.box.Stroke.Primary,
     },
     hSubCategoryTitle:{
-        ...stylesVar.titleTertiary,
-        color: stylesVar.backgroundPrimary.backgroundColor,
+        ...StyledVariables.text.Medium.Tertiary,
+        color: StyledColors.background.Primary.backgroundColor,
         textAlign: 'center',
         paddingHorizontal:4,
     },
 
     hSelectedCategory:{
-        ...stylesVar.boxPrimary
+        ...StyledVariables.box.Colored.Primary
     },
     hSelectedCategoryTitle:{
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         textAlign: 'center',  
         paddingHorizontal:4
     },
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignSelf: 'flex-start',
         borderRadius: 6,
-        borderColor: stylesVar.backgroundPrimary.backgroundColor,
+        borderColor: StyledColors.background.Primary.backgroundColor,
         backgroundColor: "orange",
         borderWidth: 0.5,
         padding:15,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     arrow:{
         backgroundColor:'transparent',
         borderColor:'transparent',
-        borderTopColor: stylesVar.backgroundSecondary.backgroundColor,
+        borderTopColor: StyledColors.background.Secondary.backgroundColor,
         borderWidth: 15,
         alignSelf: 'center',
         marginTop: -32
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     bCard: {
       position: "relative",
       elevation: 2,
-      ...stylesVar.backgroundSecondary,
+      ...StyledColors.background.Secondary,
       borderRadius: 10,
       marginHorizontal: 10,
       height: CARD_HEIGHT,
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     },
 
     bCardBodyTitle: {
-      ...stylesVar.titleSecondary,
+      ...StyledVariables.text.Medium.Primary,
       top:-5
     },
     bCardBodyDescription: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     },
     bCardFooterButtonLabel: {
       textAlign:'center',
-      ...stylesVar.buttonLabelSecondary,
+      ...StyledVariables.text.Medium.Purple,
       fontWeight:'bold'
     },
 })

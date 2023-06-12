@@ -1,11 +1,11 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{ 
         flex: 1,
         padding: 18,
-        ...stylesVar.backgroundPrimary
+        ...StyledColors.background.Primary
     },
 
     header:{
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
     hTitle:{
         marginBottom: 10,
-        ...stylesVar.titleTertiary
+        ...StyledVariables.text.Medium.Tertiary
     },
 
     body:{
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         overflow: "hidden",
         borderWidth: 2,
-        borderColor:'#3429A8'
+        borderColor:'#4444EE'
     },
 
     bEmailBox:{
@@ -44,17 +44,17 @@ const styles = StyleSheet.create({
 
     bTitle:{
         marginBottom:5,
-        ...stylesVar.titleTertiary
+        ...StyledVariables.text.Medium.Tertiary
     },
     
     bText:{
-        ...stylesVar.textSecondary
+        ...StyledVariables.text.Medium.Secondary
     },
     
     fLabel:{
         textAlign:'center',
         paddingHorizontal:10,
-        ...stylesVar.titleTertiary
+        ...StyledVariables.text.Medium.Tertiary
     },
     
     fButton:{
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginVertical: 5,
         marginHorizontal:10,
-        ...stylesVar.strokeBoxSecondary
+        ...StyledVariables.box.Stroke.Secondary
     },
 
     footer:{

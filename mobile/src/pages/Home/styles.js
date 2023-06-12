@@ -1,19 +1,20 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
-        ...stylesVar.backgroundSecondary,
+        ...StyledColors.background.Secondary,
         flex: 1
     },
 
     header:{
-        margin:16,
+        marginHorizontal:16,
+        marginTop:16,
         paddingBottom:7
     },
 
     hTitle:{
-        ...stylesVar.titlePrimary,
+        ...StyledVariables.text.Large.Primary,
         flexWrap:'wrap'
     },
 
@@ -23,35 +24,36 @@ const styles = StyleSheet.create({
     },
 
     bTitle:{
-        ...stylesVar.titleSecondary
+        ...StyledVariables.text.Medium.Primary
     },
     bIcon:{
-        ...stylesVar.icon,
+        ...StyledColors.icon.White,
     },
     bButton:{
-        ...stylesVar.boxPrimary,
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
+        ...StyledVariables.box.Colored.Primary,
+        /* alignItems: 'center',
+        justifyContent: 'space-evenly', */
         padding:10,
         margin:10,
-        width:150,
-        height:150,
+        flex:1
+        /* width:150,
+        height:150, */
     },
     bButtonTitle:{
-        ...stylesVar.titleTertiary,
-        textAlign: 'center',
+        ...StyledVariables.text.Medium.Tertiary,
+        padding:5
     },
 
     bRow:{
-        marginVertical:10,
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
         flexWrap:'wrap',
     },
     bColumn:{
-        alignItems: 'center',
-        justifyContent: 'space-around',
+        flex:1
+        /* alignItems: 'center',
+        justifyContent: 'space-around', */
 
     }
 })

@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables, StyledColors, Colors } from '../../styles'
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        ...stylesVar.backgroundSecondary,
+        ...StyledColors.background.Secondary,
     },
     
     body: {
@@ -18,12 +18,12 @@ const styles = StyleSheet.create({
     },
 
     bLabelTitle:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         marginBottom:3
     },
 
     bInputBox:{
-        ...stylesVar.strokeBoxPrimary,
+        ...StyledVariables.box.Stroke.Primary,
         padding: 8,
         paddingHorizontal:15,
     },
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     bInputPassword: {
         flexDirection: 'row',
         alignItems: 'center',
-        ...stylesVar.strokeBoxPrimary
+        ...StyledVariables.box.Stroke.Primary
     },
 
     bInputPasswordBox: {
@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     },
 
     bButton:{
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         padding: 12,
         marginVertical:10
     },
 
     bLabel:{
         textAlign:'center',
-        ...stylesVar.titleTertiary
+        ...StyledVariables.text.Medium.Tertiary
     },
     footer:{
         width:'100%',
@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
         marginVertical:5
     },
     fDescription:{
-        color: '#000000'
+        color: Colors.black
     },
     fDescriptionLogin:{
         textDecorationLine:'underline',
         fontWeight:'bold',
-        color: '#3429A8'
+        color: Colors.purplePrimary
     }
 })
 

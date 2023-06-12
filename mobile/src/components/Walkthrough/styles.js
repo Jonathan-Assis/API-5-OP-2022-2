@@ -1,12 +1,12 @@
-import { Dimensions, StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { Dimensions, StyleSheet } from 'react-native'
+import { StyledColors } from '../../styles'
 
 const {width, height} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        ...stylesVar.backgroundSecondary,
+        ...StyledColors.background.Secondary,
         alignItems: 'center',
         justifyContent: 'center'
     },

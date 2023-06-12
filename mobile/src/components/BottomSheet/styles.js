@@ -1,5 +1,5 @@
-import { StyleSheet, Dimensions } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet, Dimensions } from 'react-native'
+import { StyledVariables, StyledColors } from '../../styles'
 
 const {height:SCREEN_HEIGHT}=Dimensions.get('window')
 
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         padding:15,
         borderTopRightRadius:16,
         borderTopLeftRadius:16,
-        ...stylesVar.backgroundSecondary,
+        ...StyledColors.background.Secondary,
     },
     
 footer:{
@@ -26,23 +26,23 @@ footer:{
     },
     fTitle:{
         marginBottom:10,
-        ...stylesVar.titleSecondary,    
+        ...StyledVariables.text.Medium.Primary,    
     },
     fButton:{
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical:5,
         paddingLeft:20,
-        ...stylesVar.boxPrimary
+        ...StyledVariables.box.Colored.Primary
     },
     fButtonLabel:{
         padding:16,
         alignItems: 'center',
-        ...stylesVar.buttonLabelPrimary
+        ...StyledVariables.text.Regular.Secondary
     },
 
     bottomSheetContainer:{
-        ...stylesVar.backgroundSecondary,
+        ...StyledColors.background.Secondary,
         height:SCREEN_HEIGHT,
         width:'100%',
         position: 'absolute',
@@ -51,7 +51,7 @@ footer:{
     },
     modalContainer:{
         flex:1,
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
       },
       exitButton:{
         position: 'absolute',
@@ -75,7 +75,7 @@ footer:{
         paddingHorizontal:14,
         borderTopLeftRadius:30,
         borderTopRightRadius:30,
-        ...stylesVar.backgroundSecondary
+        ...StyledColors.background.Secondary
       },
       bsImageLabel:{
         paddingVertical:5,
@@ -91,7 +91,7 @@ footer:{
       },
       bsBairroTitle:{
         textAlign: 'center',
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
       },
       
       bsData:{
@@ -119,18 +119,18 @@ footer:{
         marginLeft:5
       },
       bsTitle:{
-          ...stylesVar.titleSecondary,
+          ...StyledVariables.text.Medium.Primary,
           marginLeft:5,
         },
         bsSubTitle:{
-          ...stylesVar.titleSecondary,
+          ...StyledVariables.text.Medium.Primary,
           fontWeight:'400',
           marginLeft:5,
           borderBottomWidth:0.5
       },
 
       bsDescricaoText:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
       },
   
       bsApoio:{
@@ -139,10 +139,10 @@ footer:{
       },
   
       bsApoioNumero:{
-        ...stylesVar.buttonLabelSecondary
+        ...StyledVariables.text.Medium.Purple
       },
       bsApoiar:{
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         padding: 10,
         marginVertical:10,
         flexDirection: 'row',
@@ -151,11 +151,11 @@ footer:{
       },
       bsApoiarLabel:{
         textAlign:'center',
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
     },
       bsContainer:{
         marginBottom:10,
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         elevation:5
       },
 })

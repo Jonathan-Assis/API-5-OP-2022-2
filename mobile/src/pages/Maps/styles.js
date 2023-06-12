@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import stylesVar from '../../styles/stylesVar';
+import { StyleSheet } from 'react-native'
+import { StyledVariables } from '../../styles'
 
 const styles = StyleSheet.create({
     container:{
@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     hTitle:{
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         textAlign: 'center',
     },
     footer:{
@@ -21,20 +21,20 @@ const styles = StyleSheet.create({
     fCategory:{
         width: 100,
         height: 110,
-        ...stylesVar.strokeBoxSecondary,
+        ...StyledVariables.box.Stroke.Secondary,
         justifyContent: 'center',
         alignItems: 'center',
     },
     fSubCategoryTitle:{
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
         textAlign: 'center',
     },
 
     fSelectedCategory:{
-        ...stylesVar.boxSecondary
+        ...StyledVariables.box.Colored.Secondary
     },
     fSelectedCategoryTitle:{
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
         textAlign: 'center',    
     },
     fButtons:{
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         marginHorizontal:8,
         flexDirection: 'row',
         alignItems: 'center',
-        ...stylesVar.boxPrimary,
+        ...StyledVariables.box.Colored.Primary,
         borderWidth:1,
         borderColor:'black',
     },
@@ -55,17 +55,17 @@ const styles = StyleSheet.create({
         marginHorizontal:8,
         flexDirection: 'row',
         alignItems: 'center',
-        ...stylesVar.boxSecondary,
+        ...StyledVariables.box.Colored.Secondary,
         borderWidth:1,
         borderColor:'black',
     },
     fButtonLabelPrimary:{
         paddingHorizontal:5,
-        ...stylesVar.titleTertiary,
+        ...StyledVariables.text.Medium.Tertiary,
     },
     fButtonLabelSecondary:{
         paddingHorizontal:5,
-        ...stylesVar.titleSecondary,
+        ...StyledVariables.text.Medium.Primary,
     },
 })
 

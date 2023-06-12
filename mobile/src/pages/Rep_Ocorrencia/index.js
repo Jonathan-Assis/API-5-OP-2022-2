@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import { View, Text,TextInput,TouchableOpacity, ScrollView, Image} from 'react-native';
-import { Picker } from "@react-native-picker/picker";
+import React, {useEffect, useState} from 'react'
+import { View, Text,TextInput,TouchableOpacity, ScrollView, Image} from 'react-native'
+import { Picker } from '@react-native-picker/picker'
 import {useNavigation} from '@react-navigation/native'
 import ServerConnection from '../../services'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faMapLocationDot, faImage, faCircleCheck, faTriangleExclamation, faXmark, faPlus } from '@fortawesome/free-solid-svg-icons'
 import {PopUpAlert,PopUpActions, BottomSheetImage, Loading} from '../../components'
-import styles from './styles';
+import styles from './styles'
 
-import { useRoute } from '@react-navigation/native';
-import { useAuth } from '../../contexts/Auth';
+import { useRoute } from '@react-navigation/native'
+import { useAuth } from '../../contexts/Auth'
 
 const Rep_Ocorrencia = (props) => {
   const navigation = useNavigation();
@@ -175,7 +175,6 @@ useEffect(() => {
         visible={alertPopUp}
         setVisible={setAlertPopUp}
       />
-    <Loading loading={loading}>
       <PopUpActions 
         icon={
           <Image source={require('../../assets/Logotype/LogoOP.png')} resizeMode='contain' style={styles.PopUpLogotype} />
@@ -189,6 +188,7 @@ useEffect(() => {
         visible={visible}
         setVisible={setVisible}
       />
+    <Loading loading={loading}>
         <BottomSheetImage
           imagem={imagem}
           setImagem={setImagem}
@@ -201,9 +201,9 @@ useEffect(() => {
               onPress={()=> imageOptions()}
             >
                <View style={styles.hImageIcon}>
-                <FontAwesomeIcon icon={faImage} size={170} color='#3429A8' />
+                <FontAwesomeIcon icon={faImage} size={170} color='#4444EE' />
                 <View style={styles.hIconPlus}>
-                  <FontAwesomeIcon icon={faPlus} size={60} color='#3429A8' />
+                  <FontAwesomeIcon icon={faPlus} size={60} color='#4444EE' />
                 </View>
                 <Text style={styles.hTitle}>Adicionar foto</Text>  
               </View>

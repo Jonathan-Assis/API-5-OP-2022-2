@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
-import { ScrollView, View, Text, TouchableOpacity, TextInput, Alert, Pressable } from 'react-native';
+import React, { useState } from 'react'
+import { ScrollView, View, Text, TouchableOpacity, TextInput, Pressable } from 'react-native'
 import { useNavigation } from '@react-navigation/native'
-import { Loading, PopUpAlert, CheckBox, PopUpTermos } from '../../components';
-import styles from './styles';
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faEye, faEyeSlash, faKey, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-import ServerConnection from '../../services';
+import { Loading, PopUpAlert, CheckBox, PopUpTermos, ProgressBar } from '../../components'
+import styles from './styles'
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faEye, faEyeSlash, faKey, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons'
+import ServerConnection from '../../services'
 import { useAuth } from '../../contexts/Auth'
+import { useFormattedCPF } from '../../util/formatField'
+import { validatePassword } from '../../util/validate'
 
 const Sign_Up = () => {
     const navigation = useNavigation();
+    const [formattedCPF, cpfNumbers, setCpf] = useFormattedCPF('');
+
     const [ loading, setLoading ] = useState(false);
     const { signUp } = useAuth()
     
@@ -21,27 +25,24 @@ const Sign_Up = () => {
     const [ showTermos, setShowTermos ] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState([])
     const [aboutTerms,setAboutTerms] = useState({})
-    console.log()
     const [ state, setState ] = useState({
         nome: undefined,
-        cpf: undefined,
         email: undefined,
-        senha: undefined,
-        confSenha: undefined,
+        senha: '',
+        confSenha: '',
         notificacao: false,
         terms: false,
     });
-
-    console.log()
+    const { strengthText } = validatePassword(state.senha);
 
     const cadastro = async () => {
-        const { nome, cpf: cpf_aux, email, senha, confSenha, notificacao } = state;
-        if(!!nome && !!cpf_aux && !!email && !!senha && !!confSenha && !!termsAccepted) {
+        const { nome, email, senha, confSenha, notificacao } = state;
+        if(!!nome && !!cpfNumbers && !!email && !!senha && !!confSenha && !!termsAccepted) {
             if(senha === confSenha) {
-                const cpf = cpf_aux.split('.-').join('');
+                const cpf = cpfNumbers;
                 const termos = [Object.assign(termsAccepted, aboutTerms)]
                 setLoading(true);
-                ServerConnection.validarCpf({ cpf: cpf })
+                ServerConnection.validarCpf(cpf)
                 .then(({ data }) => {
                     if(data) {
                         signUp(nome, cpf, email, senha, notificacao, termos)
@@ -81,7 +82,6 @@ const Sign_Up = () => {
             setVisible(true);
         }
     }
-
     return (
         <Loading loading={loading}>
             <PopUpTermos
@@ -136,12 +136,10 @@ const Sign_Up = () => {
                         <TextInput
                             style={styles.bInputBox} 
                             placeholder='000.000.000-00'
-                            maxLength={11}
-                            onChangeText={
-                            e => {setState(prev => { return { ...prev, cpf: e.split(/[.,-]/).join('')}})}
-                            }
-                            value={state.cpf}
                             keyboardType='numeric'
+                            maxLength={14}
+                            value={formattedCPF}
+                            onChangeText={setCpf}
                         />
                     </View>
 
@@ -153,9 +151,10 @@ const Sign_Up = () => {
                                 placeholder='Senha'
                                 secureTextEntry={!showPassword}
                                 value={state.senha}
-                                onChangeText={e => setState(prev => { return { ...prev, senha: e } })}
+                                onChangeText={e => {
+                                    setState(prev => { return { ...prev, senha: e } })
+                                }}
                             />
-                            
                             <TouchableOpacity
                                 style={styles.bPasswordIcon}
                                 onPress={() => setShowPassword(prev => !prev)}
@@ -163,6 +162,7 @@ const Sign_Up = () => {
                                 <FontAwesomeIcon icon={showPassword ? faEye : faEyeSlash} size={30} color='black'/>
                             </TouchableOpacity>
                         </View>
+                            <ProgressBar strength={strengthText} />
                     </View>
 
                     <View style={styles.bInput}>

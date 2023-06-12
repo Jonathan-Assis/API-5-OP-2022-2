@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Pressable } from 'react-native';
+import React, {useState} from 'react'
+import { View, Text, TextInput, TouchableOpacity, Pressable } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import styles from './styles';
+import styles from './styles'
 import {useNavigation} from '@react-navigation/native'
 import { useAuth } from '../../contexts/Auth'
 import LogoOP from '../../assets/Logotype/LogoOP.svg'
-import Animated, { BounceIn } from 'react-native-reanimated';
+import Animated, { BounceIn } from 'react-native-reanimated'
+import { useFormattedCPF } from '../../util/formatField'
 
 const Sign_In = () => {
   const navigation = useNavigation();
-  const [cpf,setCpf]=useState('')
+  const [formattedCPF, cpfNumbers, setCpf] = useFormattedCPF('');
   const [senha, setSenha]=useState('')
 
   const { signIn } = useAuth()
@@ -23,22 +24,21 @@ const Sign_In = () => {
         <Animated.View
           entering={BounceIn}
         >
-          <LogoOP  style={styles.hLogotype} />
+          <LogoOP style={styles.hLogotype} />
         </Animated.View>
         <Text style={styles.hTitle}>Ocorrências Públicas</Text>
       </View>
 
       <View style={styles.body}> 
         <View style={styles.bForm}> 
-          <Text style={styles.bDescription}>O acesso a este aplicativo é feito através do uso do CPF</Text>  
           <View style={styles.bInput}>
             <Text style={styles.bTitle}>CPF</Text>  
             <TextInput style={styles.bInputBox}
               placeholder="000.000.000-00" 
               keyboardType='numeric'
-              maxLength={11}
-              value={cpf}
-              onChangeText={value => setCpf(value.split(/[.,-]/).join(''))}
+              maxLength={14}
+              value={formattedCPF}
+              onChangeText={setCpf}
             />
           </View>
 
@@ -76,8 +76,7 @@ const Sign_In = () => {
           
           <TouchableOpacity style={styles.bButton}
             onPress={() => {
-              const cpf_aux = cpf.split('.-').join('');
-              signIn(cpf_aux,senha)
+              signIn(cpfNumbers,senha)
             }}
             >    
             <Text style={styles.bLabel}>Entrar</Text>

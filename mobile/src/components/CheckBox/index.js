@@ -1,6 +1,6 @@
-import { TouchableOpacity, Text, View } from "react-native";
-import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated';
-import { Feather } from '@expo/vector-icons';
+import { TouchableOpacity, Text, View } from 'react-native'
+import Animated, { ZoomIn, ZoomOut } from 'react-native-reanimated'
+import { Feather } from '@expo/vector-icons'
 import styles from './styles'
 
 export function CheckBox({title, checked = false, ...rest}){

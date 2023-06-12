@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, { useState } from 'react'
 import {View, Text, Modal, TouchableOpacity, Alert,Image, ScrollView} from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faCalendarDays, faCamera, faCircleInfo, faCommentDots, faImages, faMapLocationDot, faXmark } from '@fortawesome/free-solid-svg-icons'
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker'
 import styles from './styles'
-import dayjs from 'dayjs';
+import dayjs from 'dayjs'
+import { StyledColors } from '../../styles'
 
 
 const BottomSheetImage = ({
@@ -151,7 +152,7 @@ return(
               setPinSelected(false)
             }}
         >
-          <FontAwesomeIcon icon={ faXmark } size={40} color={'#fff'}  />
+          <FontAwesomeIcon icon={ faXmark } size={40} color={StyledColors.icon.White.color}  />
         </TouchableOpacity>
             <View style={styles.bsHeader}>
                <Image source={{uri: `${imagem}`}} style={styles.bsImage} resizeMode='cover'/>
@@ -159,7 +160,7 @@ return(
               <View style={styles.bsInfo}>
                 <View style={styles.bsCamera}>
                   <View style={styles.bsImageLabel}>
-                    <FontAwesomeIcon icon={faCamera} size={25} color='#fff' />
+                    <FontAwesomeIcon icon={faCamera} size={25} color={StyledColors.icon.White.color} />
                   </View>
                 </View>
               </View>
@@ -170,7 +171,7 @@ return(
                 {titulo}
                 </Text>
                 <View style={styles.bsTipo}>
-                    <FontAwesomeIcon icon={faCircleInfo} size={25} color='#323232' />
+                    <FontAwesomeIcon icon={faCircleInfo} size={25} color={StyledColors.icon.Black.color} />
                     {
                         categoria === 'Outros' ? (
                             <Text style={styles.bsTipoTitle}>{categoria}</Text>
@@ -189,7 +190,7 @@ return(
                 <View style={styles.bsInfoContainer}>
                     <View style={styles.bsData}>
                         <View style={styles.bsField}>
-                            <FontAwesomeIcon icon={faCalendarDays} size={25} color='#323232' />
+                            <FontAwesomeIcon icon={faCalendarDays} size={25} color={StyledColors.icon.Black.color} />
                             <Text style={styles.bsTitle}>Data e Hora do Registro:</Text>
                         </View>
                         <Text style={styles.bsSubTitle}>
@@ -198,7 +199,7 @@ return(
                     </View>
                     <View style={styles.bsBairro}>
                         <View style={styles.bsField}>
-                            <FontAwesomeIcon icon={faMapLocationDot} size={25} color='#323232' />
+                            <FontAwesomeIcon icon={faMapLocationDot} size={25} color={StyledColors.icon.Black.color} />
                             <Text style={styles.bsTitle}>Bairro do Ocorrido:</Text>
                         </View>
 
@@ -209,7 +210,7 @@ return(
 
                     <View style={styles.bsDescricao}>
                         <View style={styles.bsField}>
-                            <FontAwesomeIcon icon={faCommentDots} size={25} color='#323232' />
+                            <FontAwesomeIcon icon={faCommentDots} size={25} color={StyledColors.icon.Black.color} />
                             <Text style={styles.bsTitle}>Relato:</Text>
                         </View>
                         <Text style={styles.bsSubTitle}>

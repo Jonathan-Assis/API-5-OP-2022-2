@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import React, { useState, useEffect } from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { Loading, PopUpAlert } from '../../components'
-import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
-import ServerConnection from "../../services"
-import styles from "./styles";
+import * as Location from 'expo-location'
+import { useNavigation } from '@react-navigation/native'
+import ServerConnection from '../../services'
+import styles from './styles'
 
 //Icons
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faXmark, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 
-import GeoIcon from "../../assets/Icons/geo-alt";
-import GeoIconFill from "../../assets/Icons/geo-alt-fill";
-import { useAuth } from "../../contexts/Auth";
+import GeoIcon from '../../assets/Icons/geo-alt'
+import GeoIconFill from '../../assets/Icons/geo-alt-fill'
+import { useAuth } from '../../contexts/Auth'
 
 const Maps = (props) => {
   const navigation = useNavigation();
@@ -149,7 +149,7 @@ const Maps = (props) => {
       setCategoria(()=>{
         return [
           { tipo: 'Meus',
-            color: '#3429A8'
+            color: '#4444EE'
           },
           ...data
         ]
@@ -206,7 +206,7 @@ let categoriaSelected = props.route?.params.categoria
           const x = categoria.find(a => {
             return a?.tipo === item?.categoria
           })?.color
-          const cor = item?.cidadao === authData._id ? '#3429A8' : x;
+          const cor = item?.cidadao === authData._id ? '#4444EE' : x;
             return (
               <Marker
               key={index}
@@ -230,7 +230,7 @@ let categoriaSelected = props.route?.params.categoria
                 setPinSelected(false);
               }}
               >
-                <PinStrokeBlack style={{color: '#3429A8', width:23, height:32}} />
+                <PinStrokeBlack style={{color: '#4444EE', width:23, height:32}} />
               </Marker>
               )}
         </MapView>

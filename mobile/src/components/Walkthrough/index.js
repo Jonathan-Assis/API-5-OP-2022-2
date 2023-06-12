@@ -1,9 +1,9 @@
-import React, {useRef} from 'react';
-import { View,Text,TouchableOpacity, StatusBar, FlatList, Animated, Dimensions, StyleSheet, Modal } from 'react-native';
-import styles from './styles';
+import React, {useRef} from 'react'
+import { View,Text,TouchableOpacity, StatusBar, FlatList, Animated, Dimensions, StyleSheet, Modal } from 'react-native'
+import styles from './styles'
 import { backgrounds, data } from './Data'
-import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons'
 
 
 const {width, height} = Dimensions.get('window')

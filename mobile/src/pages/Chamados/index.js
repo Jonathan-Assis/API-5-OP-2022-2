@@ -1,18 +1,18 @@
-import React, { useState, useCallback } from "react";
-import { View, Text, TouchableOpacity, FlatList, Animated, Image, Dimensions } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import React, { useState, useCallback } from 'react'
+import { View, Text, TouchableOpacity, FlatList, Animated, Image, Dimensions } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { Loading, PopUpAlert, BottomSheet } from '../../components'
-import { useAuth } from '../../contexts/Auth';
-import * as Location from "expo-location";
+import { useAuth } from '../../contexts/Auth'
+import * as Location from 'expo-location'
 import ServerConnection from "../../services"
-import dayjs from 'dayjs';
-import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import styles from "./styles";
+import dayjs from 'dayjs'
+import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import styles from './styles'
 
 //Icons
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
-import PinStrokeWhite from "../../assets/Icons/PinStrokeWhite.svg";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from '@fortawesome/free-solid-svg-icons'
+import PinStrokeWhite from '../../assets/Icons/PinStrokeWhite.svg'
 import PinStrokeBlack from '../../assets/Icons/PinStrokeBlack.svg'
 
 const Chamados = (props) => {
@@ -119,7 +119,7 @@ const Chamados = (props) => {
       setCategoria(()=>{
         return [
           { tipo: 'Meus',
-            color: '#3429A8'
+            color: '#4444EE'
           },
           { tipo: 'Todos',
             color: '#DD4B3E'
@@ -215,7 +215,7 @@ const Chamados = (props) => {
                   const x = categoria.find(a => {
                     return a.tipo === item.categoria
                   })?.color
-                  const cor = item.cidadao === authData._id ? '#3429A8' : x;
+                  const cor = item.cidadao === authData._id ? '#4444EE' : x;
                   const scaleStyle = {
                     transform: [
                       {
@@ -256,7 +256,6 @@ const Chamados = (props) => {
                 style={{
                   flexDirection:'row',
                   position:'absolute',
-
                 }}
                 renderItem={({ item, index }) => (
                   <View style={styles.header}>

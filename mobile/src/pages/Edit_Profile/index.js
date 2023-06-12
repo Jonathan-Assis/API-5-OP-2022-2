@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
-import { View, Text,TextInput, TouchableOpacity, ScrollView, Image, Button } from 'react-native';
+import React, { useState } from 'react'
+import { View, Text,TextInput, TouchableOpacity, ScrollView, Image, Button } from 'react-native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import {
   faCircleUser, faUserPen, faTriangleExclamation, faEye, faEyeSlash, faKey,
-  faPenToSquare, faTrashCan
+  faPenToSquare, faTrashCan, faCheck
 } from '@fortawesome/free-solid-svg-icons'
 import { PopUpActions, PopUpAlert, BottomSheetImage, CheckBox, Loading, PopUpChangeTermos, PopUpShowTermo } from '../../components'
-import { useAuth } from '../../contexts/Auth';
-import styles from './styles';
+import { useAuth } from '../../contexts/Auth'
+import styles from './styles'
+import { useFormattedCPF } from '../../util/formatField'
 
 
 const Edit_Profile = () => {
   const authData = JSON.parse(useAuth().authData)
-  const [loading, setLoading]=useState(false)
   const { updateAuth, deleteAuth } = useAuth();
+  const [formattedCPF, cpfNumbers, setCpf] = useFormattedCPF(authData.cpf || '');
+
+  const [loading, setLoading]=useState(false)
 
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showConfPassword, setShowConfPassword ] = useState(false);
@@ -22,7 +25,6 @@ const Edit_Profile = () => {
   const [ data, setData ] = useState({
     _id: authData._id || undefined,
     nome: authData.nome || undefined,
-    cpf: authData.cpf || undefined,
     email: authData.email || undefined,
     senha: undefined,
     confSenha: undefined,
@@ -51,16 +53,15 @@ const Edit_Profile = () => {
       _id: id,
       nome,
       email,
-      cpf: cpf_aux,
       senha,
       confSenha,
       notificacao,
       termos
     } = data;
 
-    if(!!nome && !!email && !!cpf_aux) {
+    if(!!nome && !!email && !!cpfNumbers) {
       if((!senha && !confSenha) || senha === confSenha) {
-        const cpf = cpf_aux.split('.-').join('');
+        const cpf = cpfNumbers;
         updateAuth({
           id, nome, email, cpf, imagem: imagem, senha,
           senha_prev: authData.senha, notificacao: JSON.stringify(notificacao),
@@ -197,7 +198,7 @@ const Edit_Profile = () => {
                     ? <View style={styles.bImageIcon}>
                         <Image source={{uri: `${imagem?.base64}` }} resizeMode="cover" style={styles.bImageStyle}/>
                       </View>
-                    : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#3429A8'}/>
+                    : <FontAwesomeIcon icon={ faCircleUser } size={140} color={'#4444EE'}/>
                 }
               </TouchableOpacity>
 
@@ -208,7 +209,7 @@ const Edit_Profile = () => {
                   : imageOptions()
                 }}
                 >
-                <FontAwesomeIcon icon={!!imagem?.base64 ? faTrashCan : faPenToSquare} size={25} color='#3429A8' />
+                <FontAwesomeIcon icon={!!imagem?.base64 ? faTrashCan : faPenToSquare} size={25} color='#4444EE' />
               </TouchableOpacity>
             </View>
 
@@ -239,8 +240,8 @@ const Edit_Profile = () => {
                 style={styles.bInputBox}
                 keyboardType='numeric'
                 placeholder='Insira seu CPF'
-                value={data.cpf}
-                onChangeText={value => setData(prev => { return {...prev, cpf: value.split(/[.,-]/).join('')} })}
+                value={formattedCPF}
+                onChangeText={setCpf}
               />  
             </View>
 
@@ -326,6 +327,7 @@ const Edit_Profile = () => {
               }}
             >
               <Text style={styles.bLabel}>Salvar Alterações</Text>
+              <FontAwesomeIcon icon={faCheck} size={20} color='white' />
             </TouchableOpacity>
 
             <View style={styles.lineStyle} />

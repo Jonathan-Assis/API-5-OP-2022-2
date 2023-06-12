@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
+import React, {useState} from 'react'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
 import {useNavigation} from '@react-navigation/native'
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import { faUserPen, faCircleUser, faArrowRightFromBracket,faCircleInfo} from '@fortawesome/free-solid-svg-icons'
-import { useAuth } from '../../contexts/Auth';
-import { Walkthrough } from '../../components'
-import styles from './styles';
+import { useAuth } from '../../contexts/Auth'
+import { LinearBackground, Walkthrough } from '../../components'
+import styles from './styles'
+import { LinearGradient } from 'expo-linear-gradient'
 
 
 const Settings = () => {
@@ -17,7 +18,7 @@ const Settings = () => {
   return (
     <>
     <Walkthrough walkOn={walkOn} setWalkOn={setWalkOn} />
-      <View style={styles.container}>
+    <LinearBackground>
         <View style={styles.body}>
           <View style={styles.header}>
             <View style={styles.hImage}>
@@ -29,12 +30,12 @@ const Settings = () => {
             <Text style={styles.hTitle}>{authData.nome}</Text>
           </View>
 
-        <View style={styles.bEmailBox}>
-          <Text style={styles.bTitle}>Email:</Text>
-          <Text style={styles.bText}>{authData.email}</Text>
-        </View>
+          <View style={styles.bEmailBox}>
+            <Text style={styles.bTitle}>Email:</Text>
+            <Text style={styles.bText}>{authData.email}</Text>
+          </View>
 
-        <View style={styles.footer}>
+          <View style={styles.footer}>
             <TouchableOpacity style={styles.fButton}
               onPress={() => navigation.navigate('Edit_Profile')}
             >
@@ -57,7 +58,7 @@ const Settings = () => {
             </TouchableOpacity>
         </View>
       </View>
-    </View>
+      </LinearBackground>
     </>
   );
 }

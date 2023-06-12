@@ -174,12 +174,12 @@ const PopUpTermos = ({
             <View style={styles.container}>
                 <View style={styles.modalTermos}>
                     <View style={styles.headerTermos}>
-                        <FontAwesomeIcon icon={faBook} size={18} color='#3429A8' />
+                        <FontAwesomeIcon icon={faBook} size={18} color='#4444EE' />
                         <Text style={styles.hTermosTitle}>Termos de Uso</Text>
                     </View>
                     { isLoading ? (
                         <View style={{height:'75%', justifyContent: 'center'}}>
-                            <ActivityIndicator size="large" color='#3429A8' />
+                            <ActivityIndicator size="large" color='#4444EE' />
                         </View>
                         ) : (
                         <>
@@ -368,12 +368,12 @@ const PopUpShowTermo = ({
             <View style={styles.container}>
                 <View style={styles.modalTermos}>
                     <View style={styles.headerTermos}>
-                        <FontAwesomeIcon icon={faBook} size={18} color='#3429A8' />
+                        <FontAwesomeIcon icon={faBook} size={18} color='#4444EE' />
                         <Text style={styles.hTermosTitle}>Termos de Uso</Text>
                     </View>
                     { isLoading ? (
                         <View style={{height:'75%', justifyContent: 'center'}}>
-                            <ActivityIndicator size="large" color='#3429A8' />
+                            <ActivityIndicator size="large" color='#4444EE' />
                         </View>
                         ) : (
                         <>

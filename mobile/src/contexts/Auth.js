@@ -1,22 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from 'react'
+import { Alert } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { SHA256 } from 'crypto-js'
 import * as Notifications from 'expo-notifications'
+
 import ServerConnection from '../services'
-import { SHA256 } from 'crypto-js';
-import { Alert } from "react-native";
-import { Walkthrough, PopUpAlert } from "../components";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faCalendarDays, faCircleInfo, faLocationDot, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { scheduledNotifications } from '../util/notifications'
+import { Walkthrough } from '../components/Walkthrough'
 
 export const AuthContext = createContext({});
-
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-      shouldShowAlert: true,
-      shouldPlaySound: false,
-      shouldSetBadge: false,
-    }),
-  });
 
 export const AuthProvider = ({children}) =>{
     const [authData, setAuth] = useState(undefined);
@@ -27,30 +19,7 @@ export const AuthProvider = ({children}) =>{
 
     useEffect(()=>{
         loadFromStorage();
-        //scheduleNotification()
-        //getScheduleNotification()
     },[])
-
-    async function scheduleNotification() {
-        /* const trigger = new Date(Date.now());
-        trigger.setMinutes(trigger.getMinutes() + 1); */
-    
-        await Notifications.scheduleNotificationAsync({
-          content: {
-            title: 'OP says Hello World! 📣',
-            body: 'Welcome to the app'
-          },
-          trigger: {seconds: 2}
-        });
-      }
-    
-      /**
-       *  Log of List notifications
-       */
-      async function getScheduleNotification() {
-        const schedules = await Notifications.getAllScheduledNotificationsAsync();
-        //console.log(schedules);
-      }
 
     async function loadFromStorage() {
         const auth = await AsyncStorage.getItem('@AuthData')
@@ -58,6 +27,13 @@ export const AuthProvider = ({children}) =>{
         if(auth && token){
             setAuth((auth));
             setTokenData(token)
+            const { notificacao } = JSON.parse(auth)
+            if(notificacao.push){
+                await scheduledNotifications()
+            } else {
+                // Força para que caso cancele as notificações push, todas as que estiverem em espera serão removidas
+                await Notifications.cancelAllScheduledNotificationsAsync()
+            }
         }
         setLoading(false)
     }
@@ -69,7 +45,7 @@ export const AuthProvider = ({children}) =>{
         .then(({data}) => {
             setTokenData(data.token)
             setAuth(JSON.stringify(data.result));
-            AsyncStorage.setItem('@Token',(data.token))
+            AsyncStorage.setItem('@Token',(JSON.stringify(data.token)))
             AsyncStorage.setItem('@AuthData',(JSON.stringify(data.result)))
             .then(() => {
                 if(first) {
@@ -120,7 +96,7 @@ export const AuthProvider = ({children}) =>{
             }
         }
         else {
-            aux.imagem = 'null';// deleta a imagem
+            aux.imagem = 'null'// deleta a imagem
         }
 
         setLoading(true);
@@ -155,7 +131,7 @@ export const AuthProvider = ({children}) =>{
             if(!!data.deletedCount) {
                 console.log('Conta deletada com sucesso');
             }
-            else throw 'Falha ao deletar a conta';
+            else throw 'Falha ao deletar a conta'
         })
         .catch((e) => {
             if(e.response.status === 401){

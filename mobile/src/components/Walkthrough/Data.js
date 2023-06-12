@@ -4,7 +4,7 @@ import HomeIcon     from '../../assets/Icons/megaphone-fill'
 import FormIcon     from '../../assets/Icons/journal-richtext'
 import SettingsIcon from '../../assets/Icons/list-ul'
 
-const backgrounds = ['#500FFF', '#6444F0', '#55ff', '#4466EE']
+const backgrounds = ['#500FFF', '#6444F0', '#55ff', '#4444EE']
 //const backgrounds = ['#A5BBFF', '#DDBEFE', '#B98EFF', '#55AAAF']
 const data = [
     {
